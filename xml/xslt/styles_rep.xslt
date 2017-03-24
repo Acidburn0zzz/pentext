@@ -18,6 +18,7 @@
     <xsl:attribute-set name="title">
         <xsl:attribute name="keep-with-next.within-page">always</xsl:attribute>
         <xsl:attribute name="font-weight">bold</xsl:attribute>
+        <xsl:attribute name="font-family">OpenSans</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-0" use-attribute-sets="title">
         <xsl:attribute name="text-align">center</xsl:attribute>
@@ -26,23 +27,25 @@
         <xsl:attribute name="background-color">orange</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-1" use-attribute-sets="title">
-        <xsl:attribute name="font-size">16pt</xsl:attribute>
-        <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
-        <xsl:attribute name="background-color">orange</xsl:attribute>
+        <xsl:attribute name="font-size">40pt</xsl:attribute>
+        <xsl:attribute name="text-align">right</xsl:attribute>
+        <xsl:attribute name="break-before">page</xsl:attribute>
+        <xsl:attribute name="break-after">page</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-2" use-attribute-sets="title">
-        <xsl:attribute name="font-style">italic</xsl:attribute>
-        <xsl:attribute name="font-size">14pt</xsl:attribute>
-        <xsl:attribute name="margin-bottom">0.8cm</xsl:attribute>
-        <xsl:attribute name="background-color">silver</xsl:attribute>
+        <xsl:attribute name="font-size">16pt</xsl:attribute>
+        <xsl:attribute name="color">#eb6209</xsl:attribute>
+        <xsl:attribute name="margin-bottom">0.7cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-3" use-attribute-sets="title">
         <xsl:attribute name="font-size">14pt</xsl:attribute>
-        <xsl:attribute name="margin-bottom">0.8cm</xsl:attribute>
-        <xsl:attribute name="background-color">silver</xsl:attribute>
+        <xsl:attribute name="color">#eb6209</xsl:attribute>
+        <xsl:attribute name="margin-bottom">0.7cm</xsl:attribute>
+        <xsl:attribute name="font-weight">100</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-4" use-attribute-sets="title">
-        <xsl:attribute name="margin-bottom">5pt</xsl:attribute>
+        <xsl:attribute name="font-size">12pt</xsl:attribute>
+        <xsl:attribute name="margin-bottom">0.5cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-client" use-attribute-sets="title-0">
         <xsl:attribute name="background-color">silver</xsl:attribute>
@@ -74,7 +77,6 @@
     
     <!-- colors -->
     <xsl:attribute-set name="bg-orange">
-        <xsl:attribute name="background-color">orange</xsl:attribute>
     </xsl:attribute-set>
     
    

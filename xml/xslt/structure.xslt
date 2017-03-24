@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://radical.sexy"
+    exclude-result-prefixes="xs my" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
 
     <xsl:template match="section | appendix | finding | non-finding | annex">
         <xsl:if test="not(@visibility = 'hidden')">
@@ -40,6 +40,12 @@
             <xsl:call-template name="use-att-set">
                 <xsl:with-param name="CLASS" select="$CLASS"/>
             </xsl:call-template>
+
+            <xsl:if test="../.. = /">
+                <fo:marker marker-class-name="tab">
+                    <xsl:value-of select="text()"/>
+                </fo:marker>
+            </xsl:if>
             <xsl:choose>
                 <xsl:when test="$EXEC_SUMMARY = true()">
                     <xsl:choose>
@@ -58,11 +64,14 @@
                             </fo:inline>
                         </xsl:when>
                         <xsl:otherwise>
-                            <fo:inline>
-                                <xsl:number
-                                    count="section[not(@visibility = 'hidden')][ancestor-or-self::*/@inexecsummary = 'yes'] | finding | non-finding"
-                                    level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>
-                            </fo:inline>
+                            <xsl:if test="not(../.. = /)">
+                                <!-- no numbering for top-level sections -->
+                                <fo:inline>
+                                    <xsl:number
+                                        count="section[not(@visibility = 'hidden')][ancestor-or-self::*/@inexecsummary = 'yes'] | finding | non-finding"
+                                        level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>
+                                </fo:inline>
+                            </xsl:if>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
@@ -83,11 +92,14 @@
                             </fo:inline>
                         </xsl:when>
                         <xsl:otherwise>
-                            <fo:inline>
-                                <xsl:number
-                                    count="section[not(@visibility = 'hidden')] | finding | non-finding"
-                                    level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>
-                            </fo:inline>
+                            <xsl:if test="not(../.. = /)">
+                                <!-- no numbering for top-level sections -->
+                                <fo:inline>
+                                    <xsl:number
+                                        count="section[not(@visibility = 'hidden')] | finding | non-finding"
+                                        level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>
+                                </fo:inline>
+                            </xsl:if>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:otherwise>
@@ -98,11 +110,32 @@
                 <xsl:apply-templates select=".." mode="number"/>
                 <xsl:text> &#8212; </xsl:text>
             </xsl:if>
-            <xsl:apply-templates/>
+            <xsl:choose>
+                <!-- First level section titles are on their own page and need to be broken down -->
+                <xsl:when test="../.. = /">
+                    <xsl:variable name="words" select="tokenize(., '\s')"/>
+                    <xsl:for-each select="$words">
+                    <xsl:analyze-string select="." regex="([A|a]nd|[O|o]r|[T|t]he|[O|o]f)">
+                        <xsl:matching-substring>
+                            <xsl:text> </xsl:text><xsl:value-of select="."/>
+                        </xsl:matching-substring>
+                        <xsl:non-matching-substring>
+                            <fo:block/><xsl:value-of select="."/>
+                        </xsl:non-matching-substring>
+                    </xsl:analyze-string>
+                    </xsl:for-each>
+                    
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates/>
+                </xsl:otherwise>
+            </xsl:choose>
         </fo:block>
         <xsl:if test="parent::finding">
             <xsl:apply-templates select=".." mode="meta"/>
         </xsl:if>
     </xsl:template>
+
+
 
 </xsl:stylesheet>

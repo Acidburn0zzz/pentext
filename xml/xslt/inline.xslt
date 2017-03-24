@@ -25,7 +25,7 @@
                     HIDDEN</fo:inline>
             </xsl:when>
             <xsl:otherwise>
-                <fo:basic-link color="blue">
+                <fo:basic-link xsl:use-attribute-sets="link">
                     <xsl:choose>
                         <xsl:when test="starts-with(@href, '#')">
                             <xsl:attribute name="internal-destination">

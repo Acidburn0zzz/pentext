@@ -126,17 +126,17 @@
                 <fo:table-column column-width="proportional-column-width(16)"
                     xsl:use-attribute-sets="borders"/>
                 <fo:table-body>
-                    <fo:table-row xsl:use-attribute-sets="bg-orange borders">
-                        <fo:table-cell xsl:use-attribute-sets="td">
+                    <fo:table-row xsl:use-attribute-sets="bg-orange">
+                        <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>ID</fo:block>
                         </fo:table-cell>
-                        <fo:table-cell xsl:use-attribute-sets="td">
+                        <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>Type</fo:block>
                         </fo:table-cell>
-                        <fo:table-cell xsl:use-attribute-sets="td">
+                        <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>Description</fo:block>
                         </fo:table-cell>
-                        <fo:table-cell xsl:use-attribute-sets="td">
+                        <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>Threat level</fo:block>
                         </fo:table-cell>
                     </fo:table-row>
@@ -174,7 +174,10 @@
     </xsl:template>
 
     <xsl:template name="findingsSummaryContent">
-        <fo:table-row xsl:use-attribute-sets="borders TableFont">
+        <fo:table-row xsl:use-attribute-sets="TableFont">
+            <xsl:if test="position() mod 2 != 0">
+                        <xsl:attribute name="background-color">#ededed</xsl:attribute>
+                    </xsl:if>
             <fo:table-cell xsl:use-attribute-sets="td">
                 <fo:block>
                     <xsl:if test="@id">
@@ -182,7 +185,7 @@
                             <xsl:value-of select="@id"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <fo:basic-link color="blue">
+                    <fo:basic-link xsl:use-attribute-sets="link">
                         <xsl:attribute name="internal-destination"><xsl:value-of select="@findingId"/></xsl:attribute>
                         <xsl:value-of select="findingNumber"/>
                     </fo:basic-link>
@@ -220,13 +223,13 @@
                     xsl:use-attribute-sets="borders"/>
                 <fo:table-body>
                     <fo:table-row xsl:use-attribute-sets="bg-orange borders">
-                        <fo:table-cell xsl:use-attribute-sets="td">
+                        <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>ID</fo:block>
                         </fo:table-cell>
-                        <fo:table-cell xsl:use-attribute-sets="td">
+                        <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>Type</fo:block>
                         </fo:table-cell>
-                        <fo:table-cell xsl:use-attribute-sets="td">
+                        <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>Recommendation</fo:block>
                         </fo:table-cell>
                     </fo:table-row>
@@ -264,10 +267,13 @@
     </xsl:template>
 
     <xsl:template name="recommendationsSummaryContent">
-        <fo:table-row xsl:use-attribute-sets="TableFont borders">
+        <fo:table-row xsl:use-attribute-sets="TableFont">
+            <xsl:if test="position() mod 2 != 0">
+                        <xsl:attribute name="background-color">#ededed</xsl:attribute>
+                    </xsl:if>
             <fo:table-cell xsl:use-attribute-sets="td">
                 <fo:block>
-                    <fo:basic-link color="blue">
+                    <fo:basic-link xsl:use-attribute-sets="link">
                         <xsl:attribute name="internal-destination"><xsl:value-of select="@id"/></xsl:attribute>
                         <xsl:apply-templates select="." mode="number"/>
                     </fo:basic-link>
@@ -623,11 +629,11 @@
                                         <fo:table-body>
                                             <xsl:for-each select="$pieTable/pieEntry">
                                                 <fo:table-row>
-                                                  <fo:table-cell xsl:use-attribute-sets="td">
+                                                  <fo:table-cell xsl:use-attribute-sets="pieLegendTableCell">
                                                   <fo:block>
                                                   <fo:instream-foreign-object>
                                                   <svg:svg height="13" width="13">
-                                                  <svg:rect stroke="black" stroke-width="1"
+                                                  <svg:rect stroke="#706f6f" stroke-width="1"
                                                   stroke-linejoin="round" height="11" width="11">
                                                   <xsl:attribute name="fill">
                                                   <xsl:call-template name="giveColor">
@@ -641,14 +647,14 @@
                                                   </fo:instream-foreign-object>
                                                   </fo:block>
                                                   </fo:table-cell>
-                                                  <fo:table-cell xsl:use-attribute-sets="td">
+                                                  <fo:table-cell xsl:use-attribute-sets="pieLegendTableCell">
                                                   <fo:block>
                                                   <xsl:value-of select="pieEntryLabel"/>
                                                   <xsl:text> (</xsl:text>
                                                   <!-- for threatLevel legend, link to finding summary table -->
                                                   <xsl:choose>
                                                   <xsl:when test="$pieAttr = 'threatLevel'">
-                                                  <fo:basic-link text-decoration="underline">
+                                                  <fo:basic-link xsl:use-attribute-sets="link">
                                                   <xsl:attribute name="internal-destination"
                                                   >summaryTableThreatLevel<xsl:value-of
                                                   select="pieEntryLabel"/></xsl:attribute>
@@ -708,7 +714,7 @@
         <xsl:variable name="d"
             select="concat($middle, ' ', $first_line, ' ', 'a', $radius, ',', $radius, ' ', $arc_move, ' ', $x, ',', $radius - $y, ' ', 'z')"/>
         <!--put it all together-->
-        <svg:path stroke="black" stroke-width="1" stroke-linejoin="round">
+        <svg:path stroke="white" stroke-width="2" stroke-linejoin="round">
             <xsl:attribute name="fill">
                 <xsl:call-template name="giveColor">
                     <xsl:with-param name="i">
@@ -815,21 +821,25 @@
     <xsl:template name="giveColor">
         <xsl:param name="i"/>
         <xsl:choose>
-            <xsl:when test="$i = 1">#FF5C00</xsl:when>
-            <xsl:when test="$i = 2">#FE9920</xsl:when>
-            <xsl:when test="$i = 3">#D9D375</xsl:when>
-            <xsl:when test="$i = 4">#B9A44C</xsl:when>
-            <xsl:when test="$i = 5">#BEC5AD</xsl:when>
-            <xsl:when test="$i = 6">#7CA982</xsl:when>
-            <xsl:when test="$i = 7">#566E3D</xsl:when>
-            <xsl:when test="$i = 8">#5B5F97</xsl:when>
-            <xsl:when test="$i = 9">#C200FB</xsl:when>
-            <xsl:when test="$i = 10">#A9E5BB</xsl:when>
-            <xsl:when test="$i = 11">#98C1D9</xsl:when>
+            <xsl:when test="$i = 1">#eb6209</xsl:when>
+            <xsl:when test="$i = 2">#f6a56d</xsl:when>
+            <xsl:when test="$i = 3">#706f6f</xsl:when>
+            <xsl:when test="$i = 4">#000000</xsl:when>
+            <xsl:when test="$i = 5">#FF5C00</xsl:when>
+            <xsl:when test="$i = 6">#FE9920</xsl:when>
+            <xsl:when test="$i = 7">#D9D375</xsl:when>
+            <xsl:when test="$i = 8">#B9A44C</xsl:when>
+            <xsl:when test="$i = 9">#BEC5AD</xsl:when>
+            <xsl:when test="$i = 10">#7CA982</xsl:when>
+            <xsl:when test="$i = 11">#566E3D</xsl:when>
             <xsl:when test="$i = 12">#5B5F97</xsl:when>
-            <xsl:when test="$i = 13">burlywood</xsl:when>
-            <xsl:when test="$i = 14">cornflowerblue</xsl:when>
-            <xsl:when test="$i = 15">cornsilk</xsl:when>
+            <xsl:when test="$i = 13">#C200FB</xsl:when>
+            <xsl:when test="$i = 14">#A9E5BB</xsl:when>
+            <xsl:when test="$i = 15">#98C1D9</xsl:when>
+            <xsl:when test="$i = 16">#5B5F97</xsl:when>
+            <xsl:when test="$i = 17">burlywood</xsl:when>
+            <xsl:when test="$i = 18">cornflowerblue</xsl:when>
+            <xsl:when test="$i = 19">cornsilk</xsl:when>
             <xsl:otherwise>black</xsl:otherwise>
         </xsl:choose>
     </xsl:template>

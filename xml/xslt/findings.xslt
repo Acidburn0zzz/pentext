@@ -4,7 +4,7 @@
     xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
 
     <xsl:template match="finding" mode="meta">
-        <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="table" margin-bottom="{$large-space}">
+        <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="findingTable" margin-bottom="{$large-space}">
             <fo:table-column column-width="proportional-column-width(70)"/>
             <fo:table-column column-width="proportional-column-width(30)"/>
             <fo:table-body>

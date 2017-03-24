@@ -7,9 +7,10 @@
         <fo:block xsl:use-attribute-sets="title-toc">Table of Contents</fo:block>
         <fo:block xsl:use-attribute-sets="index">
             <fo:block>
-                <fo:table width="100%">
-                    <fo:table-column/>
-                    <fo:table-column column-width="7mm"/>
+                <fo:table table-layout="fixed" width="100%">
+                    <fo:table-column column-width="2.3cm"/>
+                    <fo:table-column column-width="12cm"/>
+                    <fo:table-column column-width="1cm"/>
                     <fo:table-body>
                         <xsl:apply-templates select="/" mode="toc"/>
                     </fo:table-body>
@@ -41,20 +42,30 @@
 
     <xsl:template name="ToC">
         <fo:table-row>
-            <fo:table-cell text-align-last="justify">
+            <fo:table-cell xsl:use-attribute-sets="tocCell">
                 <fo:block>
                     <fo:basic-link>
                         <xsl:attribute name="internal-destination">
                             <xsl:value-of select="@id"/>
                         </xsl:attribute>
-                        <xsl:call-template name="tocContent"/>
+                        <xsl:call-template name="tocContent_Numbering"/>
+                    </fo:basic-link>
+                </fo:block>
+            </fo:table-cell>
+            <fo:table-cell text-align-last="justify" xsl:use-attribute-sets="tocCell">
+                <fo:block>
+                    <fo:basic-link>
+                        <xsl:attribute name="internal-destination">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                        <xsl:call-template name="tocContent_Title"/>
                     </fo:basic-link>
                     <xsl:text>&#xA0;</xsl:text>
-                    <fo:leader leader-pattern="dots" leader-alignment="reference-area"
+                    <fo:leader leader-pattern="space" leader-alignment="reference-area"
                         leader-length.maximum="21cm"/>
                 </fo:block>
             </fo:table-cell>
-            <fo:table-cell padding-right="3pt" display-align="after">
+            <fo:table-cell padding-right="3pt" display-align="after" xsl:use-attribute-sets="tocCell">
                 <fo:block text-align="right">
                     <fo:basic-link>
                         <xsl:attribute name="internal-destination">
@@ -79,12 +90,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template name="tocContent">
-        <xsl:call-template name="tocContent_Numbering"/>
-        <xsl:text>&#xA0;&#xA0;</xsl:text>
-        <xsl:call-template name="tocContent_Title"/>
-    </xsl:template>
-
+    
     <xsl:template name="tocContent_Title">
         <xsl:apply-templates select="title" mode="toc"/>
     </xsl:template>
