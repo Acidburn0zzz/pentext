@@ -179,6 +179,12 @@
         <xsl:attribute name="margin-left">3cm</xsl:attribute>
         <xsl:attribute name="margin-right">1.8cm</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="cover-flow">
+        <xsl:attribute name="background-image">url(../graphics/report_titlesheet.png)</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="region-body-sectioncover">
+        <xsl:attribute name="background-image">url(../graphics/section_titlesheet.png)</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="region-before-content">
         <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">4.2cm</xsl:attribute>
@@ -216,6 +222,22 @@
         <xsl:attribute name="font-weight">bold</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="footer">
+        <xsl:attribute name="color">#e4e4e4</xsl:attribute>
+        <xsl:attribute name="margin-left">1cm</xsl:attribute>
+        <xsl:attribute name="margin-right">1cm</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="coverfooter" use-attribute-sets="footer">
+        <xsl:attribute name="margin-top">7mm</xsl:attribute>
+        <xsl:attribute name="line-height">5.5mm</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="footerlogo">
+        <xsl:attribute name="src">url(../graphics/footer_logo.png)</xsl:attribute>
+        <xsl:attribute name="height">10mm</xsl:attribute>
+        <xsl:attribute name="content-width">scale-to-fit</xsl:attribute>
+        <xsl:attribute name="content-height">scale-to-fit</xsl:attribute>
+        <xsl:attribute name="scaling">uniform</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="footertable">
         <xsl:attribute name="text-align-last">justify</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="sidetabs"/>

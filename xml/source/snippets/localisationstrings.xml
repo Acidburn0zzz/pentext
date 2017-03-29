@@ -67,6 +67,10 @@
     <translation xml:lang="nl">Kamer van Koophandel</translation>
     <translation xml:lang="en">Chamber of Commerce</translation>
   </string>
+  <string id="page_of">
+    <translation xml:lang="nl">van</translation>
+    <translation xml:lang="en">of</translation>
+  </string>
   <!-- INVOICES -->
   <string id="invoice_no">
     <translation xml:lang="nl">Factuur nr.</translation>

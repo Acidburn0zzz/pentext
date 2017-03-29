@@ -4,17 +4,7 @@
     exclude-result-prefixes="xs" xmlns:fo="http://www.w3.org/1999/XSL/Format"
     version="2.0">
     
-      <xsl:template match="meta">
-        <xsl:variable name="latestVersionNumber">
-            <xsl:for-each select="version_history/version">
-                <xsl:sort select="xs:dateTime(@date)" order="descending"/>
-                <xsl:if test="position() = 1">
-                    <xsl:call-template name="VersionNumber">
-                        <xsl:with-param name="number" select="@number"/>
-                    </xsl:call-template>
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:variable>
+      <xsl:template name="meta">
         <fo:block xsl:use-attribute-sets="graphics-block">
             <fo:external-graphic xsl:use-attribute-sets="logo"/>
         </fo:block>

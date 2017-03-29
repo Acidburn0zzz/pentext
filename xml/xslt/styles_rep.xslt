@@ -27,6 +27,8 @@
         <xsl:attribute name="background-color">orange</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-1" use-attribute-sets="title">
+        <xsl:attribute name="margin-top">2cm</xsl:attribute>
+        <xsl:attribute name="margin-right">2cm</xsl:attribute>
         <xsl:attribute name="font-size">40pt</xsl:attribute>
         <xsl:attribute name="text-align">right</xsl:attribute>
         <xsl:attribute name="break-before">page</xsl:attribute>

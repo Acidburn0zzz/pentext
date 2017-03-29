@@ -46,6 +46,17 @@
 
     <xsl:variable name="CLASSES" select="document('../xslt/styles_rep.xslt')/*/xsl:attribute-set"/>
 
+    <xsl:variable name="latestVersionNumber">
+        <xsl:for-each select="//version_history/version">
+            <xsl:sort select="xs:dateTime(@date)" order="descending"/>
+            <xsl:if test="position() = 1">
+                <xsl:call-template name="VersionNumber">
+                    <xsl:with-param name="number" select="@number"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
+
     <xsl:variable name="latestVersionDate">
         <xsl:for-each select="/*/meta/version_history/version">
             <xsl:sort select="xs:dateTime(@date)" order="descending"/>
