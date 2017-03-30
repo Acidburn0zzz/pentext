@@ -18,6 +18,17 @@
             </fo:block>
         </fo:block>
     </xsl:template>
+    
+    <xsl:template name="section-toc">
+                <fo:table table-layout="fixed" width="9cm">
+                    <fo:table-column column-width="1.8cm"/>
+                    <fo:table-column column-width="6.2cm"/>
+                    <fo:table-column column-width="1cm"/>
+                    <fo:table-body>
+                        <xsl:apply-templates select=".." mode="toc"/>
+                    </fo:table-body>
+                </fo:table>
+    </xsl:template>
 
     <xsl:template match="meta | *[ancestor-or-self::*/@visibility = 'hidden']" mode="toc"/>
 
@@ -52,7 +63,7 @@
                     </fo:basic-link>
                 </fo:block>
             </fo:table-cell>
-            <fo:table-cell text-align-last="justify" xsl:use-attribute-sets="tocCell">
+            <fo:table-cell xsl:use-attribute-sets="tocCell">
                 <fo:block>
                     <fo:basic-link>
                         <xsl:attribute name="internal-destination">
@@ -60,9 +71,6 @@
                         </xsl:attribute>
                         <xsl:call-template name="tocContent_Title"/>
                     </fo:basic-link>
-                    <xsl:text>&#xA0;</xsl:text>
-                    <fo:leader leader-pattern="space" leader-alignment="reference-area"
-                        leader-length.maximum="21cm"/>
                 </fo:block>
             </fo:table-cell>
             <fo:table-cell padding-right="3pt" display-align="after" xsl:use-attribute-sets="tocCell">

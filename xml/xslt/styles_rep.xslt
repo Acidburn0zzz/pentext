@@ -21,13 +21,14 @@
         <xsl:attribute name="font-family">OpenSans</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-0" use-attribute-sets="title">
-        <xsl:attribute name="text-align">center</xsl:attribute>
-        <xsl:attribute name="font-size">16pt</xsl:attribute>
-        <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
-        <xsl:attribute name="background-color">orange</xsl:attribute>
+        <xsl:attribute name="margin-top">4cm</xsl:attribute><!-- Note that it's more in practice because the title starts with an empty line -->
+        <xsl:attribute name="margin-right">2cm</xsl:attribute>
+        <xsl:attribute name="font-size">56pt</xsl:attribute>
+        <xsl:attribute name="text-align">right</xsl:attribute>
+        <xsl:attribute name="color">white</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-1" use-attribute-sets="title">
-        <xsl:attribute name="margin-top">2cm</xsl:attribute>
+        <xsl:attribute name="margin-top">2cm</xsl:attribute><!-- Note that it's more in practice because the title starts with an empty line -->
         <xsl:attribute name="margin-right">2cm</xsl:attribute>
         <xsl:attribute name="font-size">40pt</xsl:attribute>
         <xsl:attribute name="text-align">right</xsl:attribute>
@@ -67,10 +68,9 @@
         <xsl:attribute name="background-color">orange</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="logo">
-        <xsl:attribute name="padding-top">2cm</xsl:attribute>
-        <xsl:attribute name="padding-bottom">3cm</xsl:attribute>
-        <xsl:attribute name="src">url(../graphics/logo.png)</xsl:attribute>
-        <xsl:attribute name="width">70mm</xsl:attribute>
+        <xsl:attribute name="padding-top">4cm</xsl:attribute>
+        <xsl:attribute name="src">url(../graphics/logo_large_whitecaps.png)</xsl:attribute>
+        <xsl:attribute name="width">150mm</xsl:attribute>
         <xsl:attribute name="content-width">scale-to-fit</xsl:attribute>
         <xsl:attribute name="content-height">scale-to-fit</xsl:attribute>
         <xsl:attribute name="scaling">uniform</xsl:attribute>

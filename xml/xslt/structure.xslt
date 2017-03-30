@@ -41,20 +41,29 @@
                 <xsl:with-param name="CLASS" select="$CLASS"/>
             </xsl:call-template>
 
-            <xsl:if test="../.. = /">
-                <fo:marker marker-class-name="tab">
-                    <xsl:value-of select="text()"/>
-                </fo:marker>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="../.. = /">
+                    <!-- Titles that appear on a section cover need to have a marker attached -->
+                    <fo:marker marker-class-name="tab">
+                        <xsl:value-of select="text()"/>
+                    </fo:marker>
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- all other titles need a keep-together-with-next attr -->
+                    <xsl:attribute name="keep-with-next.within-column">always</xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+
             <xsl:choose>
                 <xsl:when test="$EXEC_SUMMARY = true()">
                     <xsl:choose>
-                        <xsl:when test="self::title[parent::appendix]">
+                        <!-- no numbering for appendices (title sheet) -->
+                        <!--<xsl:when test="self::title[parent::appendix]">
                             <fo:inline> Appendix&#160;<xsl:number
-                                    count="appendix[not(@visibility = 'hidden')][@inexecsummary = 'yes']"
-                                    level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>
+                                    count="appendix[not(@visibility = 'hidden')]" level="multiple"
+                                    format="{$AUTO_NUMBERING_FORMAT}"/>
                             </fo:inline>
-                        </xsl:when>
+                        </xsl:when>-->
                         <xsl:when test="ancestor::appendix and not(self::title[parent::appendix])">
                             <fo:inline> App&#160;<xsl:number
                                     count="appendix[not(@visibility = 'hidden')][@inexecsummary = 'yes']"
@@ -77,12 +86,13 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:choose>
-                        <xsl:when test="self::title[parent::appendix]">
+                        <!-- no numbering for appendices (title sheet) -->
+                        <!--<xsl:when test="self::title[parent::appendix]">
                             <fo:inline> Appendix&#160;<xsl:number
                                     count="appendix[not(@visibility = 'hidden')]" level="multiple"
                                     format="{$AUTO_NUMBERING_FORMAT}"/>
                             </fo:inline>
-                        </xsl:when>
+                        </xsl:when>-->
                         <xsl:when test="ancestor::appendix and not(self::title[parent::appendix])">
                             <fo:inline> App&#160;<xsl:number
                                     count="appendix[not(@visibility = 'hidden')]" level="multiple"
@@ -93,7 +103,7 @@
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:if test="not(../.. = /)">
-                                <!-- no numbering for top-level sections -->
+                                <!-- no numbering for top-level sections (title sheet) -->
                                 <fo:inline>
                                     <xsl:number
                                         count="section[not(@visibility = 'hidden')] | finding | non-finding"
@@ -115,16 +125,40 @@
                 <xsl:when test="../.. = /">
                     <xsl:variable name="words" select="tokenize(., '\s')"/>
                     <xsl:for-each select="$words">
-                    <xsl:analyze-string select="." regex="([A|a]nd|[O|o]r|[T|t]he|[O|o]f)">
-                        <xsl:matching-substring>
-                            <xsl:text> </xsl:text><xsl:value-of select="."/>
-                        </xsl:matching-substring>
-                        <xsl:non-matching-substring>
-                            <fo:block/><xsl:value-of select="."/>
-                        </xsl:non-matching-substring>
-                    </xsl:analyze-string>
+                        <!-- should make this into a function; identical operation needed in meta.xslt  -->
+                        <xsl:choose>
+                            <xsl:when
+                                test="
+                                    . = 'And' or
+                                    . = 'and' or
+                                    . = 'Or' or
+                                    . = 'or' or
+                                    . = 'The' or
+                                    . = 'the' or
+                                    . = 'Of' or
+                                    . = 'of' or
+                                    . = 'A' or
+                                    . = 'a'">
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="."/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <fo:block/>
+                                <xsl:value-of select="."/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:for-each>
-                    
+                    <xsl:if test="../@section-toc = 'yes'">
+                        <!-- we need to insert the section ToC as a footnote here because that's the only way XSL-FO will let you stick something to the bottom of the page, and the section ToC needs to grow upwards. Silly but there you go. -->
+                        <fo:footnote>
+                            <fo:inline/>
+                            <fo:footnote-body xsl:use-attribute-sets="section-toc-footnote">
+                                <fo:block xsl:use-attribute-sets="section-tocblock">
+                                    <xsl:call-template name="section-toc"/>
+                                </fo:block>
+                            </fo:footnote-body>
+                        </fo:footnote>
+                    </xsl:if>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:apply-templates/>

@@ -50,20 +50,10 @@
         <xsl:attribute name="background-color">black</xsl:attribute>
         <xsl:attribute name="font-weight">bold</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="title-0" use-attribute-sets="title">
-        <xsl:attribute name="text-align">center</xsl:attribute>
-        <xsl:attribute name="font-size">16pt</xsl:attribute>
-        <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
-        <xsl:attribute name="background-color">orange</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-1" use-attribute-sets="title">
-        
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-2" use-attribute-sets="title">
-        
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-3" use-attribute-sets="title">
-    </xsl:attribute-set>
+    <xsl:attribute-set name="title-0" use-attribute-sets="title"> </xsl:attribute-set>
+    <xsl:attribute-set name="title-1" use-attribute-sets="title"> </xsl:attribute-set>
+    <xsl:attribute-set name="title-2" use-attribute-sets="title"> </xsl:attribute-set>
+    <xsl:attribute-set name="title-3" use-attribute-sets="title"> </xsl:attribute-set>
     <xsl:attribute-set name="title-4" use-attribute-sets="title">
         <xsl:attribute name="margin-bottom">5pt</xsl:attribute>
     </xsl:attribute-set>
@@ -77,10 +67,16 @@
         <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-toc" use-attribute-sets="title-2">
+        
     </xsl:attribute-set>
     <xsl:attribute-set name="img-title">
         <xsl:attribute name="font-style">italic</xsl:attribute>
         <xsl:attribute name="text-align">center</xsl:attribute>
+        <xsl:attribute name="keep-with-previous.within-column">always</xsl:attribute>
+        <xsl:attribute name="keep-together.within-column">always</xsl:attribute>
+        <xsl:attribute name="margin-left">1cm</xsl:attribute>
+        <xsl:attribute name="margin-right">1cm</xsl:attribute>
+        <xsl:attribute name="margin-top">0.5cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="section">
         <xsl:attribute name="margin-bottom">
@@ -98,12 +94,14 @@
     </xsl:attribute-set>
     <xsl:attribute-set name="code" use-attribute-sets="DefaultFont">
         <xsl:attribute name="font-family">LiberationMono</xsl:attribute>
-        <xsl:attribute name="font-size">90%</xsl:attribute>
+        <xsl:attribute name="font-size">85%</xsl:attribute>
         <xsl:attribute name="background-color">#eeeeee</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="code-title" use-attribute-sets="DefaultFont">
         <xsl:attribute name="font-family">LiberationMono</xsl:attribute>
-        <xsl:attribute name="font-size">90%</xsl:attribute>
+        <xsl:attribute name="color">inherit</xsl:attribute>
+        <xsl:attribute name="font-weight">normal</xsl:attribute>
+        <xsl:attribute name="font-size">85%</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="sup" use-attribute-sets="DefaultFont">
         <xsl:attribute name="font-size">60%</xsl:attribute>
@@ -180,15 +178,18 @@
         <xsl:attribute name="margin-right">1.8cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="cover-flow">
-        <xsl:attribute name="background-image">url(../graphics/report_titlesheet.png)</xsl:attribute>
+        <xsl:attribute name="background-image"
+            >url(../graphics/report_titlesheet.png)</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-body-sectioncover">
-        <xsl:attribute name="background-image">url(../graphics/section_titlesheet.png)</xsl:attribute>
+        <xsl:attribute name="background-image"
+            >url(../graphics/section_titlesheet.png)</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-before-content">
         <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">4.2cm</xsl:attribute>
-        <xsl:attribute name="background-image">url(../graphics/gradient_top_gray.png)</xsl:attribute>
+        <xsl:attribute name="background-image"
+            >url(../graphics/gradient_top_gray.png)</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-after-content">
         <xsl:attribute name="precedence">true</xsl:attribute>
@@ -227,7 +228,8 @@
         <xsl:attribute name="margin-right">1cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="coverfooter" use-attribute-sets="footer">
-        <xsl:attribute name="margin-top">7mm</xsl:attribute>
+        <xsl:attribute name="margin-top">5mm</xsl:attribute>
+        <xsl:attribute name="text-align">right</xsl:attribute>
         <xsl:attribute name="line-height">5.5mm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="footerlogo">
@@ -248,9 +250,11 @@
     </xsl:attribute-set>
 
     <!-- graphics -->
+    <xsl:attribute-set name="graphics-block-frontlogo" use-attribute-sets="graphics-block">
+        <xsl:attribute name="break-after">page</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="graphics-block">
         <xsl:attribute name="text-align">center</xsl:attribute>
-        <xsl:attribute name="margin-bottom" select="$small-space"/>
     </xsl:attribute-set>
 
     <!-- tables -->
@@ -274,6 +278,10 @@
         <xsl:attribute name="padding-top">3pt</xsl:attribute>
         <xsl:attribute name="padding-bottom">3pt</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="fwtable">
+        <xsl:attribute name="table-layout">fixed</xsl:attribute>
+        <xsl:attribute name="width">100%</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="table">
         <xsl:attribute name="margin-bottom" select="$small-space"/>
         <xsl:attribute name="border-after-width.conditionality">retain</xsl:attribute>
@@ -284,6 +292,9 @@
         <xsl:attribute name="background-color">#ededed</xsl:attribute>
         <xsl:attribute name="border-color">#e4e4e4</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="th-row">
+        <xsl:attribute name="keep-with-next.within-column">always</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="pieChartTable">
         <xsl:attribute name="table-layout">fixed</xsl:attribute>
     </xsl:attribute-set>
@@ -291,11 +302,13 @@
         <xsl:attribute name="background-color">#ededed</xsl:attribute>
         <xsl:attribute name="border-color">#e4e4e4</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="pieLegendTableCell">
+    <xsl:attribute-set name="pieLegendTableCell" use-attribute-sets="cellmarginreset">
         <xsl:attribute name="padding-left">4pt</xsl:attribute>
-        <xsl:attribute name="padding-right">4pt</xsl:attribute>
     </xsl:attribute-set>
-    
+    <xsl:attribute-set name="cellmarginreset">
+        <xsl:attribute name="start-indent">0</xsl:attribute>
+        <xsl:attribute name="end-indent">0</xsl:attribute>
+    </xsl:attribute-set>
 
     <!-- lists -->
     <xsl:attribute-set name="li">
@@ -306,8 +319,22 @@
     <xsl:attribute-set name="index">
         <xsl:attribute name="break-after">page</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="tocCell">
+    <xsl:attribute-set name="tocCell" use-attribute-sets="cellmarginreset">
         <xsl:attribute name="padding-bottom">1.5mm</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="section-tocblock">
+        <xsl:attribute name="margin-left">8cm</xsl:attribute>
+        <xsl:attribute name="background-color">white</xsl:attribute>
+        <xsl:attribute name="padding-left">1cm</xsl:attribute>
+        <xsl:attribute name="padding-top">0.7cm</xsl:attribute>
+        <xsl:attribute name="padding-bottom">2cm</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="section-toc-footnote">
+        <xsl:attribute name="font-family">LiberationSansNarrow</xsl:attribute>
+        <xsl:attribute name="font-size">10pt</xsl:attribute>
+        <xsl:attribute name="color">black</xsl:attribute>
+        <xsl:attribute name="font-weight">normal</xsl:attribute>
+        <xsl:attribute name="text-align">left</xsl:attribute>
     </xsl:attribute-set>
 
     <!-- Contact -->

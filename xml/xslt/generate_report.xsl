@@ -84,6 +84,8 @@
                 <fo:root xsl:use-attribute-sets="root-common">
 
                     <xsl:call-template name="layout-master-set"/>
+                    
+        <xsl:call-template name="FrontMatter"/>
                     <xsl:call-template name="Content"/>
 
                 </fo:root>

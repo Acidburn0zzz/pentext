@@ -115,7 +115,7 @@
             </xsl:for-each>
         </xsl:variable>
         <fo:block>
-            <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="table borders">
+            <fo:table xsl:use-attribute-sets="fwtable table borders" keep-together.within-column="always">
                 <xsl:call-template name="checkIfLast"/>
                 <fo:table-column column-width="proportional-column-width(12)"
                     xsl:use-attribute-sets="borders"/>
@@ -126,7 +126,7 @@
                 <fo:table-column column-width="proportional-column-width(16)"
                     xsl:use-attribute-sets="borders"/>
                 <fo:table-body>
-                    <fo:table-row xsl:use-attribute-sets="bg-orange">
+                    <fo:table-row xsl:use-attribute-sets="bg-orange th-row">
                         <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>ID</fo:block>
                         </fo:table-cell>
@@ -213,7 +213,7 @@
         <xsl:variable name="Ref" select="@Ref"/>
         <xsl:variable name="status" select="@status"/>
         <fo:block>
-            <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="table borders">
+            <fo:table xsl:use-attribute-sets="fwtable table borders">
                 <xsl:call-template name="checkIfLast"/>
                 <fo:table-column column-width="proportional-column-width(12)"
                     xsl:use-attribute-sets="borders"/>
@@ -222,7 +222,7 @@
                 <fo:table-column column-width="proportional-column-width(66)"
                     xsl:use-attribute-sets="borders"/>
                 <fo:table-body>
-                    <fo:table-row xsl:use-attribute-sets="bg-orange borders">
+                    <fo:table-row xsl:use-attribute-sets="bg-orange th-row" keep-with-next.within-column="always">
                         <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>ID</fo:block>
                         </fo:table-cell>
@@ -302,7 +302,7 @@
 
     <xsl:template match="generate_testteam">
         <fo:block>
-            <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="borders">
+            <fo:table xsl:use-attribute-sets="fwtable borders">
                 <fo:table-column column-width="proportional-column-width(25)"
                     xsl:use-attribute-sets="borders"/>
                 <fo:table-column column-width="proportional-column-width(75)"
@@ -360,7 +360,7 @@
                 </xsl:call-template>
             </fo:block>
             <fo:block>
-                <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="borders">
+                <fo:table xsl:use-attribute-sets="fwtable borders">
                     <fo:table-column column-width="proportional-column-width(50)"
                         xsl:use-attribute-sets="borders"/>
                     <fo:table-column column-width="proportional-column-width(50)"
@@ -577,13 +577,13 @@
         <xsl:variable name="no_entries" select="count($pieTable/pieEntry)"/>
         <xsl:for-each select="$pieTable">
             <fo:block xsl:use-attribute-sets="p">
-                <fo:table margin-top="15px">
+                <fo:table margin-top="15px" xsl:use-attribute-sets="fwtable">
                     <!-- need some margin to make space for percentages that can't fit in the pie... -->
                     <fo:table-column column-width="{$pieHeight + 50}px"/>
                     <fo:table-column/>
                     <fo:table-body>
                         <fo:table-row keep-together.within-column="always">
-                            <fo:table-cell xsl:use-attribute-sets="td">
+                            <fo:table-cell xsl:use-attribute-sets="td cellmarginreset">
                                 <fo:block>
                                     <fo:instream-foreign-object
                                         xmlns:svg="http://www.w3.org/2000/svg">
@@ -623,8 +623,8 @@
                             <!-- PIE CHART LEGEND -->
                             <fo:table-cell>
                                 <fo:block>
-                                    <fo:table xsl:use-attribute-sets="pieLegendTable">
-                                        <fo:table-column column-width="20px"/>
+                                    <fo:table xsl:use-attribute-sets="pieLegendTable fwtable">
+                                        <fo:table-column column-width="22px"/>
                                         <fo:table-column/>
                                         <fo:table-body>
                                             <xsl:for-each select="$pieTable/pieEntry">

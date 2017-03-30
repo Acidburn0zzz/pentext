@@ -186,6 +186,7 @@
       </xs:sequence>
       <xs:attribute name="border" use="optional" type="xs:integer"/>
       <xs:attribute name="cols" use="optional" type="xs:string"/>
+      <xs:attribute name="width" use="optional" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="tr">

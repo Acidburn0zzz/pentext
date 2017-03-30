@@ -48,14 +48,12 @@
                     xsl:use-attribute-sets="region-before-content"/>
                 <fo:region-after region-name="region-after-content-even"
                     xsl:use-attribute-sets="region-after-content"/>
-                <fo:region-end region-name="region-end-content"
-                    xsl:use-attribute-sets="region-end-content"/>
             </fo:simple-page-master>
             <!-- sequence master -->
             <fo:page-sequence-master master-name="Cover">
                 <fo:repeatable-page-master-alternatives>
                     <fo:conditional-page-master-reference master-reference="Cover-Cover"
-                        page-position="first" blank-or-not-blank="not-blank"/>
+                        page-position="first"/>
                     <fo:conditional-page-master-reference master-reference="Cover-Content"
                         page-position="any"/>
                 </fo:repeatable-page-master-alternatives>
@@ -91,15 +89,15 @@
     <xsl:template name="page_footer">
         <fo:static-content flow-name="region-after-content-odd" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer">
-                <fo:table table-layout="fixed" width="19cm" margin-top="10.5mm">
+                <fo:table table-layout="fixed" width="18cm" margin-top="10.5mm">
                     <fo:table-column column-width="2cm"/>
-                    <fo:table-column column-width="17cm"/>
+                    <fo:table-column column-width="16cm"/>
                     <fo:table-body>
                         <fo:table-row>
-                            <fo:table-cell>
+                            <fo:table-cell xsl:use-attribute-sets="cellmarginreset">
                                 <fo:block>&#160;</fo:block>
                             </fo:table-cell>
-                            <fo:table-cell display-align="center">
+                            <fo:table-cell display-align="center" xsl:use-attribute-sets="cellmarginreset">
                                 <fo:block xsl:use-attribute-sets="footertable">
                                     <xsl:value-of select="//meta/company/coc"/>
                                     <fo:leader leader-pattern="space"/>
@@ -120,17 +118,17 @@
         </fo:static-content>
         <fo:static-content flow-name="region-after-content-even" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer">
-                <fo:table table-layout="fixed" width="19cm" margin-top="7mm">
+                <fo:table table-layout="fixed" width="18cm" margin-top="7mm">
                     <fo:table-column column-width="2cm"/>
-                    <fo:table-column column-width="17cm"/>
+                    <fo:table-column column-width="16cm"/>
                     <fo:table-body>
                         <fo:table-row>
-                            <fo:table-cell>
+                            <fo:table-cell xsl:use-attribute-sets="cellmarginreset">
                                 <fo:block>
                                     <fo:external-graphic xsl:use-attribute-sets="footerlogo"/>
                                 </fo:block>
                             </fo:table-cell>
-                            <fo:table-cell display-align="center">
+                            <fo:table-cell display-align="center" xsl:use-attribute-sets="cellmarginreset">
                                 <fo:block xsl:use-attribute-sets="footertable">
                                     <xsl:value-of select="//meta/company/coc"/>
                                     <fo:leader leader-pattern="space"/>
@@ -178,29 +176,33 @@
         </fo:static-content>
     </xsl:template>
 
-    <xsl:template name="Content">
-        <fo:page-sequence master-reference="Cover">
+    <xsl:template name="FrontMatter">
+        <fo:page-sequence master-reference="Cover" force-page-count="end-on-even">
             <xsl:call-template name="cover_footer"/>
             <xsl:call-template name="page_header"/>
             <xsl:call-template name="meta_footer"/>
             <fo:flow flow-name="cover-flow" xsl:use-attribute-sets="DefaultFont">
                 <fo:block>
-                    <xsl:call-template name="meta"/>
-                    <xsl:if test="generate_index">
-                        <!-- moet dit of slaat ie 'm sowieso wel over als er geen generate_index is? -->
+                    <xsl:apply-templates select="/*/meta"/>
+                    <xsl:apply-templates select="/*/generate_index"/>
+                    <!--<xsl:if test="generate_index">
+                        <!-\- moet dit of slaat ie 'm sowieso wel over als er geen generate_index is? -\->
                         <xsl:apply-templates select="generate_index"/>
-                    </xsl:if>
+                    </xsl:if>-->
                 </fo:block>
             </fo:flow>
         </fo:page-sequence>
+    </xsl:template>
+    
+    <xsl:template name="Content">
         <xsl:for-each select="/*/section | /*/appendix">
-            <fo:page-sequence master-reference="Sections">
+            <fo:page-sequence master-reference="Sections" force-page-count="end-on-even">
                 <xsl:call-template name="page_header"/>
                 <xsl:call-template name="page_footer"/>
                 <xsl:call-template name="page_tab"/>
                 <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
                     <fo:block>
-                        <xsl:apply-templates/>
+                        <xsl:apply-templates select="."/>
                     </fo:block>
                     <xsl:if test="not(following-sibling::*)">
                         <fo:block id="EndOfDoc"/>
