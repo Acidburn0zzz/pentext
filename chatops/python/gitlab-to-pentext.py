@@ -130,6 +130,13 @@ class NonFinding(BaseItem):
     def __init__(self):
         BaseItem.__init__(self, 'non-finding')
 
+    def __str__(self):
+        """
+        Return a XML version of the class
+        """
+        self.root_open = '<non-finding id="{0}"\n'.format(self.identifier)
+        return BaseItem.__str__(self)
+
 
 def from_issue(issue):
     """
@@ -148,6 +155,7 @@ def from_issue(issue):
                     item.technicaldescription += u'{0}\n'.format(convert_text(note.body))
     elif 'non-finding' in [x.lower() for x in issue.labels]:
         item = NonFinding()
+        item.content = convert_text(issue.description)
         for note in [x for x in reversed(issue.notes.list()) if not x.system]:
             item.content += convert_text(note.body) + '\n'
     else:
@@ -194,11 +202,14 @@ def list_issues(gitserver, options):
     """
     Lists all issues for options['issues']
     """
-    for issue in gitserver.project_issues.list(project_id=options['issues'],
-                                               per_page=999):
-        if issue.state == 'closed' and not options['closed']:
-            continue
-        add_item(issue, options)
+    try:
+        for issue in gitserver.project_issues.list(project_id=options['issues'],
+                                                   per_page=999):
+            if issue.state == 'closed' and not options['closed']:
+                continue
+            add_item(issue, options)
+    except gitlab.exceptions.GitlabListError as exception:
+        print_error('Could not access items ({0})'.format(exception))
 
 
 def list_projects(gitserver):
@@ -244,7 +255,7 @@ the Free Software Foundation, either version 3 of the License, or
     return vars(parser.parse_args())
 
 
-def preflight_checks():
+def preflight_checks(options):
     """
     Checks if all tools are there.
     Exits with 0 if everything went okilydokily.
@@ -255,9 +266,10 @@ def preflight_checks():
         gitserver.auth()
     except gitlab.config.GitlabDataError as exception:
         print_error('could not connect {0}'.format(exception), -1)
-    for path in ('findings', 'non-findings'):
-        if not os.path.isdir(path):
-            print_error('Path {0} does not exist: Is this a Pentext repository ?'.format(path), -1)
+    if not options['projects']:
+        for path in ('findings', 'non-findings'):
+            if not os.path.isdir(path):
+                print_error('Path {0} does not exist: Is this a Pentext repository ?'.format(path), -1)
     return gitserver
 
 
@@ -299,7 +311,7 @@ def valid_filename(filename):
     """
     result = ''
     for char in filename.strip():
-        if char in ['*', ':', '/', '.', '\\', ' ', '[', ']', '(', ')', '\'', '\"']:
+        if char in ['*', ':', '/', '.', '\\', ' ', '[', ']', '(', ')', '\'', '\"', '`']:
             if len(char) and not result.endswith('-'):
                 result += '-'
         else:
@@ -312,7 +324,7 @@ def main():
     The main program.
     """
     options = parse_arguments()
-    gitserver = preflight_checks()
+    gitserver = preflight_checks(options)
     if options['projects']:
         list_projects(gitserver)
     if options['issues']:

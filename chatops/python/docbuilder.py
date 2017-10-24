@@ -46,7 +46,7 @@ def parse_arguments():
         description=textwrap.dedent('''\
 Builds PDF files from (intermediate fo and) XML files.
 
-Copyright (C) 2015-2016  Radically Open Security (Peter Mosmans)
+Copyright (C) 2015-2017  Radically Open Security (Peter Mosmans)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -56,13 +56,13 @@ the Free Software Foundation, either version 3 of the License, or
                         help='overwrite output file if it already exists')
     parser.add_argument('-date', action='store',
                         help='the invoice date')
-    parser.add_argument('-execsummary', action='store',
-                        help="""create an executive summary as well as a report (true/false). 
+    parser.add_argument('-execsummary', action='store_true',
+                        help="""create an executive summary as well as a report (true/false).
                         Default: false """)
     parser.add_argument('--fop-config', action='store',
-                        default='/etc/docbuilder/rosfop.xconf',
+                        default='/etc/docbuilder/fop.xconf',
                         help="""fop configuration file (default
-                        /etc/docbuilder/rosfop.xconf""")
+                        /etc/docbuilder/fop.xconf""")
     parser.add_argument('-f', '--fop', action='store',
                         default='../target/report.fo',
                         help="""intermediate fop output file (default:
@@ -86,6 +86,8 @@ the Free Software Foundation, either version 3 of the License, or
                         default='../target/report-latest.pdf',
                         help="""output file name (default:
                         ../target/report-latest.pdf""")
+    parser.add_argument('--tag', action='store_true',
+                        help="""Modify GITREV with git commit hash""")
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='increase output verbosity')
     parser.add_argument('-w', '--warnings', action='store_true',
@@ -122,15 +124,18 @@ def change_tag(fop):
     Replaces GITREV in document by git commit shorttag.
     """
     cmd = ['git', 'log', '--pretty=format:%h', '-n', '1']
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-    shorttag, _stderr = process.communicate()
-    if not process.returncode:
-        fop_file = open(fop).read()
-        if GITREV in fop_file:
-            fop_file = fop_file.replace(GITREV, shorttag)
-            with open(fop, 'w') as new_file:
-                new_file.write(fop_file)
-            print('[+] Embedding git version information into document')
+    try:
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        shorttag, _stderr = process.communicate()
+        if not process.returncode:
+            fop_file = open(fop).read()
+            if GITREV in fop_file:
+                fop_file = fop_file.replace(GITREV, shorttag)
+                with open(fop, 'w') as new_file:
+                    new_file.write(fop_file)
+                print('[+] Embedding git version information into document')
+    except OSError:
+        print('[-] could not execute git - is git installed ?')
 
 
 def to_fo(options):
@@ -146,7 +151,7 @@ def to_fo(options):
     if options['date']:
         cmd.append('DATE=' + options['date'])
     if options['execsummary']:
-        cmd.append('EXEC_SUMMARY=' + options['execsummary'])
+        cmd.append('EXEC_SUMMARY=true')
     process = subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
     print_output(stdout, stderr)
@@ -154,7 +159,8 @@ def to_fo(options):
         print_exit('[-] Error creating fo file from XML input',
                    process.returncode)
     else:
-        change_tag(options['fop'])
+        if options['tag']:
+            change_tag(options['fop'])
     return True
 
 
@@ -228,7 +234,7 @@ def main():
             except OSError as exception:
                 print_exit('[-] ERR: {0}'.format(exception.strerror),
                            exception.errno)
-        if options['execsummary'] == 'true':  # we're generating a summary as well as a report
+        if options['execsummary'] == True:  # we're generating a summary as well as a report
             report_output = options['output']
             verboseprint('generating additional executive summary')
             output_dir = os.path.dirname(options['output'])

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section>
-  <!-- section with an overview of ROS activities -->
   <title>Project Overview</title>
   <p>
     <company_short/> will perform <company_svc_long/> for <client_short/>
@@ -20,7 +19,7 @@
     <company_short/> will test for the presence of the most common
     vulnerabilities, using both publicly available vulnerability scanning
     tools and manual testing. <company_short/> shall perform a
-    <p_duration/>-day (<p_mandays/>-manday), <p_boxtype/>, intrusive test via the
+    <p_duration/>-day (<p_persondays/>-personday), <p_boxtype/>, intrusive test via the
     internet.
   </p>
 

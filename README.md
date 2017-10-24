@@ -49,7 +49,7 @@ Besides the reports and quotations, generic documents can also be created.
 Those can be found [here](xml/doc/examples)
 
 
-## The editor
+## PenText Visual Editor (Beta)
 The pentext framework is shipped with an editor that facilitates the redacting of findings and non-findings. As the pentext framework relies heavily on xml to be able to generate documents,
 the writer(s) of these documents are faced with an extra challenge. Not only do they have to worry about content, now the structure of the document is also of importance.
 In practice this has led to annoying errors like file-inclusion errors and tag mismatch errors.
@@ -81,5 +81,8 @@ When you click on the arrow in the file, an editor opens up and all the fields a
 A file is outlined red when the structure of the file does not match the framework's specification. This means that when the file is selected, not all fields can be filled. It is advised to copy+paste from the raw file view (click file) to the fields.
 
 When a file is saved, the correct structure is used and when the directory is updated, the file should show up green and should be handled by the pentext system without hassle.
+
+**Please keep in mind that this Visual Editor is in Beta, and may still contain some bugs.  It is NOT necessary to use the Visual Editor to make use of the OWASP PenText framework.**
+
 
 

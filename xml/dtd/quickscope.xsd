@@ -9,7 +9,7 @@
         <xs:element ref="client"/>
         <xs:element ref="meta"/>
         <xs:element ref="third_party" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element ref="pentest_info"/>
+        <xs:element ref="activityinfo"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -19,7 +19,6 @@
         <xs:element ref="offer_language"/>
         <xs:element ref="offer_type"/>
         <xs:element ref="requested_service"/>
-        <xs:element ref="targets"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -33,16 +32,18 @@
         <xs:element ref="short_name"/>
         <xs:element ref="waiver_rep"/>
         <xs:element ref="address"/>
+        <xs:element ref="postal_code"/>
         <xs:element ref="city"/>
         <xs:element ref="country"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="pentest_info">
+  <xs:element name="activityinfo">
     <xs:complexType>
       <xs:sequence>
+        <xs:element ref="targets"/>
         <xs:element ref="days"/>
-        <xs:element ref="mandays"/>
+        <xs:element ref="persondays"/>
         <xs:element ref="nature"/>
         <xs:element ref="type"/>
         <xs:element ref="planning"/>
@@ -54,15 +55,17 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="days" type="xs:integer"/>
-  <xs:element name="planning" type="xs:NCName"/>
-  <xs:element name="delivery" type="xs:NCName"/>
+  <xs:element name="delivery">
+    <xs:simpleType>
+      <xs:union memberTypes="xs:date xs:string"/>
+    </xs:simpleType>
+  </xs:element>
   <xs:element name="codeaudit">
     <xs:complexType>
       <xs:attribute name="perform" use="required" type="xs:NCName"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="application_name" type="xs:NCName"/>
-  <xs:element name="rate" type="xs:integer"/>
   
   <xs:complexType name="block" mixed="true">
     <xs:choice maxOccurs="unbounded">

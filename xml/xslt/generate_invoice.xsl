@@ -5,20 +5,6 @@
 
 
     <xsl:import href="pages.xslt"/>
-    <!--<xsl:import href="meta.xslt"/>
-    <xsl:import href="toc.xslt"/>
-    <xsl:import href="structure.xslt"/>
-    <xsl:import href="att-set.xslt"/>
-    <xsl:import href="block.xslt"/>
-    <xsl:import href="findings.xslt"/>
-    <xsl:import href="auto.xslt"/>
-    <xsl:import href="table.xslt"/>
-    <xsl:import href="lists.xslt"/>
-    <xsl:import href="inline.xslt"/>
-    <xsl:import href="graphics.xslt"/>
-    <xsl:import href="generic.xslt"/>
-    <xsl:import href="numbering.xslt"/>
-    <xsl:import href="waiver.xslt"/>-->
 
     <xsl:include href="styles_inv.xslt"/>
     <xsl:include href="localisation.xslt"/>
@@ -52,19 +38,21 @@
         <!-- Invoice is generated straight from offerte -->
         <fo:root>
             <xsl:call-template name="layout-master-set"/>
-            <xsl:call-template name="Content"/>
+            <xsl:call-template name="Content">
+                        <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
+                    </xsl:call-template>
         </fo:root>
     </xsl:template>
 
     <!-- CONTENT -->
     <xsl:template name="invoice_from_offerte">
-        <xsl:variable name="fee" select="/offerte/meta/pentestinfo/fee * 1"/>
+        <xsl:variable name="fee" select="/offerte/meta/activityinfo/fee * 1"/>
         <xsl:variable name="vat" select="$fee div 100 * 21"/>
         <xsl:variable name="denomination">
             <xsl:choose>
-                <xsl:when test="/offerte/meta/pentestinfo/fee/@denomination = 'eur'">€</xsl:when>
-                <xsl:when test="/offerte/meta/pentestinfo/fee/@denomination = 'gbp'">£</xsl:when>
-                <xsl:when test="/offerte/meta/pentestinfo/fee/@denomination = 'usd'">$</xsl:when>
+                <xsl:when test="/offerte/meta/activityinfo/fee/@denomination = 'eur'">€</xsl:when>
+                <xsl:when test="/offerte/meta/activityinfo/fee/@denomination = 'gbp'">£</xsl:when>
+                <xsl:when test="/offerte/meta/activityinfo/fee/@denomination = 'usd'">$</xsl:when>
             </xsl:choose>
         </xsl:variable>
         <xsl:call-template name="invoiceStart">
@@ -73,7 +61,7 @@
             />
         </xsl:call-template>
         <xsl:variable name="serviceDescription">
-            <xsl:value-of select="/offerte/meta/pentestinfo/duration"/><xsl:text>-</xsl:text><xsl:call-template name="getString"><xsl:with-param
+            <xsl:value-of select="/offerte/meta/activityinfo/duration"/><xsl:text>-</xsl:text><xsl:call-template name="getString"><xsl:with-param
                                         name="stringID" select="'invoice_days'"
                                     /></xsl:call-template>&#160;<xsl:value-of
                                     select="/offerte/meta/offered_service_short"
@@ -159,7 +147,8 @@
         </xsl:variable>
         <xsl:call-template name="invoiceStart">
             <xsl:with-param name="INVOICE_NO" select="$INVOICE_NO"/>
-            <xsl:with-param name="DATE" select="$DATE"/>
+            <xsl:with-param name="DATE" select="format-date($DATE, '[MNn] [D1], [Y]', 'en', (), ())"
+            />
         </xsl:call-template>
         <fo:block>
             <fo:table width="100%" table-layout="fixed"
@@ -214,9 +203,9 @@
                     </xsl:for-each>
                     <!-- TODO -->
                     <xsl:for-each-group select="servicesdelivered/service | additionalcosts/cost"
-                        group-by="fee/@vat[. = 'yes']">
+                        group-by="fee">
                         <xsl:variable name="vat">
-                            <xsl:value-of select="sum(current-group()/fee) div 100 * 21"/>
+                            <xsl:value-of select="sum(current-group()/fee[@vat = 'yes']) div 100 * 21"/>
                         </xsl:variable>
                         <xsl:variable name="total">
                             <xsl:value-of select="sum(current-group()/fee) + $vat"/>

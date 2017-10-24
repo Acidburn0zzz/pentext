@@ -4,9 +4,10 @@
     exclude-result-prefixes="xs my" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
 
     <xsl:template match="section | appendix | finding | non-finding | annex">
+        <xsl:param name="execsummary" tunnel="yes"/>
         <xsl:if test="not(@visibility = 'hidden')">
             <xsl:choose>
-                <xsl:when test="$EXEC_SUMMARY = true()">
+                <xsl:when test="$execsummary = true()">
                     <xsl:if test="ancestor-or-self::*/@inexecsummary = 'yes'">
                         <fo:block xsl:use-attribute-sets="section">
                             <xsl:if test="self::appendix or self::annex">
@@ -29,6 +30,7 @@
     </xsl:template>
 
     <xsl:template match="title[not(parent::biblioentry)]">
+        <xsl:param name="execsummary" tunnel="yes"/>
         <xsl:variable name="LEVEL" select="count(ancestor::*) - 1"/>
         <xsl:variable name="CLASS">
             <!-- use title-x for all levels -->
@@ -55,13 +57,13 @@
             </xsl:choose>
 
             <xsl:choose>
-                <xsl:when test="$EXEC_SUMMARY = true()">
+                <xsl:when test="$execsummary = true()">
                     <xsl:choose>
                         <!-- no numbering for appendices (title sheet) -->
                         <!--<xsl:when test="self::title[parent::appendix]">
                             <fo:inline> Appendix&#160;<xsl:number
-                                    count="appendix[not(@visibility = 'hidden')]" level="multiple"
-                                    format="{$AUTO_NUMBERING_FORMAT}"/>
+                                    count="appendix[not(@visibility = 'hidden')][@inexecsummary = 'yes']"
+                                    level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>
                             </fo:inline>
                         </xsl:when>-->
                         <xsl:when test="ancestor::appendix and not(self::title[parent::appendix])">
@@ -120,47 +122,8 @@
                 <xsl:apply-templates select=".." mode="number"/>
                 <xsl:text> &#8212; </xsl:text>
             </xsl:if>
-            <xsl:choose>
-                <!-- First level section titles are on their own page and need to be broken down -->
-                <xsl:when test="../.. = /">
-                    <xsl:variable name="words" select="tokenize(., '\s')"/>
-                    <xsl:for-each select="$words">
-                        <!-- should make this into a function; identical operation needed in meta.xslt  -->
-                        <xsl:choose>
-                            <xsl:when
-                                test="
-                                    . = 'And' or
-                                    . = 'and' or
-                                    . = 'Or' or
-                                    . = 'or' or
-                                    . = 'The' or
-                                    . = 'the' or
-                                    . = 'Of' or
-                                    . = 'of' or
-                                    . = 'A' or
-                                    . = 'a'">
-                                <xsl:text> </xsl:text>
-                                <xsl:value-of select="."/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <fo:block/>
-                                <xsl:value-of select="."/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:for-each>
-                    <xsl:if test="../@section-toc = 'yes'">
-                        <!-- we need to insert the section ToC as a footnote here because that's the only way XSL-FO will let you stick something to the bottom of the page, and the section ToC needs to grow upwards. Silly but there you go. -->
-                        <fo:footnote>
-                            <fo:inline/>
-                            <fo:footnote-body xsl:use-attribute-sets="section-toc-footnote">
-                                <fo:block xsl:use-attribute-sets="section-tocblock">
-                                    <xsl:call-template name="section-toc"/>
-                                </fo:block>
-                            </fo:footnote-body>
-                        </fo:footnote>
-                    </xsl:if>
-                </xsl:when>
-                <xsl:otherwise>
+            
+            <xsl:call-template name="prependNumber"/>
                     <xsl:apply-templates/>
                 </xsl:otherwise>
             </xsl:choose>

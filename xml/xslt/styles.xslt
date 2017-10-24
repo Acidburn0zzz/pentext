@@ -33,6 +33,11 @@
     <xsl:attribute-set name="TableFont" use-attribute-sets="DefaultFont">
         <xsl:attribute name="font-size">10pt</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="PieFont">
+        <xsl:attribute name="font-family">LiberationSansNarrow</xsl:attribute>
+        <xsl:attribute name="font-size">10pt</xsl:attribute>
+        <xsl:attribute name="color">black</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="TinyFont" use-attribute-sets="DefaultFont">
         <xsl:attribute name="font-size">8pt</xsl:attribute>
     </xsl:attribute-set>
@@ -46,9 +51,8 @@
         <xsl:attribute name="font-weight">bold</xsl:attribute>
     </xsl:attribute-set>-->
     <xsl:attribute-set name="errortext">
-        <xsl:attribute name="color">red</xsl:attribute>
+        <xsl:attribute name="color">orange</xsl:attribute>
         <xsl:attribute name="background-color">black</xsl:attribute>
-        <xsl:attribute name="font-weight">bold</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-0" use-attribute-sets="title"> </xsl:attribute-set>
     <xsl:attribute-set name="title-1" use-attribute-sets="title"> </xsl:attribute-set>

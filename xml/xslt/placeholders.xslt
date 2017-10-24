@@ -2,6 +2,22 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:my="http://radical.sexy" exclude-result-prefixes="xs my" version="2.0">
+    
+    <xsl:template name="getDenomination">
+        <xsl:param name="placeholderElement" as="node()" select="/"/>
+        <xsl:choose>
+            <xsl:when test="$placeholderElement/ancestor-or-self::*/@denomination = 'eur'">€</xsl:when>
+            <xsl:when test="$placeholderElement/ancestor-or-self::*/@denomination = 'usd'">$</xsl:when>
+            <xsl:when test="$placeholderElement/ancestor-or-self::*/@denomination = 'gbp'">£</xsl:when>
+            <!--<xsl:otherwise>
+                <xsl:when test="$placeholderElement/ancestor::*/@denomination = 'eur'">€</xsl:when>
+                <xsl:when test="$placeholderElement/ancestor::*/@denomination = 'usd'">$</xsl:when>
+                <xsl:when test="$placeholderElement/ancestor::*/@denomination = 'gbp'">£</xsl:when>
+            </xsl:otherwise>-->
+            <xsl:otherwise><fo:inline xsl:use-attribute-sets="errortext">WARNING: NO DENOMINATION FOUND</fo:inline></xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     <!-- PLACEHOLDERS -->
     <xsl:template match="client_long">
         <xsl:param name="placeholderElement" select="/*/meta//client/full_name"/>
@@ -33,6 +49,12 @@
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
+    <xsl:template match="client_postal_code">
+        <xsl:param name="placeholderElement" select="/*/meta//client/postal_code"/>
+        <xsl:call-template name="checkPlaceholder">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+    </xsl:template>
     <xsl:template match="client_legal_rep">
         <xsl:param name="placeholderElement" select="/*/meta//client/legal_rep"/>
         <xsl:call-template name="checkPlaceholder">
@@ -59,7 +81,8 @@
     </xsl:template>
     <xsl:template match="client_rate">
         <xsl:param name="roleTitle" select="@title"/>
-        <xsl:param name="placeholderElement" select="/*/meta//client/rates/rate[@title=$roleTitle]"/>
+        <xsl:param name="placeholderElement"
+            select="/*/meta//client/rates/rate[@title = $roleTitle]"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
@@ -134,52 +157,60 @@
     </xsl:template>
     <xsl:template match="t_app">
         <xsl:param name="placeholderElement"
-            select="/offerte/meta/pentestinfo/target_application | /pentest_report/meta/pentestinfo/target_application"/>
+            select="/offerte/meta/activityinfo/target_application | /pentest_report/meta/activityinfo/target_application"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template match="t_app_producer">
         <xsl:param name="placeholderElement"
-            select="/offerte/meta/pentestinfo/target_application_producer | /pentest_report/meta/pentestinfo/target_application_producer"/>
+            select="/offerte/meta/activityinfo/target_application_producer | /pentest_report/meta/activityinfo/target_application_producer"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template match="p_duration">
-        <xsl:param name="placeholderElement" select="/*/meta/pentestinfo/duration"/>
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/duration"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="p_mandays">
-        <xsl:param name="placeholderElement" select="/*/meta/pentestinfo/mandays"/>
+    <xsl:template match="p_persondays">
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/persondays"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template match="p_boxtype">
-        <xsl:param name="placeholderElement" select="/*/meta/pentestinfo/type"/>
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/type"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template match="p_fee">
-        <xsl:param name="placeholderElement" select="/*/meta/pentestinfo/fee"/>
-        <xsl:value-of select="$denomination"/>
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/fee"/>
+        <xsl:call-template name="getDenomination">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
         <xsl:text>&#160;</xsl:text>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="p_testingduration">
-        <xsl:param name="placeholderElement" select="/*/meta/pentestinfo/test_planning"/>
+    <xsl:template match="p_startdate">
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/planning/start"/>
+        <xsl:call-template name="checkPlaceholder">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="p_enddate">
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/planning/end"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
     <xsl:template match="p_reportdue">
-        <xsl:param name="placeholderElement" select="/*/meta/pentestinfo/report_due"/>
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/report_due"/>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
@@ -216,7 +247,7 @@
         <xsl:value-of select="my:calculatePeriod($endDate, $startDate)"/>
     </xsl:template>
     <xsl:template match="contract_total_fee">
-        <xsl:value-of select="$denomination"/>
+        <xsl:call-template name="getDenomination"/>
         <xsl:text>&#160;</xsl:text>
         <xsl:value-of select="$total_fee"/>
         <!-- no need to check for existence as it's a calculation of two checked values below -->
@@ -301,7 +332,9 @@
     </xsl:template>
     <xsl:template match="contractor_hourly_fee">
         <xsl:param name="placeholderElement" select="/contract/meta/contractor/hourly_fee"/>
-        <xsl:value-of select="$denomination"/>
+        <xsl:call-template name="getDenomination">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
         <xsl:text>&#160;</xsl:text>
         <xsl:call-template name="checkPlaceholder">
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
@@ -345,6 +378,50 @@
             <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
         </xsl:call-template>
     </xsl:template>
+    
+    <xsl:template match="ir_ora_rate">
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/organizational_readiness_assessment/rate"/>
+        <xsl:call-template name="getDenomination">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+        <xsl:text>&#160;</xsl:text>
+        <xsl:call-template name="checkPlaceholder">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="ir_sim_rate">
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/security_incident_management/rate"/>
+        <xsl:call-template name="getDenomination">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+        <xsl:text>&#160;</xsl:text>
+        <xsl:call-template name="checkPlaceholder">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+    </xsl:template>
+    <xsl:template match="ir_taa_rate">
+        <xsl:param name="placeholderElement" select="/*/meta/activityinfo/technical_artefact_analysis/rate"/>
+        <xsl:call-template name="getDenomination">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+        <xsl:text>&#160;</xsl:text>
+        <xsl:call-template name="checkPlaceholder">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="finding_count">
+        <xsl:param name="threatLevel" select="@threatLevel"/>
+        <xsl:choose>
+            <xsl:when test="@threatLevel">
+                <xsl:value-of select="count(//finding[@threatLevel = $threatLevel])"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="count(//finding)"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     <xsl:template name="checkPlaceholder">
         <xsl:param name="placeholderElement" select="/"/>
         <xsl:param name="caps" select="'none'"/>
@@ -353,20 +430,29 @@
                 <!-- placeholder exists and contains text -->
                 <xsl:choose>
                     <xsl:when test="self::client_rate">
-                        <xsl:value-of select="$denomination"/>
+                        <xsl:call-template name="getDenomination">
+            <xsl:with-param name="placeholderElement" select="$placeholderElement"/>
+        </xsl:call-template>
                         <xsl:text>&#160;</xsl:text>
                         <xsl:value-of select="$placeholderElement"/>
                     </xsl:when>
-                    <xsl:when test="self::p_fee or self::contractor_hourly_fee">
-                        <!-- pretty numbering for fee -->
+                    <!-- PRETTY FORMATTING FOR AMOUNTS OF MONEY -->
+                    <xsl:when test="(self::p_fee or self::contractor_hourly_fee or self::ir_ora_rate) and string($placeholderElement) castable as xs:float">
                         <xsl:variable name="fee" select="$placeholderElement * 1"/>
                         <xsl:number value="$fee" grouping-separator="," grouping-size="3"/>
                     </xsl:when>
-                    <xsl:when test="self::contract_end_date or self::contract_start_date or self::generate_raterevisiondate">
+                    <!-- PRETTY FORMATTING FOR DATES -->
+                    <xsl:when
+                        test="(self::contract_end_date or self::contract_start_date or self::generate_raterevisiondate or self::p_startdate or self::p_enddate) and string($placeholderElement) castable as xs:date">
                         <!-- pretty printing for date -->
                         <xsl:value-of
                             select="format-date($placeholderElement, '[MNn] [D1], [Y]', 'en', (), ())"
                         />
+                    </xsl:when>
+                    <xsl:when
+                        test="(self::contract_end_date or self::contract_start_date or self::generate_raterevisiondate or self::p_startdate or self::p_enddate) and not(string($placeholderElement) castable as xs:date)">
+                        <!-- pretty printing for date -->
+                        <fo:inline xsl:use-attribute-sets="errortext">TBD</fo:inline>
                     </xsl:when>
                     <xsl:when
                         test="self::contract_period_unit and /contract/meta/scope/contract_type = 'single_engagement'">
@@ -450,9 +536,32 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
-                <fo:inline xsl:use-attribute-sets="errortext">XXXXXX</fo:inline>
+                <fo:inline xsl:use-attribute-sets="errortext">[ <fo:inline xsl:use-attribute-sets="bold">WARNING</fo:inline>: Cannot resolve placeholder <fo:inline xsl:use-attribute-sets="bold"><xsl:value-of select="name()"/></fo:inline> in <xsl:value-of select="base-uri()"/> - <xsl:call-template name="getReason"><xsl:with-param name="placeholderElement" select="$placeholderElement"/></xsl:call-template> ]</fo:inline>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="getReason">
+        <xsl:param name="placeholderElement" select="."/>
+        <xsl:choose>
+            <xsl:when test="/$placeholderElement">
+                element <fo:inline xsl:use-attribute-sets="bold">"<xsl:value-of select="name($placeholderElement)"/>"</fo:inline> (<xsl:call-template name="getXPath"><xsl:with-param name="element" select="$placeholderElement"/></xsl:call-template>) is empty
+            </xsl:when>
+            <xsl:otherwise>
+                referenced element not found
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="getXPath">
+        <xsl:param name="element" select="."/>
+        <xsl:for-each select="$element/ancestor-or-self::*">
+            <xsl:value-of select="concat('/',local-name())"/>
+            <!--Predicate is only output when needed.-->
+            <xsl:if test="(preceding-sibling::*|following-sibling::*)[local-name()=local-name(current())]">
+                <xsl:value-of select="concat('[',count(preceding-sibling::*[local-name()=local-name(current())])+1,']')"/>
+            </xsl:if>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="generate_activities_xslt">

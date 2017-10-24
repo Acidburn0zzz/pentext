@@ -1,6 +1,62 @@
 RELEASE NOTES
 =============
 
+July 5th
+--------
+
+### New `planning` elements in `activityinfo/meta`
+
+The old `<testingduration>` element has been replaced by the following elements:
+```
+<planning>
+    <start><!--date in ISO format (YYYY-MM-DD) or TBD-->2017-06-08</start>
+    <end><!--date in ISO format (YYYY-MM-DD) or TBD-->YYYY-MM-DD</end>
+</planning>
+```
+
+Accordingly, the old `<p_testingduration/>` placeholder element has been replaced by `<p_startdate>` and `<p_enddate>`.
+
+June 9th
+--------
+
+### Implemented 'Incident Response Management' template
+
+Works the same as `quickscope.xml`, only you use `ir_quickscope.xml`. Snippet selection depends on the presence of the optional `<organization_readiness_assessment>` element and its contents (other snippets are mandatory).
+
+Various little buglets have been squashed as well.
+
+June 8th ('I'm seeing the world in shades of orange' edition)
+--------
+
+### Pie Chart Improvements
+
+Pie charts can now be filtered on finding `@status`, just like Summary and Recommendation tables. Example: `<generate_piechart pieAttr="type" pieElem="finding" pieHeight="175" status="new unresolved"/>`
+
+Also, for `status` and `threatLevel` pie charts, colours are now tied to severity, so you go from angry orange to reassuring green (in case of status) or from panicky orange to puzzled grey (in case of threatLevel -- grey is 'threatLevel Unknown')
+
+### Prettier finding retest status
+
+For findings, the not-at-all-tacky status colours from the previous update have been replaced with the still-not-tacky corresponding pie chart colours, and the status is now properly capitalized throughout the report.
+
+June 7th
+--------
+
+### Finetuned some retest features
+
+Specifically for retests, we now have the following nuggets of fun:
+
+- The `@status` attribute of the findings and recommendations tables can now take a space-separated list instead of a single status value, which means you can now generate a table for multiple statuses at once. Example: `<generate_recommendations status="new unresolved"/>`
+- Finding's statuses are now colour-coded in the PDF: Resolved = green, New & Unresolved = Red, Not retested = Orange. It's not tacky at all, trust me. Very understated and classy. :)
+
+March 29th, 2017
+----------------
+
+### Finding Count placeholders
+
+In reports, you now have access to the `<finding_count>` placeholder. It takes an optional attribute `@threatLevel` and returns the number of findings with that threatLevel in the report. If no `@threatLevel` attribute is added, it returns the total number of findings in the report. Useful for Results in a Nutshell type of texts.
+
+Example: `<finding_count threatLevel="Low"/>`
+
 March 20th, 2017
 ----------------
 
