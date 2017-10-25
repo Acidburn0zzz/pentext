@@ -60,8 +60,8 @@
             </fo:page-sequence-master>
             <fo:page-sequence-master master-name="Sections">
                 <fo:repeatable-page-master-alternatives>
-                    <fo:conditional-page-master-reference master-reference="Section-Cover"
-                        page-position="first"/>
+                    <!--<fo:conditional-page-master-reference master-reference="Section-Cover"
+                        page-position="first"/>-->
                     <fo:conditional-page-master-reference master-reference="Section-Content-odd"
                         page-position="any" odd-or-even="odd"/>
                     <fo:conditional-page-master-reference master-reference="Section-Content-even"
@@ -74,8 +74,7 @@
     <xsl:template name="cover_footer">
         <fo:static-content flow-name="region-after-cover" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer coverfooter">
-                <fo:block> V<xsl:value-of select="$latestVersionNumber"/>
-                </fo:block>
+                <fo:block>V<xsl:value-of select="$latestVersionNumber"/></fo:block>
                 <fo:block>
                     <xsl:value-of select="//meta/company/city"/>, <xsl:value-of select="$latestVersionDate"/>
                 </fo:block>

@@ -39,7 +39,7 @@
         mode="toc">
         <xsl:param name="execsummary" tunnel="yes"/>
         <xsl:choose>
-            <xsl:when test="$execsummary = true()">
+            <xsl:when test="$EXEC_SUMMARY = true()">
                 <xsl:if test="ancestor-or-self::*/@inexecsummary = 'yes'">
                     <xsl:call-template name="ToC"/>
                 </xsl:if>
@@ -86,7 +86,7 @@
             </fo:table-cell>
         </fo:table-row>
         <xsl:choose>
-            <xsl:when test="$execsummary = true()">
+            <xsl:when test="$EXEC_SUMMARY = true()">
                 <xsl:apply-templates
                     select="section[not(@visibility = 'hidden')][not(../@visibility = 'hidden')][ancestor-or-self::*/@inexecsummary = 'yes']"
                     mode="toc"/>
@@ -114,7 +114,7 @@
         <xsl:choose>
             <xsl:when test="self::appendix[not(@visibility = 'hidden')]">
                 <xsl:choose>
-                    <xsl:when test="$execsummary = true()">
+                    <xsl:when test="$EXEC_SUMMARY = true()">
                         <fo:inline> Appendix&#160;<xsl:number
                                 count="appendix[not(@visibility = 'hidden')][@inexecsummary = 'yes']"
                                 level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/></fo:inline>
@@ -150,7 +150,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:choose>
-                    <xsl:when test="$execsummary = true()">
+                    <xsl:when test="$EXEC_SUMMARY = true()">
                         <xsl:number
                             count="section[not(@visibility = 'hidden')][ancestor-or-self::*/@inexecsummary = 'yes']"
                             level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>

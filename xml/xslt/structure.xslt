@@ -122,11 +122,8 @@
                 <xsl:apply-templates select=".." mode="number"/>
                 <xsl:text> &#8212; </xsl:text>
             </xsl:if>
-            
             <xsl:call-template name="prependNumber"/>
-                    <xsl:apply-templates/>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:apply-templates/>
         </fo:block>
         <xsl:if test="parent::finding">
             <xsl:apply-templates select=".." mode="meta"/>

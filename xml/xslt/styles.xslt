@@ -197,8 +197,9 @@
     </xsl:attribute-set>
     <xsl:attribute-set name="region-after-content">
         <xsl:attribute name="precedence">true</xsl:attribute>
-        <xsl:attribute name="extent">2.5cm</xsl:attribute>
-        <xsl:attribute name="background-color">black</xsl:attribute>
+        <xsl:attribute name="extent">12.5cm</xsl:attribute>
+        <xsl:attribute name="background-image"
+            >url(../graphics/stairs.png)</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-end-content">
         <xsl:attribute name="extent">1.3cm</xsl:attribute>

@@ -15,11 +15,7 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        <fo:block xsl:use-attribute-sets="graphics-block">
-            <fo:external-graphic xsl:use-attribute-sets="logo"/>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="title-0">
-            <xsl:variable name="reporttitle">
+        <xsl:variable name="words">
                 <xsl:choose>
                     <xsl:when test="$EXEC_SUMMARY = true()">
                         <xsl:text>Penetration Test Report Management Summary</xsl:text>
@@ -28,6 +24,9 @@
                         <xsl:value-of select="title"/>
                     </xsl:otherwise>
             </xsl:choose>
+            </xsl:variable>
+        <fo:block xsl:use-attribute-sets="graphics-block">
+            <fo:external-graphic xsl:use-attribute-sets="logo"/>
         </fo:block>
         <fo:block xsl:use-attribute-sets="for">
             <xsl:for-each select="$words">
@@ -122,7 +121,7 @@
                         <fo:table-cell xsl:use-attribute-sets="td">
                             <fo:block>
                                 <xsl:choose>
-                <xsl:when test="$execsummary=true()">
+                <xsl:when test="$EXEC_SUMMARY=true()">
                     <xsl:text>Penetration Test Report Management Summary</xsl:text>
                 </xsl:when>
                                     <xsl:otherwise>
