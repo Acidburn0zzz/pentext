@@ -9,7 +9,7 @@
             <fo:block>
                 <fo:table table-layout="fixed" width="100%">
                     <fo:table-column column-width="2.3cm"/>
-                    <fo:table-column column-width="12cm"/>
+                    <fo:table-column column-width="13cm"/>
                     <fo:table-column column-width="1cm"/>
                     <fo:table-body>
                         <xsl:apply-templates select="/" mode="toc"/>
@@ -17,17 +17,6 @@
                 </fo:table>
             </fo:block>
         </fo:block>
-    </xsl:template>
-    
-    <xsl:template name="section-toc">
-                <fo:table table-layout="fixed" width="9cm">
-                    <fo:table-column column-width="1.8cm"/>
-                    <fo:table-column column-width="6.2cm"/>
-                    <fo:table-column column-width="1cm"/>
-                    <fo:table-body>
-                        <xsl:apply-templates select=".." mode="toc"/>
-                    </fo:table-body>
-                </fo:table>
     </xsl:template>
 
     <xsl:template match="meta | *[ancestor-or-self::*/@visibility = 'hidden']" mode="toc"/>
@@ -56,6 +45,10 @@
         <fo:table-row>
             <fo:table-cell xsl:use-attribute-sets="tocCell">
                 <fo:block>
+                    <xsl:if test="parent::pentest_report">
+                        <!-- We're in a top-level section, so add some extra styling -->
+                        <xsl:call-template name="topLevelToCEntry"/>
+                    </xsl:if>
                     <fo:basic-link>
                         <xsl:attribute name="internal-destination">
                             <xsl:value-of select="@id"/>
@@ -66,6 +59,10 @@
             </fo:table-cell>
             <fo:table-cell xsl:use-attribute-sets="tocCell">
                 <fo:block>
+                    <xsl:if test="parent::pentest_report">
+                        <!-- We're in a top-level section, so add some extra styling -->
+                        <xsl:call-template name="topLevelToCEntry"/>
+                    </xsl:if>
                     <fo:basic-link>
                         <xsl:attribute name="internal-destination">
                             <xsl:value-of select="@id"/>
@@ -74,8 +71,13 @@
                     </fo:basic-link>
                 </fo:block>
             </fo:table-cell>
-            <fo:table-cell padding-right="3pt" display-align="after" xsl:use-attribute-sets="tocCell">
+            <fo:table-cell padding-right="3pt" display-align="after"
+                xsl:use-attribute-sets="tocCell">
                 <fo:block text-align="right">
+                    <xsl:if test="parent::pentest_report">
+                        <!-- We're in a top-level section, so add some extra styling -->
+                        <xsl:call-template name="topLevelToCEntry"/>
+                    </xsl:if>
                     <fo:basic-link>
                         <xsl:attribute name="internal-destination">
                             <xsl:value-of select="@id"/>
@@ -98,8 +100,12 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    <xsl:template name="topLevelToCEntry">
+        <xsl:attribute name="font-weight">bold</xsl:attribute>
+        <xsl:attribute name="margin-top">4mm</xsl:attribute>
+    </xsl:template>
 
-    
+
     <xsl:template name="tocContent_Title">
         <xsl:apply-templates select="title" mode="toc"/>
     </xsl:template>

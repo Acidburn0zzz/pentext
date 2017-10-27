@@ -44,7 +44,7 @@
 
     <xsl:variable name="lang" select="/*/@xml:lang"/>
 
-    <xsl:variable name="CLASSES" select="document('../xslt/styles_rep.xslt')/*/xsl:attribute-set"/>
+    <xsl:variable name="CLASSES" select="document('../xslt/styles.xslt')/*/xsl:attribute-set"/>
 
     <xsl:variable name="latestVersionNumber">
         <xsl:for-each select="//version_history/version">

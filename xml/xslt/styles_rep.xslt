@@ -15,73 +15,16 @@
     
     <!-- Text -->
  
-    <xsl:attribute-set name="title">
-        <xsl:attribute name="keep-with-next.within-page">always</xsl:attribute>
-        <xsl:attribute name="font-weight">bold</xsl:attribute>
-        <xsl:attribute name="font-family">OpenSans</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-0" use-attribute-sets="title">
-        <xsl:attribute name="margin-top">4cm</xsl:attribute><!-- Note that it's more in practice because the title starts with an empty line -->
-        <xsl:attribute name="margin-right">2cm</xsl:attribute>
-        <xsl:attribute name="font-size">56pt</xsl:attribute>
-        <xsl:attribute name="text-align">right</xsl:attribute>
-        <xsl:attribute name="color">white</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-1" use-attribute-sets="title">
-        <xsl:attribute name="margin-top">2cm</xsl:attribute><!-- Note that it's more in practice because the title starts with an empty line -->
-        <xsl:attribute name="margin-right">2cm</xsl:attribute>
-        <xsl:attribute name="font-size">40pt</xsl:attribute>
-        <xsl:attribute name="text-align">right</xsl:attribute>
-        <xsl:attribute name="break-before">page</xsl:attribute>
-        <xsl:attribute name="break-after">page</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-2" use-attribute-sets="title">
-        <xsl:attribute name="font-size">16pt</xsl:attribute>
-        <xsl:attribute name="color">#eb6209</xsl:attribute>
-        <xsl:attribute name="margin-bottom">0.7cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-3" use-attribute-sets="title">
-        <xsl:attribute name="font-size">14pt</xsl:attribute>
-        <xsl:attribute name="color">#eb6209</xsl:attribute>
-        <xsl:attribute name="margin-bottom">0.7cm</xsl:attribute>
-        <xsl:attribute name="font-weight">100</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-4" use-attribute-sets="title">
-        <xsl:attribute name="font-size">12pt</xsl:attribute>
-        <xsl:attribute name="margin-bottom">0.5cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-client" use-attribute-sets="title-0">
-        <xsl:attribute name="background-color">silver</xsl:attribute>
-        <xsl:attribute name="margin-bottom">6cm</xsl:attribute>
-        <xsl:attribute name="text-transform">capitalize</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="for">
-        <xsl:attribute name="text-align">center</xsl:attribute>
-        <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
-    </xsl:attribute-set>
+    
     <xsl:attribute-set name="p">
         <xsl:attribute name="margin-bottom">
             <xsl:value-of select="$small-space"/>
         </xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="toc-block">
-        <xsl:attribute name="background-color">orange</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="logo">
-        <xsl:attribute name="padding-top">4cm</xsl:attribute>
-        <xsl:attribute name="src">url(../graphics/logo_large_whitecaps.png)</xsl:attribute>
-        <xsl:attribute name="width">150mm</xsl:attribute>
-        <xsl:attribute name="content-width">scale-to-fit</xsl:attribute>
-        <xsl:attribute name="content-height">scale-to-fit</xsl:attribute>
-        <xsl:attribute name="scaling">uniform</xsl:attribute>
-    </xsl:attribute-set>
     
     
     
     <!-- colors -->
-    <xsl:attribute-set name="bg-orange">
-    </xsl:attribute-set>
-    
    
     <xsl:attribute-set name="status-new"><!-- also used by unresolved -->
         <xsl:attribute name="color">#CC4900</xsl:attribute>

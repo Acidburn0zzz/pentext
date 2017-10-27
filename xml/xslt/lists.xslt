@@ -6,7 +6,7 @@
     
     <xsl:template match="ul">
         <fo:list-block provisional-distance-between-starts="0.75cm"
-            provisional-label-separation="2.5mm">
+            provisional-label-separation="2.5mm" xsl:use-attribute-sets="list">
             <xsl:call-template name="checkIfLast"/>
             <xsl:call-template name="do_ul"/>
         </fo:list-block>
@@ -70,7 +70,7 @@
     
     <xsl:template match="ol">
         <fo:list-block provisional-distance-between-starts="0.85cm"
-            provisional-label-separation="2.5mm">
+            provisional-label-separation="2.5mm" xsl:use-attribute-sets="list">
             <xsl:call-template name="checkIfLast"/>
             <xsl:call-template name="do_ol"/>
         </fo:list-block>

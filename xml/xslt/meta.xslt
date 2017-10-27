@@ -4,7 +4,7 @@
     xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
 
     <xsl:template match="meta">
-          <xsl:param name="execsummary" tunnel="yes"/>
+        <xsl:param name="execsummary" tunnel="yes"/>
         <xsl:variable name="latestVersionNumber">
             <xsl:for-each select="version_history/version">
                 <xsl:sort select="xs:dateTime(@date)" order="descending"/>
@@ -15,69 +15,50 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:variable name="words">
-                <xsl:choose>
-                    <xsl:when test="$EXEC_SUMMARY = true()">
-                        <xsl:text>Penetration Test Report Management Summary</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="title"/>
-                    </xsl:otherwise>
+        <xsl:variable name="reporttitle">
+            <xsl:choose>
+                <xsl:when test="$EXEC_SUMMARY = true()">
+                    <xsl:text>Penetration Test Report Management Summary</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="title"/>
+                </xsl:otherwise>
             </xsl:choose>
-            </xsl:variable>
-        <fo:block xsl:use-attribute-sets="graphics-block">
-            <fo:external-graphic xsl:use-attribute-sets="logo"/>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="for">
-            <xsl:for-each select="$words">
-                <!-- should make this into a function; identical operation needed in structure.xslt  -->
-                <xsl:choose>
-                    <xsl:when
-                        test="
-                            . = 'And' or
-                            . = 'and' or
-                            . = 'Or' or
-                            . = 'or' or
-                            . = 'The' or
-                            . = 'the' or
-                            . = 'Of' or
-                            . = 'of' or
-                            . = 'A' or
-                            . = 'a'">
-                        <xsl:text> </xsl:text>
-                        <xsl:value-of select="."/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <fo:block/>
-                        <xsl:value-of select="."/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="graphics-block-frontlogo">
-            <fo:table width="100%" table-layout="fixed">
-                <fo:table-column column-width="proportional-column-width(66)"/>
-                <fo:table-column column-width="proportional-column-width(33)"/>
-                <fo:table-body>
-                    <fo:table-row>
-                        <fo:table-cell>
-                            <fo:block/>
-                        </fo:table-cell>
-                        <fo:table-cell text-align="left">
+        </xsl:variable>
+        <xsl:variable name="words" select="tokenize($reporttitle, '\s')"/>
 
-                            <fo:block> V<xsl:value-of select="$latestVersionNumber"/>
-<fo:external-graphic xsl:use-attribute-sets="logo"/>
-                            </fo:block>
-                            <fo:block>
-                                <xsl:text>Amsterdam</xsl:text>
-                            </fo:block>
-                            <fo:block>
-                                <xsl:value-of select="$latestVersionDate"/>
-                            </fo:block>
-                        </fo:table-cell>
-                    </fo:table-row>
-                </fo:table-body>
-            </fo:table>
+        <fo:block xsl:use-attribute-sets="frontpagetext">
+            <fo:block xsl:use-attribute-sets="title-0">
+                <xsl:for-each select="$words">
+                    <xsl:choose>
+                        <xsl:when
+                            test="
+                                . = 'And' or
+                                . = 'and' or
+                                . = 'Or' or
+                                . = 'or' or
+                                . = 'The' or
+                                . = 'the' or
+                                . = 'Of' or
+                                . = 'of' or
+                                . = 'A' or
+                                . = 'a'">
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="."/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <fo:block/>
+                            <xsl:value-of select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </fo:block>
+            <fo:block xsl:use-attribute-sets="for">
+                <xsl:text>for</xsl:text>
+            </fo:block>
+            <fo:block xsl:use-attribute-sets="title-client">
+                <xsl:value-of select="//client/full_name"/>
+            </fo:block>
         </fo:block>
         <xsl:call-template name="DocProperties"/>
         <xsl:call-template name="VersionControl"/>
@@ -96,7 +77,8 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:variable name="authors" select="version_history/version/v_author[not(.=../preceding::version/v_author)]" />   
+        <xsl:variable name="authors"
+            select="version_history/version/v_author[not(. = ../preceding::version/v_author)]"/>
         <fo:block xsl:use-attribute-sets="title-4">Document Properties</fo:block>
         <fo:block margin-bottom="{$very-large-space}">
             <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="borders">
@@ -121,9 +103,9 @@
                         <fo:table-cell xsl:use-attribute-sets="td">
                             <fo:block>
                                 <xsl:choose>
-                <xsl:when test="$EXEC_SUMMARY=true()">
-                    <xsl:text>Penetration Test Report Management Summary</xsl:text>
-                </xsl:when>
+                                    <xsl:when test="$EXEC_SUMMARY = true()">
+                                        <xsl:text>Penetration Test Report Management Summary</xsl:text>
+                                    </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:value-of select="title"/>
                                     </xsl:otherwise>

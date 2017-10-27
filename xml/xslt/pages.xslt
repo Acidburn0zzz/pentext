@@ -9,7 +9,7 @@
         <fo:layout-master-set>
             <!-- Cover page -->
             <fo:simple-page-master master-name="Cover-Cover" xsl:use-attribute-sets="PortraitPage">
-                <fo:region-body region-name="cover-flow" xsl:use-attribute-sets="cover-flow"/>
+                <fo:region-body region-name="cover-flow" xsl:use-attribute-sets="region-body-cover"/>
                 <fo:region-after region-name="region-after-cover"
                     xsl:use-attribute-sets="region-after-cover"/>
             </fo:simple-page-master>
@@ -76,7 +76,8 @@
             <fo:block xsl:use-attribute-sets="footer coverfooter">
                 <fo:block>V<xsl:value-of select="$latestVersionNumber"/></fo:block>
                 <fo:block>
-                    <xsl:value-of select="//meta/company/city"/>, <xsl:value-of select="$latestVersionDate"/>
+                    <xsl:value-of select="//meta/company/city"/>, <xsl:value-of
+                        select="$latestVersionDate"/>
                 </fo:block>
                 <fo:block>
                     <xsl:value-of select="//meta/company/coc"/>
@@ -88,62 +89,18 @@
     <xsl:template name="page_footer">
         <fo:static-content flow-name="region-after-content-odd" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer">
-                <fo:table table-layout="fixed" width="18cm" margin-top="10.5mm">
-                    <fo:table-column column-width="2cm"/>
-                    <fo:table-column column-width="16cm"/>
-                    <fo:table-body>
-                        <fo:table-row>
-                            <fo:table-cell xsl:use-attribute-sets="cellmarginreset">
-                                <fo:block>&#160;</fo:block>
-                            </fo:table-cell>
-                            <fo:table-cell display-align="center" xsl:use-attribute-sets="cellmarginreset">
-                                <fo:block xsl:use-attribute-sets="footertable">
-                                    <xsl:value-of select="//meta/company/coc"/>
-                                    <fo:leader leader-pattern="space"/>
-                                    <xsl:text>p </xsl:text>
-                                    <fo:page-number/>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:call-template name="getString">
-                                        <xsl:with-param name="stringID" select="'page_of'"/>
-                                    </xsl:call-template>
-                                    <xsl:text> </xsl:text>
-                                    <fo:page-number-citation ref-id="EndOfDoc"/>
-                                </fo:block>
-                            </fo:table-cell>
-                        </fo:table-row>
-                    </fo:table-body>
-                </fo:table>
+                <fo:inline xsl:use-attribute-sets="pagenumber">
+                    <fo:page-number/>
+                </fo:inline>
             </fo:block>
         </fo:static-content>
         <fo:static-content flow-name="region-after-content-even" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer">
-                <fo:table table-layout="fixed" width="18cm" margin-top="7mm">
-                    <fo:table-column column-width="2cm"/>
-                    <fo:table-column column-width="16cm"/>
-                    <fo:table-body>
-                        <fo:table-row>
-                            <fo:table-cell xsl:use-attribute-sets="cellmarginreset">
-                                <fo:block>
-                                    <fo:external-graphic xsl:use-attribute-sets="footerlogo"/>
-                                </fo:block>
-                            </fo:table-cell>
-                            <fo:table-cell display-align="center" xsl:use-attribute-sets="cellmarginreset">
-                                <fo:block xsl:use-attribute-sets="footertable">
-                                    <xsl:value-of select="//meta/company/coc"/>
-                                    <fo:leader leader-pattern="space"/>
-                                    <xsl:text>p </xsl:text>
-                                    <fo:page-number/>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:call-template name="getString">
-                                        <xsl:with-param name="stringID" select="'page_of'"/>
-                                    </xsl:call-template>
-                                    <xsl:text> </xsl:text>
-                                    <fo:page-number-citation ref-id="EndOfDoc"/>
-                                </fo:block>
-                            </fo:table-cell>
-                        </fo:table-row>
-                    </fo:table-body>
-                </fo:table>
+                <xsl:value-of select="//meta/company/full_name"/>
+                <fo:leader leader-pattern="space"/>
+                <fo:inline xsl:use-attribute-sets="pagenumber">
+                    <fo:page-number/>
+                </fo:inline>
             </fo:block>
         </fo:static-content>
     </xsl:template>
@@ -184,15 +141,11 @@
                 <fo:block>
                     <xsl:apply-templates select="/*/meta"/>
                     <xsl:apply-templates select="/*/generate_index"/>
-                    <!--<xsl:if test="generate_index">
-                        <!-\- moet dit of slaat ie 'm sowieso wel over als er geen generate_index is? -\->
-                        <xsl:apply-templates select="generate_index"/>
-                    </xsl:if>-->
                 </fo:block>
             </fo:flow>
         </fo:page-sequence>
     </xsl:template>
-    
+
     <xsl:template name="Content">
         <xsl:for-each select="/*/section | /*/appendix">
             <fo:page-sequence master-reference="Sections" force-page-count="end-on-even">
