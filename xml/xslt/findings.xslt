@@ -83,7 +83,7 @@
     <xsl:template match="description_summary | recommendation_summary"/>
 
     <xsl:template match="description">
-        <fo:block xsl:use-attribute-sets="title-4">Description:</fo:block>
+        <fo:block xsl:use-attribute-sets="title-findingsection">Description:</fo:block>
         <fo:block xsl:use-attribute-sets="finding-content">
             <xsl:apply-templates/>
         </fo:block>
@@ -99,21 +99,21 @@
     </xsl:template>
 
     <xsl:template match="technicaldescription">
-        <fo:block xsl:use-attribute-sets="title-4">Technical description:</fo:block>
+        <fo:block xsl:use-attribute-sets="title-findingsection">Technical description:</fo:block>
         <fo:block xsl:use-attribute-sets="finding-content">
             <xsl:apply-templates/>
         </fo:block>
     </xsl:template>
 
     <xsl:template match="impact">
-        <fo:block xsl:use-attribute-sets="title-4">Impact:</fo:block>
+        <fo:block xsl:use-attribute-sets="title-findingsection">Impact:</fo:block>
         <fo:block xsl:use-attribute-sets="finding-content">
             <xsl:apply-templates/>
         </fo:block>
     </xsl:template>
 
     <xsl:template match="recommendation">
-        <fo:block xsl:use-attribute-sets="title-4">Recommendation:</fo:block>
+        <fo:block xsl:use-attribute-sets="title-findingsection">Recommendation:</fo:block>
         <fo:block xsl:use-attribute-sets="finding-content">
             <xsl:apply-templates/>
         </fo:block>

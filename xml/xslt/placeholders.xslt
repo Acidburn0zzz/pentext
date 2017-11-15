@@ -450,6 +450,11 @@
                         />
                     </xsl:when>
                     <xsl:when
+                        test="(self::contract_end_date or self::contract_start_date or self::generate_raterevisiondate or self::p_startdate or self::p_enddate) and normalize-space(.) = 'TBD'">
+                        <!-- actual TBD, don't mess with it -->
+                        <fo:text>TBD</fo:text>
+                    </xsl:when>
+                    <xsl:when
                         test="(self::contract_end_date or self::contract_start_date or self::generate_raterevisiondate or self::p_startdate or self::p_enddate) and not(string($placeholderElement) castable as xs:date)">
                         <!-- pretty printing for date -->
                         <fo:inline xsl:use-attribute-sets="errortext">TBD</fo:inline>

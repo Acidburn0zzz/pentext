@@ -152,7 +152,7 @@
             </xsl:for-each>
         </xsl:variable>
         <fo:block>
-            <fo:table xsl:use-attribute-sets="fwtable table borders" keep-together.within-column="always">
+            <fo:table xsl:use-attribute-sets="fwtable table borders">
                 <xsl:call-template name="checkIfLast"/>
                 <fo:table-column column-width="proportional-column-width(12)"
                     xsl:use-attribute-sets="borders"/>
@@ -163,7 +163,7 @@
                 <fo:table-column column-width="proportional-column-width(16)"
                     xsl:use-attribute-sets="borders"/>
                 <fo:table-body>
-                    <fo:table-row xsl:use-attribute-sets="bg-orange th-row">
+                    <fo:table-row xsl:use-attribute-sets="bg-orange th-row" keep-with-next.within-column="always">
                         <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>ID</fo:block>
                         </fo:table-cell>

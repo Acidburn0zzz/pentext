@@ -56,7 +56,7 @@
 
 
     <xsl:attribute-set name="title">
-        <!--<xsl:attribute name="keep-with-next.within-page">always</xsl:attribute>-->
+        <xsl:attribute name="keep-with-next.within-page">always</xsl:attribute>
         <xsl:attribute name="font-weight">bold</xsl:attribute>
         <xsl:attribute name="color">black</xsl:attribute>
     </xsl:attribute-set>
@@ -71,24 +71,24 @@
     </xsl:attribute-set>
     <xsl:attribute-set name="title-1" use-attribute-sets="title">
         <xsl:attribute name="font-size">16pt</xsl:attribute>
-        <!--<xsl:attribute name="margin-bottom">1cm</xsl:attribute>-->
+        <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
         <xsl:attribute name="background-color">#e2632a</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-2" use-attribute-sets="title">
         <xsl:attribute name="font-size">13pt</xsl:attribute>
-<!--        <xsl:attribute name="margin-bottom">0.8cm</xsl:attribute>
-        <xsl:attribute name="margin-top">0.4cm</xsl:attribute>-->
+        <xsl:attribute name="margin-bottom">0.8cm</xsl:attribute>
+        <xsl:attribute name="margin-top">0.4cm</xsl:attribute>
         <xsl:attribute name="background-color">#9e9f9e</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-3" use-attribute-sets="title">
         <xsl:attribute name="font-size">13pt</xsl:attribute>
-        <!--<xsl:attribute name="margin-bottom">0.8cm</xsl:attribute>
-        -->
+        <xsl:attribute name="margin-bottom">0.8cm</xsl:attribute>
+        
         <xsl:attribute name="background-color">#9e9f9e</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-4" use-attribute-sets="title">
-        <xsl:attribute name="font-size">12pt</xsl:attribute><!--
-        <xsl:attribute name="margin-bottom">0.5cm</xsl:attribute>-->
+        <xsl:attribute name="font-size">12pt</xsl:attribute>
+        <xsl:attribute name="margin-bottom">0.5cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="for" use-attribute-sets="title">
         <xsl:attribute name="font-family">LiberationSansNarrow</xsl:attribute>
@@ -115,6 +115,7 @@
         <xsl:attribute name="margin-right">1cm</xsl:attribute>
         <xsl:attribute name="margin-top">0.5cm</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="title-findingsection" use-attribute-sets="title-4 indent"/>
     <xsl:attribute-set name="section">
         <xsl:attribute name="margin-bottom">
             <xsl:value-of select="$very-large-space"/>
@@ -162,16 +163,14 @@
     <xsl:attribute-set name="publisher"/>
     <xsl:attribute-set name="pubdate"/>
     <!-- blocks -->
-    <xsl:attribute-set name="indent">
-        <xsl:attribute name="border">1px solid orange</xsl:attribute>
-        <xsl:attribute name="margin-left">5mm</xsl:attribute>
-        <xsl:attribute name="margin-right">3mm</xsl:attribute>
-    </xsl:attribute-set>
+    <xsl:attribute-set name="indent"/>
+        
+    
     <xsl:attribute-set name="p" use-attribute-sets="indent">
         <xsl:attribute name="margin-bottom">
             <xsl:value-of select="$small-space"/>
         </xsl:attribute>
-        <xsl:attribute name="line-height">5.5mm</xsl:attribute>
+        <xsl:attribute name="line-height">6mm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="biblioentry" use-attribute-sets="indent">
         <xsl:attribute name="margin-bottom">
@@ -199,7 +198,7 @@
     <xsl:attribute-set name="finding-meta" use-attribute-sets="indent">
         <xsl:attribute name="margin-bottom" select="$small-space"/>
     </xsl:attribute-set>
-    <xsl:attribute-set name="finding-content" use-attribute-sets="indent">
+    <xsl:attribute-set name="finding-content" use-attribute-sets="p">
         <xsl:attribute name="margin-bottom" select="$large-space"/>
     </xsl:attribute-set>
 
@@ -310,7 +309,7 @@
     </xsl:attribute-set>
     <xsl:attribute-set name="fwtable">
         <xsl:attribute name="table-layout">fixed</xsl:attribute>
-        <xsl:attribute name="width">95%</xsl:attribute>
+        <xsl:attribute name="width">100%</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="table" use-attribute-sets="indent">
         <xsl:attribute name="margin-bottom" select="$small-space"/>

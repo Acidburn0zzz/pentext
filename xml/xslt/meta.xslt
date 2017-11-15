@@ -303,7 +303,7 @@
 
     <xsl:template name="Contact">
         <fo:block xsl:use-attribute-sets="title-4">Contact</fo:block>
-        <fo:block xsl:use-attribute-sets="p">For more information about this Document and its
+        <fo:block xsl:use-attribute-sets="p" margin-left="0">For more information about this Document and its
             contents please contact <xsl:value-of select="company/full_name"/>
             <xsl:if test="not(company/full_name[ends-with(., '.')])"
             ><xsl:text>.</xsl:text></xsl:if></fo:block>
