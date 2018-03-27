@@ -111,7 +111,7 @@
     </xsl:template>
 
     <xsl:template match="title" mode="toc">
-        <xsl:call-template name="prependNumber"/>
+        <xsl:call-template name="prependId"/>
         <xsl:apply-templates/>
     </xsl:template>
 
