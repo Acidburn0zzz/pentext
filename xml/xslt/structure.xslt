@@ -37,7 +37,14 @@
             <xsl:text>title-</xsl:text>
             <xsl:value-of select="$LEVEL"/>
         </xsl:variable>
-        <fo:list-block provisional-distance-between-starts="2.6cm" provisional-label-separation="3mm" padding-left="2mm">
+        <fo:list-block provisional-label-separation="3mm" padding-left="2mm">
+            <!-- Give somewhat larger separation to Appendix because of the long string; if everything gets 3cm it looks horrible -->
+            <xsl:attribute name="provisional-distance-between-starts">
+                <xsl:choose>
+                    <xsl:when test="self::title[parent::appendix]">3cm</xsl:when>
+                    <xsl:otherwise>1.3cm</xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
             <xsl:call-template name="use-att-set">
                 <xsl:with-param name="CLASS" select="$CLASS"/>
             </xsl:call-template>
@@ -115,13 +122,17 @@
                 <fo:list-item-body start-indent="body-start()">
                     <fo:block line-height="0.7cm">
                         <xsl:if test="parent::finding">
-                            <xsl:call-template name="prependNumber"/>
+                            <xsl:call-template name="prependId"/>
                         </xsl:if>
                         <xsl:apply-templates/>
                     </fo:block>
                 </fo:list-item-body>
             </fo:list-item>
         </fo:list-block>
+
+        <xsl:if test="parent::finding">
+            <xsl:apply-templates select=".." mode="meta"/>
+        </xsl:if>
     </xsl:template>
 
 
