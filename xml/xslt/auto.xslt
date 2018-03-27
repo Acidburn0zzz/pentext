@@ -934,13 +934,13 @@
         <xsl:choose>
             <!-- specific cases -->
             <!-- threat level -->
-            <xsl:when test="$pieEntryLabel = 'Extreme'">#CC4900</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'High'">#FF5C00</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Elevated'">#FE9920</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Moderate'">#ffbf7f</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Low'">#ffed7f</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'N/A'">#FFFFFF</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Unknown'">#CCCCCC</xsl:when>
+            <xsl:when test="$pieEntryLabel = 'Extreme'">#000000</xsl:when>
+            <xsl:when test="$pieEntryLabel = 'High'">#CC4900</xsl:when>
+            <xsl:when test="$pieEntryLabel = 'Elevated'">#FF5C00</xsl:when>
+            <xsl:when test="$pieEntryLabel = 'Moderate'">#FE9920</xsl:when>
+            <xsl:when test="$pieEntryLabel = 'Low'">#ffbf7f</xsl:when>
+            <xsl:when test="$pieEntryLabel = 'N/A'">#CCCCCC</xsl:when>
+            <xsl:when test="$pieEntryLabel = 'Unknown'">#FFFFFF</xsl:when>
             <!-- status -->
             <xsl:when test="$pieEntryLabel = 'new'">#CC4900</xsl:when>
             <xsl:when test="$pieEntryLabel = 'unresolved'">#FF5C00</xsl:when>
