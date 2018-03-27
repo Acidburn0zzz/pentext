@@ -362,12 +362,12 @@
       <xs:simpleContent>
         <xs:extension base="xs:string">
           <xs:attribute name="href" use="required" type="xs:anyURI"/>
+          <xs:attribute name="class" use="optional" type="xs:string"/>
           <xs:attribute name="includepage" use="optional">
             <xs:simpleType>
               <xs:restriction base="xs:string">
-                <xs:enumeration value="black-box"/>
-                <xs:enumeration value="crystal-box"/>
-                <xs:enumeration value="grey-box"/>
+                <xs:enumeration value="yes"/>
+                <xs:enumeration value="no"/>
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
