@@ -195,7 +195,7 @@
         <xsl:attribute name="font-size">8pt</xsl:attribute>
         <xsl:attribute name="padding">4pt</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="finding-meta" use-attribute-sets="indent">
+    <xsl:attribute-set name="finding-meta">
         <xsl:attribute name="margin-bottom" select="$small-space"/>
     </xsl:attribute-set>
     <xsl:attribute-set name="finding-content" use-attribute-sets="p">
@@ -316,11 +316,14 @@
         <xsl:attribute name="border-after-width.conditionality">retain</xsl:attribute>
         <xsl:attribute name="border-before-width.conditionality">retain</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="findingTable" use-attribute-sets="table">
+    <xsl:attribute-set name="findingTable">
         <xsl:attribute name="margin-bottom" select="$large-space"/>
+        <xsl:attribute name="padding-left">-8pt</xsl:attribute>
         <xsl:attribute name="background-color">#ededed</xsl:attribute>
-        <xsl:attribute name="border-color">#e4e4e4</xsl:attribute>
-        <xsl:attribute name="width">15.5cm</xsl:attribute>
+        <xsl:attribute name="border-left">4px solid #e4e4e4</xsl:attribute>
+        <xsl:attribute name="border-right">1px solid #e4e4e4</xsl:attribute>
+        <xsl:attribute name="border-top">1px solid #e4e4e4</xsl:attribute>
+        <xsl:attribute name="border-bottom">1px solid #e4e4e4</xsl:attribute>
         <xsl:attribute name="table-layout">fixed</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="th-row">
