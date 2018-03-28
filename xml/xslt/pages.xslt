@@ -73,7 +73,7 @@
 
     <xsl:template name="cover_footer">
         <fo:static-content flow-name="region-after-cover" xsl:use-attribute-sets="FooterFont">
-            <fo:block xsl:use-attribute-sets="footer coverfooter">
+            <fo:block xsl:use-attribute-sets="coverfooter">
                 <fo:block>V<xsl:value-of select="$latestVersionNumber"/></fo:block>
                 <fo:block>
                     <xsl:value-of select="//meta/company/city"/>, <xsl:value-of
@@ -139,7 +139,7 @@
             <xsl:call-template name="meta_footer"/>
             <fo:flow flow-name="cover-flow" xsl:use-attribute-sets="DefaultFont">
                 <fo:block>
-                    <xsl:apply-templates select="/*/meta"/>
+                    <xsl:apply-templates select="/*/meta" mode="frontmatter"/>
                     <xsl:apply-templates select="/*/generate_index"/>
                 </fo:block>
             </fo:flow>

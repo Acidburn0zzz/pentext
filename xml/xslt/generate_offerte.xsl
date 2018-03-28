@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" exclude-result-prefixes="xs" version="2.0">
+    xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:my="http://www.radical.sexy"
+    exclude-result-prefixes="xs my" version="2.0">
 
 
     <xsl:import href="pages.xslt"/>
@@ -18,111 +19,183 @@
     <xsl:import href="graphics.xslt"/>
     <xsl:import href="generic.xslt"/>
     <xsl:import href="numbering.xslt"/>
+    <xsl:import href="localisation.xslt"/>
     <xsl:import href="placeholders.xslt"/>
-    <xsl:import href="waiver.xslt"/>
-    
-    <xsl:include href="localisation.xslt"/>
+
     <xsl:include href="styles_off.xslt"/>
-    
+
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
 
 
-    <!-- ****** AUTO_NUMBERING_FORMAT:	value of the <xsl:number> element used for auto numbering -->
     <xsl:param name="AUTO_NUMBERING_FORMAT" select="'1.1.1'"/>
-    <xsl:param name="EXEC_SUMMARY" select="false()"/><!-- not needed except for shared code -->
-    
+    <xsl:param name="EXEC_SUMMARY" select="false()"/>
 
-    <xsl:key name="rosid" match="section|finding|appendix|non-finding" use="@id"/>
+    <xsl:key name="rosid" match="section | finding | appendix | non-finding" use="@id"/>
     <xsl:key name="biblioid" match="biblioentry" use="@id"/>
-    
+
     <!-- not used but needed because of shared code with contract; todo: clean these up -->
     <xsl:variable name="fee" select="/contract/meta/contractor/hourly_fee * 1"/>
     <xsl:variable name="plannedHours" select="/contract/meta/work/planning/hours * 1"/>
     <xsl:variable name="total_fee" select="$fee * $plannedHours"/>
     <!-- end -->
-    
-    <xsl:variable name="CLASSES" select="document('../xslt/styles_off.xslt')/*/xsl:attribute-set"/>
-    
+
     <xsl:variable name="lang" select="/*/@xml:lang"/>
-    <xsl:variable name="localDateFormat" select="$strdoc/date/format[lang($lang)]"/>
-    
+
+    <xsl:variable name="CLASSES" select="document('../xslt/styles.xslt')/*/xsl:attribute-set"/>
+
+    <xsl:variable name="latestVersionNumber">
+        <xsl:for-each select="//version_history/version">
+            <xsl:sort select="xs:dateTime(@date)" order="descending"/>
+            <xsl:if test="position() = 1">
+                <xsl:call-template name="VersionNumber">
+                    <xsl:with-param name="number" select="@number"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
+
     <xsl:variable name="latestVersionDate">
-            <xsl:for-each select="/*/meta/version_history/version">
-                <xsl:sort select="xs:dateTime(@date)" order="descending"/>
-                <xsl:if test="position() = 1">
-                    <xsl:value-of select="format-dateTime(@date, '[MNn] [D1], [Y]', en, (), ())"/>
-                    <!-- Note: this should be: 
-                    <xsl:value-of select="format-dateTime(@date, $localDateFormat, $lang, (), ())"/> 
-                    to properly be localised, but we're using Saxon HE instead of PE/EE and having localised month names 
-                    would require creating a LocalizerFactory 
-                    See http://www.saxonica.com/html/documentation/extensibility/config-extend/localizing/ for more info
-                    sounds like I'd have to know Java for that so for now, the date isn't localised. :) -->
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:variable>
-    
-    
-    
-<!-- ROOT -->
+        <xsl:for-each select="//version_history/version">
+            <xsl:sort select="xs:dateTime(@date)" order="descending"/>
+            <xsl:if test="position() = 1">
+                <xsl:value-of select="format-dateTime(@date, '[MNn] [D1o], [Y]', 'en', (), ())"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
+
+
+    <!-- ROOT -->
     <xsl:template match="/">
-
-        <fo:root>
-
+        <fo:root xsl:use-attribute-sets="root-common">
             <xsl:call-template name="layout-master-set"/>
+            <xsl:call-template name="FrontMatter"/>
             <xsl:call-template name="Content">
-                        <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
-                    </xsl:call-template>
-
+                <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
+            </xsl:call-template>
         </fo:root>
     </xsl:template>
 
-<!-- OVERRIDES -->
-    
-    <!-- FRONT PAGE -->
-    <xsl:template match="meta">
-        <fo:block xsl:use-attribute-sets="graphics-block">
-            <fo:external-graphic xsl:use-attribute-sets="logo"/>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="title-0">
-            <xsl:value-of select="upper-case(company/full_name)"/>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="for">
-            <xsl:value-of select="//meta/title"/>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="title-0">
-            <xsl:value-of select="upper-case(offered_service_long)"/>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="for">
-            <xsl:call-template name="getString">
-                    <xsl:with-param name="stringID" select="'coverpage_for'"/>
-                </xsl:call-template>
-        </fo:block>
-        <fo:block xsl:use-attribute-sets="title-client">
-            <xsl:value-of select="permission_parties/client/full_name"/>
-        </fo:block>
-        <!-- NO DOCUMENT CONTROL, JUST THE DATE ON THE FP -->
-        <fo:block xsl:use-attribute-sets="for break-after">
-            <xsl:value-of select="$latestVersionDate"/>
-        </fo:block>
+
+    <!-- OVERRIDES -->
+
+    <!-- PAGE LAYOUT -->
+    <xsl:template name="Content">
+        <fo:page-sequence master-reference="Sections">
+                <xsl:call-template name="page_header"/>
+                <xsl:call-template name="page_footer"/>
+                <xsl:call-template name="page_tab"/>
+                <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
+                    <fo:block>
+                        <xsl:apply-templates select="offerte"/>
+                    </fo:block>
+                    <xsl:if test="not(following-sibling::*)">
+                        <fo:block id="EndOfDoc"/>
+                    </xsl:if>
+                </fo:flow>
+            </fo:page-sequence>
     </xsl:template>
     
+    <!-- skip meta in quote; this is handled in FrontMatter -->
+    <xsl:template match="meta"/>
+
+    <!-- FRONT PAGE -->
+    <xsl:template match="meta" mode="frontmatter">
+        <xsl:param name="execsummary" tunnel="yes"/>
+        <xsl:variable name="latestVersionNumber">
+            <xsl:for-each select="version_history/version">
+                <xsl:sort select="xs:dateTime(@date)" order="descending"/>
+                <xsl:if test="position() = 1">
+                    <xsl:call-template name="VersionNumber">
+                        <xsl:with-param name="number" select="@number"/>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="reporttitle">
+            <xsl:value-of select="title"/>
+        </xsl:variable>
+        <xsl:variable name="words" select="tokenize($reporttitle, '\s')"/>
+
+        <fo:block xsl:use-attribute-sets="frontpagetext">
+            <fo:block xsl:use-attribute-sets="title-0">
+                <xsl:for-each select="$words">
+                    <xsl:choose>
+                        <xsl:when
+                            test="
+                                . = 'And' or
+                                . = 'and' or
+                                . = 'Or' or
+                                . = 'or' or
+                                . = 'The' or
+                                . = 'the' or
+                                . = 'Of' or
+                                . = 'of' or
+                                . = 'A' or
+                                . = 'a'">
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="."/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <fo:block/>
+                            <xsl:value-of select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </fo:block>
+            <fo:block xsl:use-attribute-sets="frontpagesubtitle">
+                <xsl:sequence
+                    select="
+                        string-join(for $x in tokenize(//offered_service_long, ' ')
+                        return
+                            my:titleCase($x), ' ')"
+                />
+            </fo:block>
+            <fo:block xsl:use-attribute-sets="for">
+                <xsl:text>for</xsl:text>
+            </fo:block>
+            <fo:block xsl:use-attribute-sets="title-client">
+                <xsl:value-of select="//client/full_name"/>
+            </fo:block>
+            <xsl:if test="normalize-space(//client_reference)">
+                <fo:block xsl:use-attribute-sets="title-client">
+                    <xsl:text>[</xsl:text>
+                    <xsl:value-of select="//client_reference"/>
+                    <xsl:text>]</xsl:text>
+                </fo:block>
+            </xsl:if>
+            <fo:block xsl:use-attribute-sets="title-date">
+                <xsl:value-of select="$latestVersionDate"/>
+            </fo:block>
+        </fo:block>
+    </xsl:template>
+
+    <xsl:template name="cover_footer">
+        <fo:static-content flow-name="region-after-cover" xsl:use-attribute-sets="FooterFont">
+            <fo:block xsl:use-attribute-sets="footer coverfooter">
+                <fo:block>
+                    <xsl:value-of select="//meta/company/coc"/>
+                </fo:block>
+            </fo:block>
+        </fo:static-content>
+    </xsl:template>
+
     <!-- TITLES (NO NUMBERING) -->
-        <xsl:template match="title">
+    <xsl:template match="title">
         <xsl:variable name="LEVEL" select="count(ancestor::*) - 1"/>
         <xsl:variable name="CLASS">
             <!-- use title-x for all levels -->
             <xsl:text>title-</xsl:text>
             <xsl:value-of select="$LEVEL"/>
         </xsl:variable>
-        
-        <fo:block>
+
+        <fo:block padding-left="2mm">
             <xsl:call-template name="use-att-set">
                 <xsl:with-param name="CLASS" select="$CLASS"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </fo:block>
     </xsl:template>
-    
+
     <!-- CONTACT BOX (comes at the end, is just the address, no title/table) -->
     <xsl:template match="contact">
         <fo:block xsl:use-attribute-sets="Contact">
@@ -130,16 +203,18 @@
         </fo:block>
     </xsl:template>
     <xsl:template match="contact/name">
-            <fo:block><xsl:apply-templates/></fo:block>
-        </xsl:template>
-    <!--<xsl:template match="contact/address">
-            <fo:block><xsl:apply-templates/></fo:block>
-        </xsl:template>-->
-    <!-- is already in block.xslt -->
+        <fo:block>
+            <xsl:apply-templates/>
+        </fo:block>
+    </xsl:template>
     <xsl:template match="contact/phone">
-            <fo:block><xsl:apply-templates/></fo:block>
-        </xsl:template>
+        <fo:block>
+            <xsl:apply-templates/>
+        </fo:block>
+    </xsl:template>
     <xsl:template match="contact/email">
-            <fo:block><xsl:apply-templates/></fo:block>
-        </xsl:template>
+        <fo:block>
+            <xsl:apply-templates/>
+        </fo:block>
+    </xsl:template>
 </xsl:stylesheet>

@@ -83,20 +83,11 @@
     <xsl:attribute-set name="title-3" use-attribute-sets="title">
         <xsl:attribute name="font-size">13pt</xsl:attribute>
         <xsl:attribute name="margin-bottom">0.8cm</xsl:attribute>
-        
         <xsl:attribute name="background-color">#9e9f9e</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-4" use-attribute-sets="title">
         <xsl:attribute name="font-size">12pt</xsl:attribute>
         <xsl:attribute name="margin-bottom">0.5cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="for" use-attribute-sets="title">
-        <xsl:attribute name="font-family">LiberationSansNarrow</xsl:attribute>
-        <xsl:attribute name="text-align">left</xsl:attribute>
-        <xsl:attribute name="margin-left">11.5cm</xsl:attribute>
-        <xsl:attribute name="color">white</xsl:attribute>
-        <xsl:attribute name="font-size">20pt</xsl:attribute>
-        <xsl:attribute name="font-weight">normal</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-client" use-attribute-sets="for">
     </xsl:attribute-set>
@@ -264,12 +255,6 @@
         <xsl:attribute name="margin-left">2cm</xsl:attribute>
         <xsl:attribute name="margin-right">2cm</xsl:attribute>
         <xsl:attribute name="text-align-last">justify</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="coverfooter" use-attribute-sets="FooterFont footer">
-        <xsl:attribute name="margin-top">95mm</xsl:attribute>
-        <xsl:attribute name="text-align">right</xsl:attribute>
-        <xsl:attribute name="font-weight">bold</xsl:attribute>
-        <xsl:attribute name="line-height">5.5mm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="sidetabs"/>
 

@@ -20,15 +20,12 @@
     <xsl:import href="numbering.xslt"/>
     <xsl:import href="localisation.xslt"/>
     <xsl:import href="placeholders.xslt"/>
-    <!--
-    <xsl:import href="snippets.xslt"/>-->
 
     <xsl:include href="styles_rep.xslt"/>
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
 
 
-    <!-- ****** AUTO_NUMBERING_FORMAT:	value of the <xsl:number> element used for auto numbering -->
     <xsl:param name="AUTO_NUMBERING_FORMAT" select="'1.1.1'"/>
     <xsl:param name="EXEC_SUMMARY" select="false()"/>
 
@@ -39,7 +36,6 @@
     <xsl:variable name="fee" select="/contract/meta/contractor/hourly_fee * 1"/>
     <xsl:variable name="plannedHours" select="/contract/meta/work/planning/hours * 1"/>
     <xsl:variable name="total_fee" select="$fee * $plannedHours"/>
-    <xsl:variable name="denomination" select="'X'"/>
     <!-- end -->
 
     <xsl:variable name="lang" select="/*/@xml:lang"/>
@@ -58,7 +54,7 @@
     </xsl:variable>
 
     <xsl:variable name="latestVersionDate">
-        <xsl:for-each select="/*/meta/version_history/version">
+        <xsl:for-each select="//version_history/version">
             <xsl:sort select="xs:dateTime(@date)" order="descending"/>
             <xsl:if test="position() = 1">
                 <xsl:value-of select="format-dateTime(@date, '[MNn] [D1o], [Y]', 'en', (), ())"/>
@@ -69,31 +65,26 @@
     <!-- ROOT -->
     <xsl:template match="/">
 
-            <xsl:if test="$EXEC_SUMMARY = true()">
-                <xsl:result-document href="../target/execsummary.fo">
-                    <fo:root xsl:use-attribute-sets="root-common">
-
-                        <xsl:call-template name="layout-master-set"/>
-                        <xsl:call-template name="Content">
-                            <xsl:with-param name="execsummary" select="true()" tunnel="yes"/>
-                        </xsl:call-template>
-
-                    </fo:root>
-                </xsl:result-document>
-            </xsl:if>
+        <xsl:if test="$EXEC_SUMMARY = true()">
+            <xsl:result-document href="../target/execsummary.fo">
                 <fo:root xsl:use-attribute-sets="root-common">
 
                     <xsl:call-template name="layout-master-set"/>
-                    
-        <xsl:call-template name="FrontMatter"/>
                     <xsl:call-template name="Content">
-                        <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
+                        <xsl:with-param name="execsummary" select="true()" tunnel="yes"/>
                     </xsl:call-template>
 
-
                 </fo:root>
-            
+            </xsl:result-document>
+        </xsl:if>
         
+        <fo:root xsl:use-attribute-sets="root-common">
+            <xsl:call-template name="layout-master-set"/>
+            <xsl:call-template name="FrontMatter"/>
+            <xsl:call-template name="Content">
+                <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
+            </xsl:call-template>
+        </fo:root>
     </xsl:template>
 
 
