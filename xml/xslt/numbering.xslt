@@ -102,6 +102,11 @@
                     <xsl:apply-templates select=".." mode="number"/>
                     <xsl:text> &#8212; </xsl:text>
                 </xsl:when>
+                <xsl:when test="parent::non-finding">
+                    <!-- prepend non-finding id (NF-NNN) -->
+                    <xsl:apply-templates select=".." mode="number"/>
+                    <xsl:text> &#8212; </xsl:text>
+                </xsl:when>
             </xsl:choose>
     </xsl:template>
 

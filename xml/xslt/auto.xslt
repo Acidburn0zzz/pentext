@@ -224,6 +224,8 @@
                     </xsl:if>
                     <fo:basic-link xsl:use-attribute-sets="link">
                         <xsl:attribute name="internal-destination"><xsl:value-of select="@findingId"/></xsl:attribute>
+                            <xsl:value-of select="@findingId"/>
+                        </xsl:attribute>
                         <xsl:value-of select="findingNumber"/>
                     </fo:basic-link>
                 </fo:block>
@@ -318,6 +320,8 @@
                 <fo:block>
                     <fo:basic-link xsl:use-attribute-sets="link">
                         <xsl:attribute name="internal-destination"><xsl:value-of select="@id"/></xsl:attribute>
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
                         <xsl:apply-templates select="." mode="number"/>
                     </fo:basic-link>
                 </fo:block>
