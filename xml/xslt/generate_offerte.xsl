@@ -81,20 +81,20 @@
     <!-- PAGE LAYOUT -->
     <xsl:template name="Content">
         <fo:page-sequence master-reference="Sections">
-                <xsl:call-template name="page_header"/>
-                <xsl:call-template name="page_footer"/>
-                <xsl:call-template name="page_tab"/>
-                <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
-                    <fo:block>
-                        <xsl:apply-templates select="offerte"/>
-                    </fo:block>
-                    <xsl:if test="not(following-sibling::*)">
-                        <fo:block id="EndOfDoc"/>
-                    </xsl:if>
-                </fo:flow>
-            </fo:page-sequence>
+            <xsl:call-template name="page_header"/>
+            <xsl:call-template name="page_footer"/>
+            <xsl:call-template name="page_tab"/>
+            <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
+                <fo:block>
+                    <xsl:apply-templates select="offerte"/>
+                </fo:block>
+                <xsl:if test="not(following-sibling::*)">
+                    <fo:block id="EndOfDoc"/>
+                </xsl:if>
+            </fo:flow>
+        </fo:page-sequence>
     </xsl:template>
-    
+
     <!-- skip meta in quote; this is handled in FrontMatter -->
     <xsl:template match="meta"/>
 
@@ -183,17 +183,34 @@
     <xsl:template match="title">
         <xsl:variable name="LEVEL" select="count(ancestor::*) - 1"/>
         <xsl:variable name="CLASS">
-            <!-- use title-x for all levels -->
-            <xsl:text>title-</xsl:text>
-            <xsl:value-of select="$LEVEL"/>
+            <xsl:choose>
+                <xsl:when test="ancestor::waivers">
+                    <!-- Waivers get their own title style -->
+                    <xsl:text>title-waiver</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- use title-x for all levels -->
+                    <xsl:text>title-</xsl:text>
+                    <xsl:value-of select="$LEVEL"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:variable>
+
 
         <fo:block padding-left="2mm">
             <xsl:call-template name="use-att-set">
                 <xsl:with-param name="CLASS" select="$CLASS"/>
             </xsl:call-template>
+            <xsl:if test="self::title[ancestor::waivers]">
+                <fo:inline>
+                    <xsl:text>Annex&#160;</xsl:text>
+                    <xsl:value-of select="count(//annex) + 1"/>
+                    <xsl:text>:&#160;</xsl:text>
+                </fo:inline>
+            </xsl:if>
             <xsl:apply-templates/>
         </fo:block>
+
     </xsl:template>
 
     <!-- CONTACT BOX (comes at the end, is just the address, no title/table) -->
