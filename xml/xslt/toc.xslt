@@ -156,7 +156,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:choose>
-                    <xsl:when test="$execsummary = true()">
+                    <xsl:when test="$EXEC_SUMMARY = true()">
                         <xsl:number
                             count="section[not(@visibility = 'hidden')][ancestor-or-self::*/@inexecsummary = 'yes']"
                             level="multiple" format="{$AUTO_NUMBERING_FORMAT}"/>
