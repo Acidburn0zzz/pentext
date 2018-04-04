@@ -8,9 +8,9 @@
         <fo:block xsl:use-attribute-sets="index">
             <fo:block>
                 <fo:table table-layout="fixed" width="100%">
-                    <fo:table-column column-width="2.3cm"/>
-                    <fo:table-column column-width="13cm"/>
-                    <fo:table-column column-width="1cm"/>
+                    <fo:table-column column-width="proportional-column-width(14)"/>
+                    <fo:table-column column-width="proportional-column-width(79)"/>
+                    <fo:table-column column-width="proportional-column-width(7)"/>
                     <fo:table-body>
                         <xsl:apply-templates select="/" mode="toc"/>
                     </fo:table-body>
