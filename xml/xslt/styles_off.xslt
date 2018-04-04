@@ -43,7 +43,6 @@
         <xsl:attribute name="text-align">right</xsl:attribute>
         <xsl:attribute name="margin-right">2cm</xsl:attribute>
     </xsl:attribute-set>
-    
     <!-- Pages -->
     <xsl:attribute-set name="coverfooter" use-attribute-sets="FooterFont footer">
         <xsl:attribute name="color">#FFFFFF</xsl:attribute>
@@ -53,5 +52,7 @@
         <xsl:attribute name="line-height">5.5mm</xsl:attribute>
         <xsl:attribute name="text-align-last">right</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="sidetab"/>
+    <xsl:attribute-set name="sidetab-textblock"/>
     
 </xsl:stylesheet>

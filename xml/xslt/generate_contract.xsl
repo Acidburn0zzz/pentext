@@ -59,7 +59,7 @@
 
             <xsl:call-template name="layout-master-set"/>
             <xsl:call-template name="Content">
-                        <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
+                        <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
                     </xsl:call-template>
 
         </fo:root>

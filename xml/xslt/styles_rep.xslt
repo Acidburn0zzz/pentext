@@ -36,6 +36,21 @@
         <xsl:attribute name="line-height">5.5mm</xsl:attribute>
         <xsl:attribute name="text-align-last">right</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="sidetab">
+        <xsl:attribute name="width">4.3cm</xsl:attribute>
+        <xsl:attribute name="height">1.3cm</xsl:attribute>
+        <xsl:attribute name="padding-end">5mm</xsl:attribute>
+        <xsl:attribute name="background-color">#e2632a</xsl:attribute>
+        <xsl:attribute name="reference-orientation">90</xsl:attribute>
+        <xsl:attribute name="display-align">center</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="sidetab-textblock">
+        <xsl:attribute name="color">white</xsl:attribute>
+        <xsl:attribute name="font-size">9pt</xsl:attribute>
+        <xsl:attribute name="margin-left">2mm</xsl:attribute>
+        <xsl:attribute name="margin-right">2mm</xsl:attribute>
+        <xsl:attribute name="text-align">center</xsl:attribute>
+    </xsl:attribute-set>
     
     <!-- Retest status -->
     <xsl:attribute-set name="status-new"><!-- also used by unresolved -->

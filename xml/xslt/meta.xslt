@@ -15,17 +15,8 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:variable name="reporttitle">
-            <xsl:choose>
-                <xsl:when test="$EXEC_SUMMARY = true()">
-                    <xsl:text>Penetration Test Report Management Summary</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="title"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="words" select="tokenize($reporttitle, '\s')"/>
+        
+        <xsl:variable name="words" select="tokenize(title, '\s')"/>
 
         <fo:block xsl:use-attribute-sets="frontpagetext">
             <fo:block xsl:use-attribute-sets="title-0">
@@ -53,6 +44,11 @@
                     </xsl:choose>
                 </xsl:for-each>
             </fo:block>
+            <xsl:if test="$execsummary = 'yes'">
+                <fo:block xsl:use-attribute-sets="for">
+                <xsl:text>Management Summary</xsl:text>
+            </fo:block>
+            </xsl:if>
             <fo:block xsl:use-attribute-sets="for">
                 <xsl:text>for</xsl:text>
             </fo:block>
@@ -101,16 +97,14 @@
                             <fo:block>Title</fo:block>
                         </fo:table-cell>
                         <fo:table-cell xsl:use-attribute-sets="td">
-                            <fo:block>
-                                <xsl:choose>
-                                    <xsl:when test="$EXEC_SUMMARY = true()">
-                                        <xsl:text>Penetration Test Report Management Summary</xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="title"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </fo:block>
+                            <xsl:choose>
+                <xsl:when test="$execsummary = 'yes'">
+                    <fo:block>Penetration Test Report Management Summary</fo:block>
+                </xsl:when>
+                <xsl:otherwise>
+                    <fo:block><xsl:value-of select="title"/></fo:block>
+                </xsl:otherwise>
+            </xsl:choose>
                         </fo:table-cell>
                     </fo:table-row>
                     <fo:table-row xsl:use-attribute-sets="borders">
@@ -303,8 +297,8 @@
 
     <xsl:template name="Contact">
         <fo:block xsl:use-attribute-sets="title-4">Contact</fo:block>
-        <fo:block xsl:use-attribute-sets="p" margin-left="0">For more information about this Document and its
-            contents please contact <xsl:value-of select="company/full_name"/>
+        <fo:block xsl:use-attribute-sets="p" margin-left="0">For more information about this
+            Document and its contents please contact <xsl:value-of select="company/full_name"/>
             <xsl:if test="not(company/full_name[ends-with(., '.')])"
             ><xsl:text>.</xsl:text></xsl:if></fo:block>
         <fo:block break-after="page">

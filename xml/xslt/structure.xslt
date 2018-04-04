@@ -7,7 +7,7 @@
         <xsl:param name="execsummary" tunnel="yes"/>
         <xsl:if test="not(@visibility = 'hidden')">
             <xsl:choose>
-                <xsl:when test="$execsummary = true()">
+                <xsl:when test="$execsummary = 'yes'">
                     <xsl:if test="ancestor-or-self::*/@inexecsummary = 'yes'">
                         <fo:block xsl:use-attribute-sets="section">
                             <xsl:if test="self::appendix or self::annex">
@@ -41,8 +41,8 @@
             <!-- Give somewhat larger separation to Appendix because of the long string; if everything gets 3cm it looks horrible -->
             <xsl:attribute name="provisional-distance-between-starts">
                 <xsl:choose>
-                    <xsl:when test="self::title[parent::appendix]">3cm</xsl:when>
-                    <xsl:otherwise>1.3cm</xsl:otherwise>
+                    <xsl:when test="self::title[parent::appendix]">2.8cm</xsl:when>
+                    <xsl:otherwise>1.5cm</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
             <xsl:call-template name="use-att-set">
@@ -58,7 +58,7 @@
                             </fo:marker>
                         </xsl:if>
                         <xsl:choose>
-                            <xsl:when test="$execsummary = true()">
+                            <xsl:when test="$execsummary = 'yes'">
                                 <xsl:choose>
                                     <xsl:when test="self::title[parent::appendix]">
                                         <fo:inline> Appendix&#160;<xsl:number

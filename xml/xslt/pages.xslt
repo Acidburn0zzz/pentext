@@ -133,7 +133,14 @@
     </xsl:template>
 
     <xsl:template name="FrontMatter">
-        <fo:page-sequence master-reference="Cover" force-page-count="end-on-even">
+        <xsl:param name="execsummary" tunnel="yes"/>
+        <fo:page-sequence master-reference="Cover">
+            <xsl:attribute name="force-page-count">
+                <xsl:choose>
+                    <xsl:when test="$execsummary = 'yes'">no-force</xsl:when>
+                    <xsl:otherwise>end-on-even</xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
             <xsl:call-template name="cover_footer"/>
             <xsl:call-template name="page_header"/>
             <xsl:call-template name="meta_footer"/>
@@ -147,21 +154,46 @@
     </xsl:template>
 
     <xsl:template name="Content">
-        <xsl:for-each select="/*/section | /*/appendix">
-            <fo:page-sequence master-reference="Sections" force-page-count="end-on-even">
-                <xsl:call-template name="page_header"/>
-                <xsl:call-template name="page_footer"/>
+        <xsl:param name="execsummary" tunnel="yes"/>
+        <xsl:choose>
+            <xsl:when test="$execsummary = 'yes'">
+                <xsl:for-each
+                    select="/*/section[@inexecsummary = 'yes'] | /*/appendix[@inexecsummary = 'yes']">
+                    <xsl:call-template name="generate_pages"/>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="/*/section | /*/appendix">
+                    <xsl:call-template name="generate_pages"/>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+
+    </xsl:template>
+
+    <xsl:template name="generate_pages">
+        <xsl:param name="execsummary" tunnel="yes"/>
+        <fo:page-sequence master-reference="Sections">
+            <xsl:attribute name="force-page-count">
+                <xsl:choose>
+                    <xsl:when test="$execsummary = 'yes'">no-force</xsl:when>
+                    <xsl:otherwise>end-on-even</xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:call-template name="page_header"/>
+            <xsl:call-template name="page_footer"/>
+            <xsl:if test="not($execsummary = 'yes')">
                 <xsl:call-template name="page_tab"/>
-                <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
-                    <fo:block>
-                        <xsl:apply-templates select="."/>
-                    </fo:block>
-                    <xsl:if test="not(following-sibling::*)">
-                        <fo:block id="EndOfDoc"/>
-                    </xsl:if>
-                </fo:flow>
-            </fo:page-sequence>
-        </xsl:for-each>
+            </xsl:if>
+            <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
+                <fo:block>
+                    <xsl:apply-templates select="."/>
+                </fo:block>
+                <xsl:if test="not(following-sibling::*)">
+                    <fo:block id="EndOfDoc"/>
+                </xsl:if>
+            </fo:flow>
+        </fo:page-sequence>
     </xsl:template>
 
 </xsl:stylesheet>
