@@ -97,6 +97,12 @@
         <xsl:attribute name="margin-bottom">0.7cm</xsl:attribute>
         <xsl:attribute name="font-family">OpenSans</xsl:attribute>
     </xsl:attribute-set>
+    <xsl:attribute-set name="title-waiver" use-attribute-sets="title">
+        <xsl:attribute name="font-size">16pt</xsl:attribute>
+        <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
+        <xsl:attribute name="background-color">#e2632a</xsl:attribute>
+        <xsl:attribute name="text-transform">capitalize</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="img-title">
         <xsl:attribute name="font-style">italic</xsl:attribute>
         <xsl:attribute name="text-align">center</xsl:attribute>
@@ -221,21 +227,6 @@
     <xsl:attribute-set name="region-end-content">
         <xsl:attribute name="extent">1.3cm</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="sidetab">
-        <xsl:attribute name="width">4.3cm</xsl:attribute>
-        <xsl:attribute name="height">1.3cm</xsl:attribute>
-        <xsl:attribute name="padding-end">5mm</xsl:attribute>
-        <xsl:attribute name="background-color">#e2632a</xsl:attribute>
-        <xsl:attribute name="reference-orientation">90</xsl:attribute>
-        <xsl:attribute name="display-align">center</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="sidetab-textblock">
-        <xsl:attribute name="color">white</xsl:attribute>
-        <xsl:attribute name="font-size">9pt</xsl:attribute>
-        <xsl:attribute name="margin-left">2mm</xsl:attribute>
-        <xsl:attribute name="margin-right">2mm</xsl:attribute>
-        <xsl:attribute name="text-align">center</xsl:attribute>
-    </xsl:attribute-set>
     <xsl:attribute-set name="region-body-cover">
         <xsl:attribute name="background-color">#414241</xsl:attribute>
     </xsl:attribute-set>
@@ -310,6 +301,7 @@
         <xsl:attribute name="border-top">1px solid #e4e4e4</xsl:attribute>
         <xsl:attribute name="border-bottom">1px solid #e4e4e4</xsl:attribute>
         <xsl:attribute name="table-layout">fixed</xsl:attribute>
+        <xsl:attribute name="width">100%</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="th-row">
         <xsl:attribute name="keep-with-next.within-column">always</xsl:attribute>
