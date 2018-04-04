@@ -44,7 +44,7 @@
                     <xsl:result-document href="{$filename}">
                         <fo:root>
                             <xsl:call-template name="layout-master-set"/>
-                            <fo:page-sequence master-reference="Report">
+                            <fo:page-sequence master-reference="Sections">
                                 <xsl:call-template name="page_header"/>
                                 <xsl:call-template name="page_footer"/>
                                 <fo:flow flow-name="region-body"
@@ -104,14 +104,7 @@
     
     <xsl:template match="alternative_waiver | standard_waiver" mode="apply">
         <xsl:param name="client" tunnel="yes"/>
-            <!-- WAIVER TITLE -->
-            <fo:block xsl:use-attribute-sets="title-1">
-                <xsl:if test="$client = true()">
-                    <xsl:text>ANNEX 2</xsl:text>
-                    <fo:block/>
-                </xsl:if>
-            </fo:block>
-            <xsl:apply-templates/>
+        <xsl:apply-templates/>
         <xsl:call-template name="generate_waiver_signature_box"/>
             
         

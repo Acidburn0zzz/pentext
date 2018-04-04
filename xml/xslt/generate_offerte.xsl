@@ -21,6 +21,7 @@
     <xsl:import href="numbering.xslt"/>
     <xsl:import href="localisation.xslt"/>
     <xsl:import href="placeholders.xslt"/>
+    <xsl:import href="waiver.xslt"/>
 
     <xsl:include href="styles_off.xslt"/>
 
@@ -110,6 +111,8 @@
             </fo:flow>
         </fo:page-sequence>
     </xsl:template>
+    
+    <xsl:template name="page_tab"/>
 
     <!-- skip meta in quote; this is handled in FrontMatter -->
     <xsl:template match="meta"/>
