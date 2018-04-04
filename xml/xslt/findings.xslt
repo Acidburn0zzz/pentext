@@ -14,7 +14,6 @@
             />
         </xsl:variable>
         <fo:table xsl:use-attribute-sets="findingTable">
-            margin-bottom="{$large-space}">
             <fo:table-column column-width="proportional-column-width(70)"/>
             <fo:table-column column-width="proportional-column-width(30)"/>
             <fo:table-body>
