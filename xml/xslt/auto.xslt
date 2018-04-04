@@ -3,7 +3,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs"
     xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0"
     xmlns:svg="http://www.w3.org/2000/svg" xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-    xmlns:my="http://www.radical.sexy" extension-element-prefixes="math my">
+    xmlns:my="http://www.radical.sexy" extension-element-prefixes="math">
 
     <xsl:template match="generate_targets">
         <xsl:call-template name="generate_targets_xslt"/>
@@ -223,7 +223,7 @@
                         </xsl:attribute>
                     </xsl:if>
                     <fo:basic-link xsl:use-attribute-sets="link">
-                        <xsl:attribute name="internal-destination"><xsl:value-of select="@findingId"/></xsl:attribute>
+                        <xsl:attribute name="internal-destination">
                             <xsl:value-of select="@findingId"/>
                         </xsl:attribute>
                         <xsl:value-of select="findingNumber"/>
@@ -319,7 +319,7 @@
             <fo:table-cell xsl:use-attribute-sets="td">
                 <fo:block>
                     <fo:basic-link xsl:use-attribute-sets="link">
-                        <xsl:attribute name="internal-destination"><xsl:value-of select="@id"/></xsl:attribute>
+                        <xsl:attribute name="internal-destination">
                             <xsl:value-of select="@id"/>
                         </xsl:attribute>
                         <xsl:apply-templates select="." mode="number"/>
@@ -684,7 +684,7 @@
                 <fo:table margin-top="15px" xsl:use-attribute-sets="fwtable">
                     <!-- need some margin to make space for percentages that can't fit in the pie... -->
                     <fo:table-column column-width="{$pieHeight + 50}px"/>
-                    <fo:table-column/>
+                    <fo:table-column column-width="proportional-column-width(1)"/>
                     <fo:table-body>
                         <fo:table-row keep-together.within-column="always">
                             <fo:table-cell xsl:use-attribute-sets="td cellmarginreset">
@@ -729,7 +729,7 @@
                                 <fo:block>
                                     <fo:table xsl:use-attribute-sets="pieLegendTable fwtable">
                                         <fo:table-column column-width="22px"/>
-                                        <fo:table-column/>
+                                        <fo:table-column column-width="proportional-column-width(1)"/>
                                         <fo:table-body>
                                             <xsl:for-each select="$pieTable/pieEntry">
                                                 <xsl:variable name="pieEntryLabelClean"
@@ -972,21 +972,5 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
-    <xsl:function name="my:titleCase" as="xs:string">
-        <xsl:param name="s" as="xs:string"/>
-        <xsl:choose>
-            <xsl:when test="lower-case($s) = ('and', 'or')">
-                <xsl:value-of select="lower-case($s)"/>
-            </xsl:when>
-            <xsl:when test="$s = upper-case($s)">
-                <xsl:value-of select="$s"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of
-                    select="concat(upper-case(substring($s, 1, 1)), lower-case(substring($s, 2)))"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>
 
 </xsl:stylesheet>

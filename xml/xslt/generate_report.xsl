@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" exclude-result-prefixes="xs" version="2.0">
+    xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:my="http://www.radical.sexy" exclude-result-prefixes="xs my" version="2.0">
 
 
     <xsl:import href="pages.xslt"/>
@@ -62,28 +62,44 @@
         </xsl:for-each>
     </xsl:variable>
 
+    <xsl:function name="my:titleCase" as="xs:string">
+        <xsl:param name="s" as="xs:string"/>
+        <xsl:choose>
+            <xsl:when test="lower-case($s) = ('and', 'or')">
+                <xsl:value-of select="lower-case($s)"/>
+            </xsl:when>
+            <xsl:when test="$s = upper-case($s)">
+                <xsl:value-of select="$s"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of
+                    select="concat(upper-case(substring($s, 1, 1)), lower-case(substring($s, 2)))"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+
     <!-- ROOT -->
     <xsl:template match="/">
-
         <xsl:if test="$EXEC_SUMMARY = true()">
             <xsl:result-document href="../target/execsummary.fo">
                 <fo:root xsl:use-attribute-sets="root-common">
-
                     <xsl:call-template name="layout-master-set"/>
-                    <xsl:call-template name="Content">
-                        <xsl:with-param name="execsummary" select="true()" tunnel="yes"/>
+                    <xsl:call-template name="FrontMatter">
+                        <xsl:with-param name="execsummary" select="'yes'" tunnel="yes"/>
                     </xsl:call-template>
-
+                    <xsl:call-template name="Content">
+                        <xsl:with-param name="execsummary" select="'yes'" tunnel="yes"/>
+                    </xsl:call-template>
                 </fo:root>
             </xsl:result-document>
         </xsl:if>
-        
         <fo:root xsl:use-attribute-sets="root-common">
             <xsl:call-template name="layout-master-set"/>
             <xsl:call-template name="FrontMatter"/>
             <xsl:call-template name="Content">
-                <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
-            </xsl:call-template>
+                        <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
+                    </xsl:call-template>
         </fo:root>
     </xsl:template>
 
