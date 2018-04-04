@@ -37,10 +37,13 @@
   </xs:element>
 
   <xs:group name="name-group">
-    <xs:sequence>
-      <xs:element ref="full_name"/>
-      <xs:element ref="short_name"/>
-    </xs:sequence>
+    <xs:choice>
+      <xs:sequence>
+        <xs:element ref="full_name"/>
+        <xs:element ref="short_name"/>
+      </xs:sequence>
+      <xs:group ref="placeholders"/>
+    </xs:choice>
   </xs:group>
   <xs:group name="address-group">
     <xs:sequence>
@@ -63,9 +66,21 @@
       </xs:choice>
     </xs:complexType>
   </xs:element>
-  <xs:element name="postal_code" type="xs:string"/>
-  <xs:element name="city" type="xs:string"/>
-  <xs:element name="country" type="xs:string"/>
+  <xs:element name="postal_code" type="addresstype"/>
+  <xs:element name="city" type="addresstype"/>
+  <xs:element name="country" type="addresstype"/>
+  <xs:element name="email">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="placeholders"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="addresstype" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="1">
+      <xs:group ref="placeholders"/>
+    </xs:choice>
+  </xs:complexType>
   <xs:element name="phone" type="xs:string"/>
   <xs:element name="email" type="emailAddress"/>
   <xs:element name="website" type="xs:anyURI"/>
@@ -191,8 +206,8 @@
       <xs:union memberTypes="xs:date xs:string"/>
     </xs:simpleType>
   </xs:element>
-  
-  
+
+
 
   <xs:element name="target_application" type="xs:string"/>
   <xs:element name="target_application_producer" type="xs:string"/>
@@ -299,6 +314,8 @@
   </xs:element>
 
   <xs:attribute name="class" type="xs:string"/>
+
+  <xs:element name="client_reference" type="xs:string"/>
 
   <xs:element name="version_history">
     <xs:complexType>
