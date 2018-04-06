@@ -11,10 +11,6 @@
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
 
-    <xsl:variable name="lang" select="/*/@xml:lang"/>
-
-    <!-- ****** AUTO_NUMBERING_FORMAT:	value of the <xsl:number> element used for auto numbering -->
-    <!--<xsl:param name="AUTO_NUMBERING_FORMAT" select="'1.1.1'"/>-->
     <xsl:param name="INVOICE_NO">
         <xsl:choose>
             <xsl:when test="/invoice/@invoice_no">
@@ -33,13 +29,16 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>
+    
+    <xsl:include href="functions_params_vars.xslt"/>
+    
     <!-- ROOT -->
     <xsl:template match="/offerte | /invoice">
         <!-- Invoice is generated straight from offerte -->
         <fo:root>
             <xsl:call-template name="layout-master-set"/>
             <xsl:call-template name="Content">
-                        <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
+                        <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
                     </xsl:call-template>
         </fo:root>
     </xsl:template>
@@ -48,13 +47,6 @@
     <xsl:template name="invoice_from_offerte">
         <xsl:variable name="fee" select="/offerte/meta/activityinfo/fee * 1"/>
         <xsl:variable name="vat" select="$fee div 100 * 21"/>
-        <xsl:variable name="denomination">
-            <xsl:choose>
-                <xsl:when test="/offerte/meta/activityinfo/fee/@denomination = 'eur'">€</xsl:when>
-                <xsl:when test="/offerte/meta/activityinfo/fee/@denomination = 'gbp'">£</xsl:when>
-                <xsl:when test="/offerte/meta/activityinfo/fee/@denomination = 'usd'">$</xsl:when>
-            </xsl:choose>
-        </xsl:variable>
         <xsl:call-template name="invoiceStart">
             <xsl:with-param name="INVOICE_NO" select="$INVOICE_NO"/>
             <xsl:with-param name="DATE" select="format-date($DATE, '[MNn] [D1], [Y]', 'en', (), ())"
@@ -138,13 +130,6 @@
     </xsl:template>
 
     <xsl:template name="custom_invoice">
-        <xsl:variable name="denomination">
-            <xsl:choose>
-                <xsl:when test="/invoice/@denomination = 'usd'">$</xsl:when>
-                <xsl:when test="/invoice/@denomination = 'eur'">€</xsl:when>
-                <xsl:when test="/invoice/@denomination = 'gbp'">£</xsl:when>
-            </xsl:choose>
-        </xsl:variable>
         <xsl:call-template name="invoiceStart">
             <xsl:with-param name="INVOICE_NO" select="$INVOICE_NO"/>
             <xsl:with-param name="DATE" select="format-date($DATE, '[MNn] [D1], [Y]', 'en', (), ())"

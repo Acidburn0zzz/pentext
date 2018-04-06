@@ -19,41 +19,7 @@
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
 
-    
-    <!-- params & keys not needed but required by shared code -->
-    <xsl:param name="AUTO_NUMBERING_FORMAT" select="'1.1.1'"/>
-    <xsl:param name="EXEC_SUMMARY" select="false()"/>
-    <xsl:key name="rosid" match="section|finding|appendix|non-finding" use="@id"/>
-    <xsl:key name="biblioid" match="biblioentry" use="@id"/>
-    <xsl:variable name="fee" select="/contract/meta/contractor/hourly_fee * 1"/>
-    <xsl:variable name="plannedHours" select="/contract/meta/work/planning/hours * 1"/>
-    <xsl:variable name="total_fee" select="$fee * $plannedHours"/>
-    
-    <!-- the ones below actually *are* used -->
-    <xsl:variable name="CLASSES" select="document('../xslt/styles_rat.xslt')/*/xsl:attribute-set"/>
-    <xsl:variable name="lang" select="/*/@xml:lang"/>
-    <xsl:variable name="latestVersionDate">
-            <xsl:for-each select="/*/meta/client/rates/latestrevisiondate">
-                <xsl:sort select="xs:dateTime(@date)" order="descending"/>
-                <xsl:if test="position() = 1">
-                    <xsl:value-of select="format-dateTime(@date, '[MNn] [D1], [Y]', en, (), ())"/>
-                    <!-- Note: this should be: 
-                    <xsl:value-of select="format-dateTime(@date, $localDateFormat, $lang, (), ())"/> 
-                    to properly be localised, but we're using Saxon HE instead of PE/EE and having localised month names 
-                    would require creating a LocalizerFactory 
-                    See http://www.saxonica.com/html/documentation/extensibility/config-extend/localizing/ for more info
-                    sounds like I'd have to know Java for that so for now, the date isn't localised. :) -->
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:variable>
-    
-    <xsl:variable name="denomination">
-            <xsl:choose>
-                <xsl:when test="//meta/client/rates/@denomination = 'eur'">€</xsl:when>
-                <xsl:when test="//meta/client/rates/@denomination = 'gbp'">£</xsl:when>
-                <xsl:when test="//meta/client/rates/@denomination = 'usd'">$</xsl:when>
-            </xsl:choose>
-        </xsl:variable>
+    <xsl:include href="functions_params_vars.xslt"/>
     
     <xsl:template match="ratecard">
         <!-- Invoice is generated straight from offerte -->

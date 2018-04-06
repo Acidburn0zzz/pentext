@@ -11,7 +11,6 @@
     <xsl:import href="structure.xslt"/>
     <xsl:import href="att-set.xslt"/>
     <xsl:import href="block.xslt"/>
-    <!--<xsl:import href="findings.xslt"/>-->
     <xsl:import href="auto.xslt"/>
     <xsl:import href="table.xslt"/>
     <xsl:import href="lists.xslt"/>
@@ -26,59 +25,8 @@
     <xsl:include href="styles_off.xslt"/>
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
-
-
-    <xsl:param name="AUTO_NUMBERING_FORMAT" select="'1.1.1'"/>
-    <xsl:param name="EXEC_SUMMARY" select="false()"/>
-
-    <xsl:key name="rosid" match="section | finding | appendix | non-finding" use="@id"/>
-    <xsl:key name="biblioid" match="biblioentry" use="@id"/>
-
-    <!-- not used but needed because of shared code with contract; todo: clean these up -->
-    <xsl:variable name="fee" select="/contract/meta/contractor/hourly_fee * 1"/>
-    <xsl:variable name="plannedHours" select="/contract/meta/work/planning/hours * 1"/>
-    <xsl:variable name="total_fee" select="$fee * $plannedHours"/>
-    <!-- end -->
-
-    <xsl:variable name="lang" select="/*/@xml:lang"/>
-
-    <xsl:variable name="CLASSES" select="document('../xslt/styles.xslt')/*/xsl:attribute-set"/>
-
-    <xsl:variable name="latestVersionNumber">
-        <xsl:for-each select="//version_history/version">
-            <xsl:sort select="xs:dateTime(@date)" order="descending"/>
-            <xsl:if test="position() = 1">
-                <xsl:call-template name="VersionNumber">
-                    <xsl:with-param name="number" select="@number"/>
-                </xsl:call-template>
-            </xsl:if>
-        </xsl:for-each>
-    </xsl:variable>
-
-    <xsl:variable name="latestVersionDate">
-        <xsl:for-each select="//version_history/version">
-            <xsl:sort select="xs:dateTime(@date)" order="descending"/>
-            <xsl:if test="position() = 1">
-                <xsl:value-of select="format-dateTime(@date, '[MNn] [D1o], [Y]', 'en', (), ())"/>
-            </xsl:if>
-        </xsl:for-each>
-    </xsl:variable>
-
-    <xsl:function name="my:titleCase" as="xs:string">
-        <xsl:param name="s" as="xs:string"/>
-        <xsl:choose>
-            <xsl:when test="lower-case($s) = ('and', 'or')">
-                <xsl:value-of select="lower-case($s)"/>
-            </xsl:when>
-            <xsl:when test="$s = upper-case($s)">
-                <xsl:value-of select="$s"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of
-                    select="concat(upper-case(substring($s, 1, 1)), lower-case(substring($s, 2)))"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:function>
+    
+    <xsl:include href="functions_params_vars.xslt"/>
 
 
     <!-- ROOT -->

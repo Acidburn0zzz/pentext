@@ -9,11 +9,6 @@
             <xsl:when test="$placeholderElement/ancestor-or-self::*/@denomination = 'eur'">€</xsl:when>
             <xsl:when test="$placeholderElement/ancestor-or-self::*/@denomination = 'usd'">$</xsl:when>
             <xsl:when test="$placeholderElement/ancestor-or-self::*/@denomination = 'gbp'">£</xsl:when>
-            <!--<xsl:otherwise>
-                <xsl:when test="$placeholderElement/ancestor::*/@denomination = 'eur'">€</xsl:when>
-                <xsl:when test="$placeholderElement/ancestor::*/@denomination = 'usd'">$</xsl:when>
-                <xsl:when test="$placeholderElement/ancestor::*/@denomination = 'gbp'">£</xsl:when>
-            </xsl:otherwise>-->
             <xsl:otherwise><fo:inline xsl:use-attribute-sets="errortext">WARNING: NO DENOMINATION FOUND</fo:inline></xsl:otherwise>
         </xsl:choose>
     </xsl:template>

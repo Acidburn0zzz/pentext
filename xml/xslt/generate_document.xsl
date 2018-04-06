@@ -24,24 +24,7 @@
     
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
 
-
-    <!-- ****** AUTO_NUMBERING_FORMAT:	value of the <xsl:number> element used for auto numbering -->
-    <xsl:param name="AUTO_NUMBERING_FORMAT" select="'1.1.1'"/>
-
-    <xsl:key name="rosid" match="section|appendix" use="@id"/>
-    <xsl:key name="biblioid" match="biblioentry" use="@id"/>
-    
-    <xsl:variable name="CLASSES" select="document('../xslt/styles_doc.xslt')/*/xsl:attribute-set"/>
-    <xsl:variable name="lang" select="/*/@xml:lang"/>
-    
-    <xsl:variable name="latestVersionDate">
-            <xsl:for-each select="/*/meta/version_history/version">
-                <xsl:sort select="xs:dateTime(@date)" order="descending"/>
-                <xsl:if test="position() = 1">
-                    <xsl:value-of select="format-dateTime(@date, '[MNn] [D1o], [Y]', 'en', (), ())"/>
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:variable>
+    <xsl:include href="functions_params_vars.xslt"/>
     
 <!-- ROOT -->
     <xsl:template match="/">
@@ -59,16 +42,6 @@
 <!-- OVERRIDES -->
     <!-- meta -->
     <xsl:template match="meta">
-        <xsl:variable name="latestVersionNumber">
-            <xsl:for-each select="version_history/version">
-                <xsl:sort select="xs:dateTime(@date)" order="descending"/>
-                <xsl:if test="position() = 1">
-                    <xsl:call-template name="VersionNumber">
-                        <xsl:with-param name="number" select="@number"/>
-                    </xsl:call-template>
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:variable>
         <fo:block xsl:use-attribute-sets="graphics-block">
             <fo:external-graphic xsl:use-attribute-sets="logo"/>
         </fo:block>
