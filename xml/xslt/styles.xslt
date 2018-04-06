@@ -174,7 +174,6 @@
             <xsl:value-of select="$small-space"/>
         </xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="list" use-attribute-sets="p"/>
     <xsl:attribute-set name="last">
         <xsl:attribute name="margin-bottom">
             <xsl:value-of select="$very-large-space"/>
@@ -322,6 +321,10 @@
     </xsl:attribute-set>
 
     <!-- lists -->
+    <xsl:attribute-set name="list">
+        <xsl:attribute name="provisional-distance-between-starts">0.7cm</xsl:attribute>
+        <xsl:attribute name="provisional-label-separation">2mm</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="li">
         <xsl:attribute name="line-height">5.5mm</xsl:attribute>
         <xsl:attribute name="keep-together.within-page">always</xsl:attribute>
