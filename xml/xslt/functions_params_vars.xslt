@@ -21,7 +21,7 @@
     <!-- contract variables -->
     <xsl:variable name="hourly_fee" select="/contract/meta/contractor/hourly_fee * 1"/>
     <xsl:variable name="plannedHours" select="/contract/meta/work/planning/hours * 1"/>
-    <xsl:variable name="total_fee" select="$fee * $plannedHours"/>
+    <xsl:variable name="total_fee" select="$hourly_fee * $plannedHours"/>
 
     <!-- adding multiple classes to elements -->
     <xsl:variable name="CLASSES" select="document('../xslt/styles.xslt')/*/xsl:attribute-set"/>

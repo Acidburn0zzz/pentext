@@ -25,7 +25,7 @@
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
     
-    <xsl:include href="keys_params_vars.xslt"/>
+    <xsl:include href="functions_params_vars.xslt"/>
 
     <!-- ROOT -->
     <xsl:template match="/">

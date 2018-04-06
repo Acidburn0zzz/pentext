@@ -25,7 +25,7 @@
                     <!-- list text -->
                     <fo:list-item-body start-indent="body-start()">
                         <fo:block>
-                            <xsl:value-of select="."/>
+                            <xsl:apply-templates/>
                         </fo:block>
                     </fo:list-item-body>
                 </fo:list-item>
