@@ -51,5 +51,24 @@
         </fo:root>
     </xsl:template>
 
+    <xsl:template name="Content">
+        <fo:page-sequence master-reference="Flimsy">
+            <xsl:call-template name="page_header"/>
+            <xsl:call-template name="page_footer"/>
+            <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
+                <fo:block>
+                    <xsl:choose>
+                        <xsl:when test="self::offerte">
+                            <xsl:call-template name="invoice_from_offerte"/>
+                        </xsl:when>
+                        <xsl:when test="self::invoice">
+                            <xsl:call-template name="custom_invoice"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </fo:block>
+            </fo:flow>
+        </fo:page-sequence>
+    </xsl:template>
+
 
 </xsl:stylesheet>

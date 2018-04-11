@@ -146,11 +146,15 @@
   <string id="invoice_yaygreen">
     <translation xml:lang="nl">Spaar papier — niet afdrukken tenzij absoluut
       noodzakelijk. Lees onze (unieke) voorwaarden op:
-      https://radicallyopensecurity.com/TermsandConditions.pdf
     </translation>
     <translation xml:lang="en">Please keep digital unless absolutely required.
       Read the (unique) terms and conditions of Radically Open Security at:
-      https://radicallyopensecurity.com/TermsandConditions.pdf
+    </translation>
+  </string>
+  <string id="invoice_terms">
+    <translation xml:lang="nl">https://radicallyopensecurity.com/TermsandConditions.pdf
+    </translation>
+    <translation xml:lang="en">https://radicallyopensecurity.com/TermsandConditions.pdf
     </translation>
   </string>
   <!-- QUICKSCOPING 2 QUOTE -->

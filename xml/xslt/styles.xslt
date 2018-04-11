@@ -59,6 +59,7 @@
         <xsl:attribute name="keep-with-next.within-page">always</xsl:attribute>
         <xsl:attribute name="font-weight">bold</xsl:attribute>
         <xsl:attribute name="color">black</xsl:attribute>
+        <xsl:attribute name="font-family">OpenSans</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-0" use-attribute-sets="title">
         <xsl:attribute name="margin-top">4cm</xsl:attribute><!-- Note that it's more in practice because the title starts with an empty line -->
@@ -67,7 +68,6 @@
         <xsl:attribute name="font-size">64pt</xsl:attribute>
         <xsl:attribute name="text-align">right</xsl:attribute>
         <xsl:attribute name="color">#e2632a</xsl:attribute>
-        <xsl:attribute name="font-family">OpenSans</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="title-1" use-attribute-sets="title">
         <xsl:attribute name="font-size">16pt</xsl:attribute>

@@ -22,11 +22,6 @@
                 <fo:region-after region-name="region-after-meta"
                     xsl:use-attribute-sets="region-after-content"/>
             </fo:simple-page-master>
-            <!-- Section Cover Page -->
-            <fo:simple-page-master master-name="Section-Cover" xsl:use-attribute-sets="PortraitPage">
-                <fo:region-body region-name="region-body"
-                    xsl:use-attribute-sets="region-body-sectioncover"/>
-            </fo:simple-page-master>
             <!-- Section Content Page (Odd) -->
             <fo:simple-page-master master-name="Section-Content-odd"
                 xsl:use-attribute-sets="PortraitPage">
@@ -60,8 +55,6 @@
             </fo:page-sequence-master>
             <fo:page-sequence-master master-name="Sections">
                 <fo:repeatable-page-master-alternatives>
-                    <!--<fo:conditional-page-master-reference master-reference="Section-Cover"
-                        page-position="first"/>-->
                     <fo:conditional-page-master-reference master-reference="Section-Content-odd"
                         page-position="any" odd-or-even="odd"/>
                     <fo:conditional-page-master-reference master-reference="Section-Content-even"
