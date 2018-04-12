@@ -14,20 +14,21 @@
     <xsl:import href="generic.xslt"/>
     <xsl:import href="att-set.xslt"/>
     <xsl:import href="table.xslt"/>
+    <xsl:import href="numbering.xslt"/>
     <xsl:include href="styles_inv.xslt"/>
     <xsl:include href="localisation.xslt"/>
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
 
     <xsl:include href="functions_params_vars.xslt"/>
-    
+
     <xsl:template match="ratecard">
         <!-- Invoice is generated straight from offerte -->
         <fo:root>
-            <xsl:call-template name="layout-master-set"/>
+            <xsl:call-template name="layout-master-set-flimsy"/>
             <xsl:call-template name="Content">
-                        <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
-                    </xsl:call-template>
+                <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
+            </xsl:call-template>
         </fo:root>
     </xsl:template>
 
@@ -44,8 +45,20 @@
             </fo:flow>
         </fo:page-sequence>
     </xsl:template>
-    
+
+    <!-- title override -->
+    <xsl:template match="title[not(parent::biblioentry)]">
+        <fo:block padding-left="2mm" xsl:use-attribute-sets="title-2">
+            <xsl:apply-templates/>
+        </fo:block>
+    </xsl:template>
+
     <xsl:template match="meta">
         <!-- not doing anything here, ratecard meta is only for placeholder references -->
     </xsl:template>
+
+    <xsl:template name="VersionNumber">
+        <xsl:param name="number"/>
+    </xsl:template>
+
 </xsl:stylesheet>

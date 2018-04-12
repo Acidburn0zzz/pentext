@@ -11,6 +11,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="meta"/>
+                <xs:element name="header" type="block"/>
                 <xs:element ref="title"/>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
                     <xs:element ref="pre"/>

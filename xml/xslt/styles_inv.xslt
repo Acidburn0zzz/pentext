@@ -32,11 +32,11 @@
     </xsl:attribute-set>
     <xsl:attribute-set name="region-before-rest">
         <xsl:attribute name="precedence">true</xsl:attribute>
-        <xsl:attribute name="extent">0.6cm</xsl:attribute>
+        <xsl:attribute name="extent">1cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-after-rest">
         <xsl:attribute name="precedence">true</xsl:attribute>
-        <xsl:attribute name="extent">0.6cm</xsl:attribute>
+        <xsl:attribute name="extent">2cm</xsl:attribute>
         <xsl:attribute name="padding">0</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="logo">
