@@ -19,10 +19,9 @@
         <xi:include href="../company_info.xml"/>
         <xi:include href="../../client_info.xml"/>
     </meta>
-    <header><company_long/></header>
     <title>Service Rate Card for <client_long/></title>
     <div class="important"><generate_raterevisiondate/></div>
-    <p>For <client_long/> we offer the following hourly rates:</p>
+    <p><company_long/> offers <client_long/> the following hourly rates:</p>
    <table cols="1cm 8cm 3cm">
        <tr><th>&#160;</th><th>Role</th><th>Rate</th></tr>
         <tr><td>•</td><td>Junior pentester</td><td><client_rate title="juniorpentester"/></td></tr>
@@ -37,7 +36,7 @@
     </table>
 
 
-    <p><company_long/>'s hourly rates are excluding VAT and out-of-pocket expenses and depend upon
+    <p>All hourly rates are excluding VAT and out-of-pocket expenses and depend upon
         the exact service or area of expertise.</p>
     <p>Typically, a pentesting team is composed of two pentesters and one project/account manager. The actual team composition and price naturally depends on the length of the pentest and the complexity of the tasks, and will be determined in close consultation with <client_short/> on a per-assignment basis.</p>
     <p>

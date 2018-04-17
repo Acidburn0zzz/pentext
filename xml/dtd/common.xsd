@@ -82,7 +82,6 @@
     </xs:choice>
   </xs:complexType>
   <xs:element name="phone" type="xs:string"/>
-  <xs:element name="email" type="emailAddress"/>
   <xs:element name="website" type="xs:anyURI"/>
   <xs:element name="vat_no" type="xs:string"/>
   <xs:element name="iban" type="xs:string"/>

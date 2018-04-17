@@ -375,4 +375,13 @@
     <xsl:attribute-set name="big-space-below">
         <xsl:attribute name="margin-bottom">8mm</xsl:attribute>
     </xsl:attribute-set>
+    
+    
+    <xsl:attribute-set name="important">
+        <xsl:attribute name="text-align">center</xsl:attribute>
+        <xsl:attribute name="font-size">16pt</xsl:attribute>
+        <xsl:attribute name="margin-top">1cm</xsl:attribute>
+        <xsl:attribute name="margin-bottom">1cm</xsl:attribute>
+        <xsl:attribute name="font-weight">bold</xsl:attribute>
+    </xsl:attribute-set>
 </xsl:stylesheet>

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" 
-    exclude-result-prefixes="xs"
-    version="2.0">
-    
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    exclude-result-prefixes="xs" version="2.0">
+
     <xsl:template name="layout-master-set-flimsy">
         <!-- Invoices, Ratecards and Contracts need their own page layout; quite different from other docs so just create a different set -->
         <fo:layout-master-set>

@@ -15,7 +15,7 @@
     <xsl:import href="att-set.xslt"/>
     <xsl:import href="table.xslt"/>
     <xsl:import href="numbering.xslt"/>
-    <xsl:include href="styles_inv.xslt"/>
+    <xsl:include href="styles_rat.xslt"/>
     <xsl:include href="localisation.xslt"/>
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
@@ -32,14 +32,13 @@
         </fo:root>
     </xsl:template>
 
-    <!-- overrules for pages.xslt -->
-    <xsl:template name="Content">
+  <xsl:template name="Content">
         <fo:page-sequence master-reference="Flimsy">
             <xsl:call-template name="page_header"/>
             <xsl:call-template name="page_footer"/>
             <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
                 <fo:block>
-                    <xsl:apply-templates/>
+                            <xsl:apply-templates/>
                 </fo:block>
                 <fo:block id="EndOfDoc"/>
             </fo:flow>
@@ -48,7 +47,7 @@
 
     <!-- title override -->
     <xsl:template match="title[not(parent::biblioentry)]">
-        <fo:block padding-left="2mm" xsl:use-attribute-sets="title-2">
+        <fo:block padding-left="2mm" xsl:use-attribute-sets="title-0">
             <xsl:apply-templates/>
         </fo:block>
     </xsl:template>
