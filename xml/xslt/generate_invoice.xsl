@@ -52,7 +52,7 @@
     <!-- ROOT -->
     <xsl:template match="/offerte | /invoice">
         <!-- Invoice is generated straight from offerte -->
-        <fo:root>
+        <fo:root xsl:use-attribute-sets="root-common">
             <xsl:call-template name="layout-master-set-flimsy"/>
             <xsl:call-template name="Content">
                 <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
