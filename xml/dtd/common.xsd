@@ -10,18 +10,13 @@
   <!-- company -->
 
 
-  <xs:simpleType name="emailAddress">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="[^@]+@[^\.]+\..+"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
-  <xs:complexType name="emailAddress" mixed="true">
-    <xs:choice minOccurs="0" maxOccurs="1">
-      <xs:element name="company_email"/>
-      <xs:any></xs:any>
-    </xs:choice>
-  </xs:complexType>
+  <xs:element name="email">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="1">
+        <xs:element name="company_email"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
 
 
   <xs:element name="company">
@@ -76,13 +71,6 @@
   <xs:element name="postal_code" type="addresstype"/>
   <xs:element name="city" type="addresstype"/>
   <xs:element name="country" type="addresstype"/>
-  <xs:element name="email">
-    <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:group ref="placeholders"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
   <xs:complexType name="addresstype" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="1">
       <xs:group ref="placeholders"/>
@@ -172,7 +160,7 @@
   </xs:element>
 
   <xs:element name="invoice_rep" type="xs:string"/>
-  <xs:element name="invoice_mail" type="emailAddress"/>
+  <xs:element name="invoice_mail" type="xs:string"/>
   <xs:element name="invoice_extra_field" type="xs:string"/>
 
   <xs:element name="duration" type="xs:nonNegativeInteger"/>
