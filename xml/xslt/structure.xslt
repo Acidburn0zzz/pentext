@@ -41,7 +41,7 @@
             <!-- Give somewhat larger separation to Appendix because of the long string; if everything gets 3cm it looks horrible -->
             <xsl:attribute name="provisional-distance-between-starts">
                 <xsl:choose>
-                    <xsl:when test="self::title[parent::appendix]">2.8cm</xsl:when>
+                    <xsl:when test="self::title[parent::appendix]">3.5cm</xsl:when>
                     <xsl:otherwise>1.5cm</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
@@ -53,9 +53,7 @@
                     <fo:block line-height="0.7cm">
                         <xsl:if test="../.. = /">
                             <!-- Titles that appear on a section cover need to have a marker attached -->
-                            <fo:marker marker-class-name="tab">
-                                <xsl:value-of select="text()"/>
-                            </fo:marker>
+                            <xsl:call-template name="getTabMarker"/>
                         </xsl:if>
                         <xsl:choose>
                             <xsl:when test="$execsummary = 'yes'">
@@ -133,6 +131,11 @@
         <xsl:if test="parent::finding">
             <xsl:apply-templates select=".." mode="meta"/>
         </xsl:if>
+    </xsl:template>
+    <xsl:template name="getTabMarker">
+        <fo:marker marker-class-name="tab">
+            <xsl:value-of select="text()"/>
+        </fo:marker>
     </xsl:template>
 
 
