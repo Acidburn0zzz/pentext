@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
   vc:minVersion="1.0" vc:maxVersion="1.1">
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+<xs:import namespace="http://www.w3.org/XML/1998/namespace"
     schemaLocation="http://www.w3.org/2001/xml.xsd"/>
   <xs:import namespace="http://www.w3.org/2001/XInclude"
     schemaLocation="http://www.w3.org/2001/XInclude/XInclude.xsd"/>
@@ -15,6 +15,13 @@
       <xs:pattern value="[^@]+@[^\.]+\..+"/>
     </xs:restriction>
   </xs:simpleType>
+  
+  <xs:complexType name="emailAddress" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="1">
+      <xs:element name="company_email"/>
+      <xs:any></xs:any>
+    </xs:choice>
+  </xs:complexType>
 
 
   <xs:element name="company">
