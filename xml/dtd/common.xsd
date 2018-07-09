@@ -175,8 +175,8 @@
   <xs:element name="invoice_mail" type="emailAddress"/>
   <xs:element name="invoice_extra_field" type="xs:string"/>
 
-  <xs:element name="duration" type="xs:nonNegativeInteger"/>
-  <xs:element name="persondays" type="xs:nonNegativeInteger"/>
+  <xs:element name="duration" type="xs:float"/>
+  <xs:element name="persondays" type="xs:float"/>
   <xs:element name="planning">
     <xs:complexType>
       <xs:sequence>
