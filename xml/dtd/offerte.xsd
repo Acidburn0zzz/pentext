@@ -256,6 +256,8 @@
       <xs:element name="p_fee"/>
       <xs:element name="p_testingduration"/>
       <xs:element name="p_reportdue"/>
+      <xs:element name="p_startdate"/>
+      <xs:element name="p_enddate"/>
       <xs:element name="signee_long"/>
       <xs:element name="signee_short"/>
       <xs:element name="signee_street"/>
