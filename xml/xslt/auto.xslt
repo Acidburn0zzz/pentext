@@ -826,7 +826,7 @@
         <xsl:variable name="arc_move3" select="'1'"/>
         <xsl:variable name="arc_move" select="concat($arc_move1, ' ', $arc_move2, ',', $arc_move3)"/>
         <xsl:variable name="d"
-            select="concat($middle, ' ', $first_line, ' ', 'a', $radius, ',', $radius, ' ', $arc_move, ' ', $x, ',', $radius - $y, ' ', 'z')"/>
+            select="concat($middle, ' ', $first_line, ' ', 'a ', $radius, ',', $radius, ' ', $arc_move, ' ', $x, ',', $radius - $y, ' ', 'z')"/>
         <!--put it all together-->
         <svg:path stroke="white" stroke-width="2" stroke-linejoin="round">
             <xsl:attribute name="fill">
