@@ -718,7 +718,7 @@
                                                   select="$pieHeightHalf"/>
                                                 <xsl:with-param name="move_x" select="0"/>
                                                 <xsl:with-param name="radius"
-                                                  select="$pieHeightHalf div 100 * 86"/>
+                                                  select="$pieHeightHalf div 100 * 85"/>
                                             </xsl:call-template>
                                         </svg:svg>
                                     </fo:instream-foreign-object>
