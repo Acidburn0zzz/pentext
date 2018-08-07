@@ -23,9 +23,6 @@
     <xsl:variable name="plannedHours" select="/contract/meta/work/planning/hours * 1"/>
     <xsl:variable name="total_fee" select="$hourly_fee * $plannedHours"/>
 
-    <!-- adding multiple classes to elements -->
-    <xsl:variable name="CLASSES" select="document('../xslt/styles.xslt')/*/xsl:attribute-set"/>
-
     <!-- document version number (mostly for report) -->
     <xsl:variable name="latestVersionNumber">
         <xsl:for-each select="//version_history/version">

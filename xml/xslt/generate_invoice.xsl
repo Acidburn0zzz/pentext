@@ -55,7 +55,7 @@
         <fo:root xsl:use-attribute-sets="root-common">
             <xsl:call-template name="layout-master-set-flimsy"/>
             <xsl:call-template name="Content">
-                <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
+                <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
             </xsl:call-template>
         </fo:root>
     </xsl:template>

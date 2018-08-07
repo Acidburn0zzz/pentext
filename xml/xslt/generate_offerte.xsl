@@ -9,7 +9,7 @@
     <xsl:import href="meta.xslt"/>
     <xsl:import href="toc.xslt"/>
     <xsl:import href="structure.xslt"/>
-    <xsl:import href="att-set.xslt"/>
+    <!--<xsl:import href="att-set.xslt"/>-->
     <xsl:import href="block.xslt"/>
     <xsl:import href="auto.xslt"/>
     <xsl:import href="table.xslt"/>
@@ -21,21 +21,23 @@
     <xsl:import href="localisation.xslt"/>
     <xsl:import href="placeholders.xslt"/>
     <xsl:import href="waiver.xslt"/>
-
+    <xsl:include href="functions_params_vars.xslt"/>
     <xsl:include href="styles_off.xslt"/>
 
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
-    
-    <xsl:include href="functions_params_vars.xslt"/>
 
+    <!-- numbered titles or not? -->
+    <xsl:param name="NUMBERING" select="false()"/>
 
     <!-- ROOT -->
     <xsl:template match="/">
         <fo:root xsl:use-attribute-sets="root-common">
             <xsl:call-template name="layout-master-set"/>
-            <xsl:call-template name="FrontMatter"/>
+            <xsl:call-template name="FrontMatter">
+                <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
+            </xsl:call-template>
             <xsl:call-template name="Content">
-                <xsl:with-param name="execsummary" select="'no'" tunnel="yes"/>
+                <xsl:with-param name="execsummary" select="false()" tunnel="yes"/>
             </xsl:call-template>
         </fo:root>
     </xsl:template>
@@ -59,7 +61,7 @@
             </fo:flow>
         </fo:page-sequence>
     </xsl:template>
-    
+
     <xsl:template name="page_tab"/>
 
     <!-- skip meta in quote; this is handled in FrontMatter -->
@@ -78,107 +80,31 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:variable name="reporttitle">
-            <xsl:value-of select="title"/>
-        </xsl:variable>
-        <xsl:variable name="words" select="tokenize($reporttitle, '\s')"/>
 
         <fo:block xsl:use-attribute-sets="frontpagetext">
-            <fo:block xsl:use-attribute-sets="title-0">
-                <xsl:for-each select="$words">
-                    <xsl:choose>
-                        <xsl:when
-                            test="
-                                . = 'And' or
-                                . = 'and' or
-                                . = 'Or' or
-                                . = 'or' or
-                                . = 'The' or
-                                . = 'the' or
-                                . = 'Of' or
-                                . = 'of' or
-                                . = 'A' or
-                                . = 'a'">
-                            <xsl:text> </xsl:text>
-                            <xsl:value-of select="."/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <fo:block/>
-                            <xsl:value-of select="."/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:for-each>
+            <fo:block xsl:use-attribute-sets="frontlogo">
+                <fo:external-graphic src="../graphics/logo_large.png" width="17cm"
+                    content-height="scale-to-fit"/>
             </fo:block>
-            <fo:block xsl:use-attribute-sets="frontpagesubtitle">
-                <xsl:sequence
-                    select="
-                        string-join(for $x in tokenize(//offered_service_long, ' ')
-                        return
-                            my:titleCase($x), ' ')"
-                />
-            </fo:block>
-            <fo:block xsl:use-attribute-sets="for">
-                <xsl:text>for</xsl:text>
-            </fo:block>
-            <fo:block xsl:use-attribute-sets="title-client">
-                <xsl:value-of select="//client/full_name"/>
-            </fo:block>
-            <xsl:if test="normalize-space(//client_reference)">
-                <fo:block xsl:use-attribute-sets="title-client">
-                    <xsl:text>[</xsl:text>
-                    <xsl:value-of select="//client_reference"/>
-                    <xsl:text>]</xsl:text>
-                </fo:block>
-            </xsl:if>
-            <fo:block xsl:use-attribute-sets="title-date">
-                <xsl:value-of select="$latestVersionDate"/>
-            </fo:block>
-        </fo:block>
-    </xsl:template>
-
-    <xsl:template name="cover_footer">
-        <fo:static-content flow-name="region-after-cover" xsl:use-attribute-sets="FooterFont">
-            <fo:block xsl:use-attribute-sets="footer coverfooter">
-                <fo:block>
-                    <xsl:value-of select="//meta/company/coc"/>
-                </fo:block>
-            </fo:block>
-        </fo:static-content>
-    </xsl:template>
-
-    <!-- TITLES (NO NUMBERING) -->
-    <xsl:template match="title">
-        <xsl:variable name="LEVEL" select="count(ancestor::*) - 1"/>
-        <xsl:variable name="CLASS">
-            <xsl:choose>
-                <xsl:when test="ancestor::waivers">
-                    <!-- Waivers get their own title style -->
-                    <xsl:text>title-waiver</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <!-- use title-x for all levels -->
-                    <xsl:text>title-</xsl:text>
-                    <xsl:value-of select="$LEVEL"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-
-        <fo:block padding-left="2mm">
-            <xsl:call-template name="use-att-set">
-                <xsl:with-param name="CLASS" select="$CLASS"/>
-            </xsl:call-template>
-            <xsl:if test="self::title[ancestor::waivers]">
-                <fo:inline>
-                    <xsl:text>Annex&#160;</xsl:text>
-                    <xsl:value-of select="count(//annex) + 1"/>
-                    <xsl:text>:&#160;</xsl:text>
-                </fo:inline>
-            </xsl:if>
-            <xsl:apply-templates/>
+            <fo:footnote>
+                <fo:inline/>
+                <fo:footnote-body xsl:use-attribute-sets="front-titleblock-container">
+                    <fo:block xsl:use-attribute-sets="front-titleblock">
+                        <xsl:call-template name="front"/>
+                    </fo:block>
+                </fo:footnote-body>
+            </fo:footnote>
         </fo:block>
 
+        <fo:footnote>
+            <fo:inline/>
+            <fo:footnote-body>
+                <xsl:call-template name="Contact"/>
+            </fo:footnote-body>
+        </fo:footnote>
     </xsl:template>
+
+
 
     <!-- CONTACT BOX (comes at the end, is just the address, no title/table) -->
     <xsl:template match="contact">

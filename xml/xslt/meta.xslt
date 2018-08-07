@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs my"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:my="http://www.radical.sexy" version="2.0">
 
     <xsl:template match="meta" mode="frontmatter">
         <xsl:param name="execsummary" tunnel="yes"/>
@@ -15,50 +15,73 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        
-        <xsl:variable name="words" select="tokenize(title, '\s')"/>
 
         <fo:block xsl:use-attribute-sets="frontpagetext">
-            <fo:block xsl:use-attribute-sets="title-0">
-                <xsl:for-each select="$words">
-                    <xsl:choose>
-                        <xsl:when
-                            test="
-                                . = 'And' or
-                                . = 'and' or
-                                . = 'Or' or
-                                . = 'or' or
-                                . = 'The' or
-                                . = 'the' or
-                                . = 'Of' or
-                                . = 'of' or
-                                . = 'A' or
-                                . = 'a'">
-                            <xsl:text> </xsl:text>
-                            <xsl:value-of select="."/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <fo:block/>
-                            <xsl:value-of select="."/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:for-each>
+            <fo:block xsl:use-attribute-sets="frontlogo">
+                <fo:external-graphic src="../graphics/logo_large.png" width="17cm"
+                    content-height="scale-to-fit"/>
             </fo:block>
-            <xsl:if test="$execsummary = 'yes'">
-                <fo:block xsl:use-attribute-sets="for">
-                <xsl:text>Management Summary</xsl:text>
-            </fo:block>
-            </xsl:if>
-            <fo:block xsl:use-attribute-sets="for">
-                <xsl:text>for</xsl:text>
-            </fo:block>
-            <fo:block xsl:use-attribute-sets="title-client">
-                <xsl:value-of select="//client/full_name"/>
-            </fo:block>
+            <fo:footnote>
+                <fo:inline/>
+                <fo:footnote-body xsl:use-attribute-sets="front-titleblock-container">
+                    <fo:block xsl:use-attribute-sets="front-titleblock">
+                        <xsl:call-template name="front"/>
+                    </fo:block>
+                </fo:footnote-body>
+            </fo:footnote>
         </fo:block>
+
         <xsl:call-template name="DocProperties"/>
         <xsl:call-template name="VersionControl"/>
         <xsl:call-template name="Contact"/>
+    </xsl:template>
+
+    <xsl:template name="front">
+        <xsl:param name="execsummary" tunnel="yes"/>
+        <fo:table table-layout="fixed" width="10cm" border-after-color="black"
+            border-after-width="2mm" border-after-style="solid" margin-left="0cm" margin-right="0cm">
+            <fo:table-column column-width="10cm"/>
+            <fo:table-body>
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="front-titlerow">
+                        <fo:block xsl:use-attribute-sets="title-0">
+                            <xsl:sequence
+                                select="
+                                    string-join(for $x in tokenize(normalize-space(title), ' ')
+                                    return
+                                        my:titleCase($x), ' ')"
+                            />
+                        </fo:block>
+                    </fo:table-cell>
+                </fo:table-row>
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="front-subtitlerow">
+                        <xsl:if test="$execsummary = true()">
+                            <fo:block xsl:use-attribute-sets="title-sub">
+                                <xsl:text>Management Summary</xsl:text>
+                            </fo:block>
+                        </xsl:if>
+                        <fo:block xsl:use-attribute-sets="title-client">
+                            <xsl:value-of select="//client/full_name"/>
+                        </fo:block>
+                    </fo:table-cell>
+                </fo:table-row>
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="front-metarow">
+                        <fo:block>
+                            <fo:block>V <xsl:value-of select="$latestVersionNumber"/></fo:block>
+                            <fo:block>
+                                <xsl:value-of select="//meta/company/city"/>, <xsl:value-of
+                                    select="$latestVersionDate"/>
+                            </fo:block>
+                            <fo:block>
+                                <xsl:value-of select="//meta/company/coc"/>
+                            </fo:block>
+                        </fo:block>
+                    </fo:table-cell>
+                </fo:table-row>
+            </fo:table-body>
+        </fo:table>
     </xsl:template>
 
     <xsl:template name="DocProperties">
@@ -78,8 +101,7 @@
         <fo:block xsl:use-attribute-sets="title-4">Document Properties</fo:block>
         <fo:block margin-bottom="{$very-large-space}">
             <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="borders">
-                <fo:table-column column-width="proportional-column-width(25)"
-                    xsl:use-attribute-sets="bg-orange borders"/>
+                <fo:table-column column-width="proportional-column-width(25)"/>
                 <fo:table-column column-width="proportional-column-width(75)"/>
                 <fo:table-body>
                     <fo:table-row xsl:use-attribute-sets="borders">
@@ -98,13 +120,22 @@
                         </fo:table-cell>
                         <fo:table-cell xsl:use-attribute-sets="td">
                             <xsl:choose>
-                <xsl:when test="$execsummary = 'yes'">
-                    <fo:block>Penetration Test Report Management Summary</fo:block>
-                </xsl:when>
-                <xsl:otherwise>
-                    <fo:block><xsl:value-of select="title"/></fo:block>
-                </xsl:otherwise>
-            </xsl:choose>
+                                <xsl:when test="$execsummary = true()">
+                                    <fo:block>Penetration Test Report Management Summary</fo:block>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <fo:block>
+                                        <xsl:sequence
+                                            select="
+                                                concat(upper-case(substring(title, 1, 1)),
+                                                substring(title, 2),
+                                                ' '[not(last())]
+                                                )
+                                                "
+                                        />
+                                    </fo:block>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </fo:table-cell>
                     </fo:table-row>
                     <fo:table-row xsl:use-attribute-sets="borders">
@@ -220,7 +251,7 @@
                 <fo:table-column column-width="proportional-column-width(25)"
                     xsl:use-attribute-sets="borders"/>
                 <fo:table-body>
-                    <fo:table-row xsl:use-attribute-sets="bg-orange">
+                    <fo:table-row>
                         <fo:table-cell xsl:use-attribute-sets="th">
                             <fo:block>Version</fo:block>
                         </fo:table-cell>
@@ -298,13 +329,12 @@
     <xsl:template name="Contact">
         <fo:block xsl:use-attribute-sets="title-4">Contact</fo:block>
         <fo:block xsl:use-attribute-sets="p" margin-left="0">For more information about this
-            Document and its contents please contact <xsl:value-of select="company/full_name"/>
+            document and its contents please contact <xsl:value-of select="company/full_name"/>
             <xsl:if test="not(company/full_name[ends-with(., '.')])"
             ><xsl:text>.</xsl:text></xsl:if></fo:block>
         <fo:block break-after="page">
             <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="borders">
-                <fo:table-column column-width="proportional-column-width(25)"
-                    xsl:use-attribute-sets="bg-orange borders"/>
+                <fo:table-column column-width="proportional-column-width(25)"/>
                 <fo:table-column column-width="proportional-column-width(75)"/>
                 <fo:table-body xsl:use-attribute-sets="borders">
                     <fo:table-row>

@@ -56,11 +56,11 @@
                             select="
                                 (count(ancestor::ol) +
                                 count(ancestor::ul)) *
-                                1.25"
+                                0.75"
                         />
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:text>0</xsl:text>
+                        <xsl:text>0.2</xsl:text>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>

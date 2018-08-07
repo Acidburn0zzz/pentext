@@ -38,7 +38,7 @@
         mode="number">
         <xsl:param name="execsummary" tunnel="yes"/>
         <xsl:choose>
-            <xsl:when test="$execsummary = 'yes'">
+            <xsl:when test="$execsummary = true()">
                 <xsl:choose>
                     <xsl:when test="self::appendix">
                         <fo:inline> Appendix&#160;<xsl:number
