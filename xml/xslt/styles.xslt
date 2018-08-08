@@ -248,10 +248,6 @@
         <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">2cm</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="region-body-cover">
-        <xsl:attribute name="background-image"
-            >url(../graphics/frontpage.jpg)</xsl:attribute>
-    </xsl:attribute-set>
     <xsl:attribute-set name="region-before-cover"/>
     <xsl:attribute-set name="region-after-cover">
     </xsl:attribute-set>

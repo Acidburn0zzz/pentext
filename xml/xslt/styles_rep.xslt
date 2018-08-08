@@ -25,6 +25,10 @@
     </xsl:attribute-set>
     
     <!-- Pages -->
+    <xsl:attribute-set name="region-body-cover">
+        <xsl:attribute name="background-image"
+            >url(../graphics/frontpage_report.jpg)</xsl:attribute>
+    </xsl:attribute-set>
     <xsl:attribute-set name="sidetab">
         <xsl:attribute name="background-color"><xsl:value-of select="$c_main"/></xsl:attribute>
         <xsl:attribute name="width">4.3cm</xsl:attribute>
