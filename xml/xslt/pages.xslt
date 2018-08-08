@@ -127,12 +127,6 @@
     <xsl:template name="FrontMatter">
         <xsl:param name="execsummary" tunnel="yes"/>
         <fo:page-sequence master-reference="Cover">
-            <xsl:attribute name="force-page-count">
-                <xsl:choose>
-                    <xsl:when test="$execsummary = true()">no-force</xsl:when>
-                    <xsl:otherwise>end-on-even</xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
             <xsl:call-template name="page_header"/>
             <xsl:call-template name="meta_footer"/>
             <fo:flow flow-name="cover-flow" xsl:use-attribute-sets="DefaultFont">
@@ -165,12 +159,6 @@
     <xsl:template name="generate_pages">
         <xsl:param name="execsummary" tunnel="yes"/>
         <fo:page-sequence master-reference="Sections">
-            <xsl:attribute name="force-page-count">
-                <xsl:choose>
-                    <xsl:when test="$execsummary = true()">no-force</xsl:when>
-                    <xsl:otherwise>end-on-even</xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
             <xsl:call-template name="page_header"/>
             <xsl:call-template name="page_footer"/>
             <xsl:call-template name="footerlogo"/>
