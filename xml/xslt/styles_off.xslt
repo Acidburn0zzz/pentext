@@ -22,7 +22,5 @@
         <xsl:attribute name="background-image"
             >url(../graphics/frontpage_quote.jpg)</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="sidetab"/>
-    <xsl:attribute-set name="sidetab-textblock"/>
     
 </xsl:stylesheet>

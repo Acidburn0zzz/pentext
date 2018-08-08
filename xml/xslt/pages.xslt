@@ -41,8 +41,8 @@
                     xsl:use-attribute-sets="region-before-content"/>
                 <fo:region-after region-name="region-after-content-odd"
                     xsl:use-attribute-sets="region-after-content"/>
-                <fo:region-end region-name="region-end-content-odd"
-                    xsl:use-attribute-sets="region-end-content-odd"/>
+                <fo:region-start region-name="region-start-content-odd"
+                    xsl:use-attribute-sets="region-start-content-odd"/>
             </fo:simple-page-master>
             <!-- Section Content Pages (Even) (just a change in the margins and footer) -->
             <fo:simple-page-master master-name="Section-Content-even"
@@ -53,7 +53,7 @@
                     xsl:use-attribute-sets="region-before-content"/>
                 <fo:region-after region-name="region-after-content-even"
                     xsl:use-attribute-sets="region-after-content"/>
-                <fo:region-start region-name="region-start-content-even"
+                <fo:region-end region-name="region-end-content-even"
                     xsl:use-attribute-sets="region-end-content-even"/>
             </fo:simple-page-master>
             <!-- sequence master -->
@@ -81,6 +81,8 @@
     <xsl:template name="page_footer">
         <fo:static-content flow-name="region-after-content-odd" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer-odd">
+                <fo:retrieve-marker retrieve-class-name="tab"/>
+                <fo:leader leader-pattern="space"/>
                 <fo:inline>
                     <fo:page-number/>
                 </fo:inline>
@@ -88,11 +90,11 @@
         </fo:static-content>
         <fo:static-content flow-name="region-after-content-even" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer-even">
-                <xsl:value-of select="//meta/company/full_name"/>
-                <fo:leader leader-pattern="space"/>
                 <fo:inline>
                     <fo:page-number/>
-                </fo:inline>
+                </fo:inline> 
+                <fo:leader leader-pattern="space"/>
+                <xsl:value-of select="//meta/company/full_name"/>
             </fo:block>
         </fo:static-content>
     </xsl:template>
@@ -110,27 +112,13 @@
         </fo:static-content>
     </xsl:template>
 
-    <xsl:template name="page_tab">
-        <fo:static-content flow-name="region-end-content-odd" xsl:use-attribute-sets="HeaderFont">
-            <fo:block>
-                <fo:block-container xsl:use-attribute-sets="sidetab">
-                    <fo:block xsl:use-attribute-sets="sidetab-textblock">
-                        <fo:block>
-                            <fo:retrieve-marker retrieve-class-name="tab"/>
-                        </fo:block>
-                    </fo:block>
-                </fo:block-container>
-            </fo:block>
-        </fo:static-content>
-    </xsl:template>
-    
     <xsl:template name="footerlogo">
-        <fo:static-content flow-name="region-start-content-even">
+        <fo:static-content flow-name="region-start-content-odd">
             <fo:block>
                 <fo:block-container xsl:use-attribute-sets="footerlogo">
-                        <fo:block>
-                            <fo:external-graphic src="../graphics/logo_footer.png"/>
-                        </fo:block>
+                    <fo:block>
+                        <fo:external-graphic src="../graphics/logo_footer.png"/>
+                    </fo:block>
                 </fo:block-container>
             </fo:block>
         </fo:static-content>
@@ -186,9 +174,6 @@
             <xsl:call-template name="page_header"/>
             <xsl:call-template name="page_footer"/>
             <xsl:call-template name="footerlogo"/>
-            <xsl:if test="not($execsummary = true())">
-                <xsl:call-template name="page_tab"/>
-            </xsl:if>
             <fo:flow flow-name="region-body" xsl:use-attribute-sets="DefaultFont">
                 <fo:block>
                     <xsl:apply-templates select="."/>

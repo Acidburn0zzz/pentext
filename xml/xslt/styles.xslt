@@ -219,20 +219,29 @@
         <xsl:attribute name="page-height">29.7cm</xsl:attribute>
         <xsl:attribute name="page-width">21.0cm</xsl:attribute>
     </xsl:attribute-set>
+    <!-- Front Matter (Cover, Meta, ToC) -->
+    <!-- Flow -->
+    <xsl:attribute-set name="cover-flow"/>
+    
+    <!-- Regions -->
+    <xsl:attribute-set name="region-before-cover"/>
+    <xsl:attribute-set name="region-after-cover"/>
+    
+    <!-- Content Matter -->
+    <!-- Flow -->    
+    <!-- Regions -->
     <xsl:attribute-set name="region-body-content">
         <xsl:attribute name="margin-top">2.5cm</xsl:attribute>
         <xsl:attribute name="margin-bottom">2.5cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-body-content-odd" use-attribute-sets="region-body-content">
-        <xsl:attribute name="margin-left">2.5cm</xsl:attribute>
         <xsl:attribute name="margin-right">2cm</xsl:attribute>
+        <xsl:attribute name="margin-left">2cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-body-content-even" use-attribute-sets="region-body-content">
-        <xsl:attribute name="margin-left">2.5cm</xsl:attribute>
+        <xsl:attribute name="margin-left">2cm</xsl:attribute>
         <xsl:attribute name="margin-right">2cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="cover-flow"/>    
-    <xsl:attribute-set name="region-body-sectioncover"/>
+    </xsl:attribute-set>    
     <xsl:attribute-set name="region-before-content">
         <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">4.6cm</xsl:attribute><!-- overlaps body since it's empty anyway and we need to push down the tab in region-end -->
@@ -240,16 +249,35 @@
     <xsl:attribute-set name="region-after-content">
         <xsl:attribute name="extent">2.1cm</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="region-end-content-odd">
+    <xsl:attribute-set name="region-start-content-odd">
         <xsl:attribute name="precedence">true</xsl:attribute>
-        <xsl:attribute name="extent">1.3cm</xsl:attribute>
+        <xsl:attribute name="extent">2cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-end-content-even">
         <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">2cm</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="region-before-cover"/>
-    <xsl:attribute-set name="region-after-cover">
+    <xsl:attribute-set name="footer">
+        <xsl:attribute name="color"><xsl:value-of select="$c_support_medium"/></xsl:attribute>
+        <xsl:attribute name="border-color"><xsl:value-of select="$c_support_dark"/></xsl:attribute>
+        <xsl:attribute name="padding-top">0.7cm</xsl:attribute>
+        <xsl:attribute name="border-before-width">1px</xsl:attribute>
+        <xsl:attribute name="border-before-style">solid</xsl:attribute>
+        <xsl:attribute name="text-align-last">justify</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="footer-odd" use-attribute-sets="footer">
+        <!-- need to set margin-right to 0cm to force block to accept padding -->
+        <xsl:attribute name="margin-right">0cm</xsl:attribute>
+        <xsl:attribute name="padding-right">2cm</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="footer-even" use-attribute-sets="footer">
+        <!-- need to set margin-right to 0cm to force block to accept padding -->
+        <xsl:attribute name="margin-left">0cm</xsl:attribute>
+        <xsl:attribute name="padding-left">2cm</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="footerlogo">
+        <xsl:attribute name="padding-top">23.3cm</xsl:attribute>
+        <xsl:attribute name="margin-left">0.2cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="frontlogo">
         <xsl:attribute name="margin-left">2cm</xsl:attribute>
@@ -288,32 +316,6 @@
         <xsl:attribute name="padding-top">0.5cm</xsl:attribute>
         <xsl:attribute name="padding-bottom">1.2cm</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="header">
-        <xsl:attribute name="text-align">right</xsl:attribute>
-        <xsl:attribute name="font-weight">bold</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="footer">
-        <xsl:attribute name="color"><xsl:value-of select="$c_support_medium"/></xsl:attribute>
-        <xsl:attribute name="border-color"><xsl:value-of select="$c_support_dark"/></xsl:attribute>
-        <xsl:attribute name="padding-top">0.7cm</xsl:attribute>
-        <xsl:attribute name="border-before-width">1px</xsl:attribute>
-        <xsl:attribute name="border-before-style">solid</xsl:attribute>
-        <xsl:attribute name="text-align-last">justify</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="footer-odd" use-attribute-sets="footer">
-        <xsl:attribute name="margin-left">0cm</xsl:attribute>
-        <xsl:attribute name="padding-left">2.5cm</xsl:attribute>
-        <xsl:attribute name="margin-right">0.7cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="footer-even" use-attribute-sets="footer">
-        <xsl:attribute name="margin-right">0cm</xsl:attribute>
-        <xsl:attribute name="padding-right">2.5cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="footerlogo">
-        <xsl:attribute name="padding-top">23.3cm</xsl:attribute>
-        <xsl:attribute name="margin-left">0.2cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="sidetabs"/>
 
     <!-- graphics -->
     <xsl:attribute-set name="frontpagetext">
