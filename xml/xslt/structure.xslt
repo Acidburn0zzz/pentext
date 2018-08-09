@@ -257,6 +257,4 @@
         </fo:marker>
     </xsl:template>
 
-
-
 </xsl:stylesheet>

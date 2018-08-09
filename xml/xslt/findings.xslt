@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://www.radical.sexy" exclude-result-prefixes="xs my"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://www.radical.sexy"
+    exclude-result-prefixes="xs my" xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
 
     <xsl:template match="finding" mode="meta">
         <xsl:variable name="status" select="@status"/>
@@ -14,6 +14,9 @@
             />
         </xsl:variable>
         <fo:table xsl:use-attribute-sets="findingTable">
+            <xsl:attribute name="border-top">3px solid <xsl:call-template name="selectColor"
+                        ><xsl:with-param name="label" select="@threatLevel"/></xsl:call-template>
+            </xsl:attribute>
             <fo:table-column column-width="proportional-column-width(70)"/>
             <fo:table-column column-width="proportional-column-width(30)"/>
             <fo:table-body>
