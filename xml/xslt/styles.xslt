@@ -10,6 +10,8 @@
     <xsl:variable name="c_support_subtlydarkerlight">#e4e4e4</xsl:variable><!-- used for subtle light border around support_light background -->
     <xsl:variable name="c_support_medium">#999999</xsl:variable><!-- used for subtle light border around support_light background -->
     <xsl:variable name="c_support_dark">#444444</xsl:variable>
+    <!-- Note: pie chart colors can be customized in functions_params_vars.xslt -->
+    
     <!-- variables -->
     <xsl:variable name="border-width">1pt</xsl:variable>
     <xsl:variable name="border-style">solid</xsl:variable>

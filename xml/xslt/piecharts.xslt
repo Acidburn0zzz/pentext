@@ -217,9 +217,9 @@
                                                   <svg:rect stroke="#706f6f" stroke-width="1"
                                                   stroke-linejoin="round" height="11" width="11">
                                                   <xsl:attribute name="fill">
-                                                  <xsl:call-template name="giveColor">
-                                                  <xsl:with-param name="i" select="position()"/>
-                                                  <xsl:with-param name="pieEntryLabel"
+                                                  <xsl:call-template name="selectColor">
+                                                  <xsl:with-param name="position" select="position()"/>
+                                                  <xsl:with-param name="label"
                                                   select="pieEntryLabel"/>
                                                   </xsl:call-template>
                                                   </xsl:attribute>
@@ -297,9 +297,9 @@
         <!--put it all together-->
         <svg:path stroke="white" stroke-width="2" stroke-linejoin="round">
             <xsl:attribute name="fill">
-                <xsl:call-template name="giveColor">
-                    <xsl:with-param name="i" select="$position"/>
-                    <xsl:with-param name="pieEntryLabel"
+                <xsl:call-template name="selectColor">
+                    <xsl:with-param name="position" select="$position"/>
+                    <xsl:with-param name="label"
                         select="//pieEntry[position() = $position]/pieEntryLabel"/>
                 </xsl:call-template>
             </xsl:attribute>
@@ -399,42 +399,43 @@
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <xsl:template name="giveColor">
-        <xsl:param name="i"/>
-        <xsl:param name="pieEntryLabel"/>
+    
+    <xsl:template name="selectColor">
+        <xsl:param name="label"/>
+        <xsl:param name="position"/>
         <xsl:choose>
             <!-- specific cases -->
             <!-- threat level -->
-            <xsl:when test="$pieEntryLabel = 'Extreme'">#000000</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'High'">#CC4900</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Elevated'">#FF5C00</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Moderate'">#FE9920</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Low'">#ffbf7f</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'N/A'">#CCCCCC</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'Unknown'">#FFFFFF</xsl:when>
+            <xsl:when test="$label = 'Extreme'"><xsl:value-of select="$color_extreme"/></xsl:when>
+            <xsl:when test="$label = 'High'"><xsl:value-of select="$color_high"/></xsl:when>
+            <xsl:when test="$label = 'Elevated'"><xsl:value-of select="$color_elevated"/></xsl:when>
+            <xsl:when test="$label = 'Moderate'"><xsl:value-of select="$color_moderate"/></xsl:when>
+            <xsl:when test="$label = 'Low'"><xsl:value-of select="$color_low"/></xsl:when>
+            <xsl:when test="$label = 'N/A'"><xsl:value-of select="$color_na"/></xsl:when>
+            <xsl:when test="$label = 'Unknown'"><xsl:value-of select="$color_unknown"/></xsl:when>
             <!-- status -->
-            <xsl:when test="$pieEntryLabel = 'new'">#CC4900</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'unresolved'">#FF5C00</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'not_retested'">#FE9920</xsl:when>
-            <xsl:when test="$pieEntryLabel = 'resolved'">#e5d572</xsl:when>
+            <xsl:when test="$label = 'new'"><xsl:value-of select="$color_new"/></xsl:when>
+            <xsl:when test="$label = 'unresolved'"><xsl:value-of select="$color_unresolved"/></xsl:when>
+            <xsl:when test="$label = 'not_retested'"><xsl:value-of select="$color_notretested"/></xsl:when>
+            <xsl:when test="$label = 'resolved'"><xsl:value-of select="$color_resolved"/></xsl:when>
             <xsl:otherwise>
                 <!-- generic pie chart -->
                 <xsl:choose>
                     <!-- Going with shades of green and blue in all cases here so as not to imply severity levels -->
-                    <xsl:when test="$i = 1">#D9D375</xsl:when>
-                    <xsl:when test="$i = 2">#B9A44C</xsl:when>
-                    <xsl:when test="$i = 3">#BEC5AD</xsl:when>
-                    <xsl:when test="$i = 4">#7CA982</xsl:when>
-                    <xsl:when test="$i = 5">#566E3D</xsl:when>
-                    <xsl:when test="$i = 6">#5B5F97</xsl:when>
-                    <xsl:when test="$i = 7">#C200FB</xsl:when>
-                    <xsl:when test="$i = 8">#A9E5BB</xsl:when>
-                    <xsl:when test="$i = 9">#98C1D9</xsl:when>
-                    <xsl:when test="$i = 10">#5B5F97</xsl:when>
-                    <xsl:when test="$i = 11">burlywood</xsl:when>
-                    <xsl:when test="$i = 12">cornflowerblue</xsl:when><!-- that's right people, cornflower blue -->
-                    <xsl:when test="$i = 13">cornsilk</xsl:when>
-                    <xsl:otherwise>black</xsl:otherwise>
+                    <xsl:when test="$position = 1"><xsl:value-of select="$generic_piecolor_1"/></xsl:when>
+                    <xsl:when test="$position = 2"><xsl:value-of select="$generic_piecolor_2"/></xsl:when>
+                    <xsl:when test="$position = 3"><xsl:value-of select="$generic_piecolor_3"/></xsl:when>
+                    <xsl:when test="$position = 4"><xsl:value-of select="$generic_piecolor_4"/></xsl:when>
+                    <xsl:when test="$position = 5"><xsl:value-of select="$generic_piecolor_5"/></xsl:when>
+                    <xsl:when test="$position = 6"><xsl:value-of select="$generic_piecolor_6"/></xsl:when>
+                    <xsl:when test="$position = 7"><xsl:value-of select="$generic_piecolor_7"/></xsl:when>
+                    <xsl:when test="$position = 8"><xsl:value-of select="$generic_piecolor_8"/></xsl:when>
+                    <xsl:when test="$position = 9"><xsl:value-of select="$generic_piecolor_9"/></xsl:when>
+                    <xsl:when test="$position = 10"><xsl:value-of select="$generic_piecolor_10"/></xsl:when>
+                    <xsl:when test="$position = 11"><xsl:value-of select="$generic_piecolor_11"/></xsl:when>
+                    <xsl:when test="$position = 12"><xsl:value-of select="$generic_piecolor_12"/></xsl:when>
+                    <xsl:when test="$position = 13"><xsl:value-of select="$generic_piecolor_13"/></xsl:when>
+                    <xsl:otherwise><xsl:value-of select="$generic_piecolor_14"/></xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>

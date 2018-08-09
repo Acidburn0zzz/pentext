@@ -23,6 +23,38 @@
     <xsl:variable name="plannedHours" select="/contract/meta/work/planning/hours * 1"/>
     <xsl:variable name="total_fee" select="$hourly_fee * $plannedHours"/>
 
+    <!-- finding colors (used in findings & pie charts) -->
+    <!-- threatlevel -->
+    <xsl:variable name="color_extreme">#000000</xsl:variable>
+    <xsl:variable name="color_high">#CC4900</xsl:variable>
+    <xsl:variable name="color_elevated">#FF5C00</xsl:variable>
+    <xsl:variable name="color_moderate">#FE9920</xsl:variable>
+    <xsl:variable name="color_low">#ffbf7f</xsl:variable>
+    <xsl:variable name="color_na">#CCCCCC</xsl:variable>
+    <xsl:variable name="color_unknown">#FFFFFF</xsl:variable>
+    <!-- status -->
+    <xsl:variable name="color_new">#CC4900</xsl:variable>
+    <xsl:variable name="color_unresolved">#FF5C00</xsl:variable>
+    <xsl:variable name="color_notretested">#FE9920</xsl:variable>
+    <xsl:variable name="color_resolved">#e5d572</xsl:variable>
+
+    <!-- generic pie chart colors -->
+    <xsl:variable name="generic_piecolor_1">#D9D375</xsl:variable>
+    <xsl:variable name="generic_piecolor_2">#B9A44C</xsl:variable>
+    <xsl:variable name="generic_piecolor_3">#BEC5AD</xsl:variable>
+    <xsl:variable name="generic_piecolor_4">#7CA982</xsl:variable>
+    <xsl:variable name="generic_piecolor_5">#566E3D</xsl:variable>
+    <xsl:variable name="generic_piecolor_6">#5B5F97</xsl:variable>
+    <xsl:variable name="generic_piecolor_7">#C200FB</xsl:variable>
+    <xsl:variable name="generic_piecolor_8">#A9E5BB</xsl:variable>
+    <xsl:variable name="generic_piecolor_9">#98C1D9</xsl:variable>
+    <xsl:variable name="generic_piecolor_10">#5B5F97</xsl:variable>
+    <xsl:variable name="generic_piecolor_11">burlywood</xsl:variable>
+    <xsl:variable name="generic_piecolor_12">cornflowerblue</xsl:variable>
+    <!-- that's right people, cornflower blue -->
+    <xsl:variable name="generic_piecolor_13">cornsilk</xsl:variable>
+    <xsl:variable name="generic_piecolor_14">black</xsl:variable>
+
     <!-- document version number (mostly for report) -->
     <xsl:variable name="latestVersionNumber">
         <xsl:for-each select="//version_history/version">
@@ -72,6 +104,7 @@
         </xsl:choose>
     </xsl:variable>
 
+    <!-- Money stuff -->
     <xsl:variable name="eur" select="'eur'"/>
     <xsl:variable name="gbp" select="'gbp'"/>
     <xsl:variable name="usd" select="'usd'"/>
