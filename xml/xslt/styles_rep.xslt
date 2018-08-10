@@ -39,6 +39,7 @@
         <xsl:attribute name="border-style">solid</xsl:attribute>
         <xsl:attribute name="border-left-width">1px</xsl:attribute>
         <xsl:attribute name="border-right-width">1px</xsl:attribute>
+        <xsl:attribute name="border-top-width">1px</xsl:attribute>
         <xsl:attribute name="border-bottom-width">1px</xsl:attribute>
         <xsl:attribute name="table-layout">fixed</xsl:attribute>
         <xsl:attribute name="width">100%</xsl:attribute>
