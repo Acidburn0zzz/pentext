@@ -13,70 +13,69 @@
                         my:titleCase($x), ' ')"
             />
         </xsl:variable>
-        <fo:block keep-together.within-page="always">
-            <fo:block padding="0cm" margin-top="-0.3cm" font-size="0pt"><fo:external-graphic src="{concat('../graphics/threatgradient_',@threatLevel,'.png')}"
-                width="17cm"/></fo:block>
-            <fo:table xsl:use-attribute-sets="findingTable">
-                <fo:table-column column-width="proportional-column-width(70)"/>
-                <fo:table-column column-width="proportional-column-width(30)"/>
-                <fo:table-body>
-                    <fo:table-row>
-                        <fo:table-cell xsl:use-attribute-sets="td">
-                            <xsl:if test="not(@status)">
-                                <xsl:attribute name="number-columns-spanned">2</xsl:attribute>
-                            </xsl:if>
-                            <fo:block xsl:use-attribute-sets="finding-meta">
-                                <fo:inline xsl:use-attribute-sets="bold">Vulnerability ID: </fo:inline>
-                                <xsl:apply-templates select="." mode="number"/>
-                            </fo:block>
-                        </fo:table-cell>
-                        <xsl:if test="@status">
-                            <fo:table-cell xsl:use-attribute-sets="td">
-                                <fo:block xsl:use-attribute-sets="finding-meta">
-                                    <fo:inline xsl:use-attribute-sets="bold">Retest status: </fo:inline>
-                                    <xsl:choose>
-                                        <xsl:when test="@status = 'new' or @status = 'unresolved'">
-                                            <fo:inline xsl:use-attribute-sets="status-new">
-                                                <xsl:value-of select="$prettyStatus"/>
-                                            </fo:inline>
-                                        </xsl:when>
-                                        <xsl:when test="@status = 'not_retested'">
-                                            <fo:inline xsl:use-attribute-sets="status-not_retested">
-                                                <xsl:value-of select="$prettyStatus"/>
-                                            </fo:inline>
-                                        </xsl:when>
-                                        <xsl:when test="@status = 'resolved'">
-                                            <fo:inline xsl:use-attribute-sets="status-resolved">
-                                                <xsl:value-of select="$prettyStatus"/>
-                                            </fo:inline>
-                                        </xsl:when>
-                                    </xsl:choose>
-
-                                </fo:block>
-                            </fo:table-cell>
+        <fo:table xsl:use-attribute-sets="findingTable">
+            <xsl:attribute name="border-top">3px solid <xsl:call-template name="selectColor"
+                        ><xsl:with-param name="label" select="@threatLevel"/></xsl:call-template>
+            </xsl:attribute>
+            <fo:table-column column-width="proportional-column-width(70)"/>
+            <fo:table-column column-width="proportional-column-width(30)"/>
+            <fo:table-body>
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="td">
+                        <xsl:if test="not(@status)">
+                            <xsl:attribute name="number-columns-spanned">2</xsl:attribute>
                         </xsl:if>
-                    </fo:table-row>
-                    <fo:table-row>
-                        <fo:table-cell xsl:use-attribute-sets="td" number-columns-spanned="2">
+                        <fo:block xsl:use-attribute-sets="finding-meta">
+                            <fo:inline xsl:use-attribute-sets="bold">Vulnerability ID: </fo:inline>
+                            <xsl:apply-templates select="." mode="number"/>
+                        </fo:block>
+                    </fo:table-cell>
+                    <xsl:if test="@status">
+                        <fo:table-cell xsl:use-attribute-sets="td">
                             <fo:block xsl:use-attribute-sets="finding-meta">
-                                <fo:inline xsl:use-attribute-sets="bold">Vulnerability type: </fo:inline>
-                                <xsl:value-of select="@type"/>
+                                <fo:inline xsl:use-attribute-sets="bold">Retest status: </fo:inline>
+                                <xsl:choose>
+                                    <xsl:when test="@status = 'new' or @status = 'unresolved'">
+                                        <fo:inline xsl:use-attribute-sets="status-new">
+                                            <xsl:value-of select="$prettyStatus"/>
+                                        </fo:inline>
+                                    </xsl:when>
+                                    <xsl:when test="@status = 'not_retested'">
+                                        <fo:inline xsl:use-attribute-sets="status-not_retested">
+                                            <xsl:value-of select="$prettyStatus"/>
+                                        </fo:inline>
+                                    </xsl:when>
+                                    <xsl:when test="@status = 'resolved'">
+                                        <fo:inline xsl:use-attribute-sets="status-resolved">
+                                            <xsl:value-of select="$prettyStatus"/>
+                                        </fo:inline>
+                                    </xsl:when>
+                                </xsl:choose>
+
                             </fo:block>
                         </fo:table-cell>
-                    </fo:table-row>
-                    <fo:table-row>
-                        <fo:table-cell xsl:use-attribute-sets="td" number-columns-spanned="2">
-                            <fo:block xsl:use-attribute-sets="finding-meta">
-                                <fo:inline xsl:use-attribute-sets="bold">Threat level: </fo:inline>
-                                <xsl:value-of select="@threatLevel"/>
-                            </fo:block>
-                        </fo:table-cell>
+                    </xsl:if>
+                </fo:table-row>
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="td" number-columns-spanned="2">
+                        <fo:block xsl:use-attribute-sets="finding-meta">
+                            <fo:inline xsl:use-attribute-sets="bold">Vulnerability type: </fo:inline>
+                            <xsl:value-of select="@type"/>
+                        </fo:block>
+                    </fo:table-cell>
+                </fo:table-row>
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="td" number-columns-spanned="2">
+                        <fo:block xsl:use-attribute-sets="finding-meta">
+                            <fo:inline xsl:use-attribute-sets="bold">Threat level: </fo:inline>
+                            <xsl:value-of select="@threatLevel"/>
+                        </fo:block>
+                    </fo:table-cell>
 
-                    </fo:table-row>
+                </fo:table-row>
 
-                </fo:table-body>
-            </fo:table>
-        </fo:block>
+            </fo:table-body>
+        </fo:table>
 
 
 
