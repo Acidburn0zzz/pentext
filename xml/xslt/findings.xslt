@@ -14,7 +14,7 @@
             />
         </xsl:variable>
         <fo:table xsl:use-attribute-sets="findingTable">
-            <xsl:attribute name="border-top">3px solid <xsl:call-template name="selectColor"
+            <xsl:attribute name="border-top">4px solid <xsl:call-template name="selectColor"
                         ><xsl:with-param name="label" select="@threatLevel"/></xsl:call-template>
             </xsl:attribute>
             <fo:table-column column-width="proportional-column-width(70)"/>
