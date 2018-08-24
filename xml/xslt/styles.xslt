@@ -58,7 +58,7 @@
     
     <xsl:attribute-set name="errortext">
         <xsl:attribute name="background-color">black</xsl:attribute>
-        <xsl:attribute name="color"><xsl:value-of select="$c_main"/></xsl:attribute>
+        <xsl:attribute name="color"><xsl:value-of select="$color_moderate"/></xsl:attribute>
     </xsl:attribute-set>
 
 

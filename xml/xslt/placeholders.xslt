@@ -433,6 +433,10 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+    <xsl:template match="todo">
+        <fo:inline xsl:use-attribute-sets="errortext">###TODO###</fo:inline>
+    </xsl:template>
 
     <xsl:template name="checkPlaceholder">
         <xsl:param name="placeholderElement" select="/"/>

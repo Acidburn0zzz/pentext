@@ -269,6 +269,7 @@
       <xs:element name="ir_ora_rate"/>
       <xs:element name="ir_sim_rate"/>
       <xs:element name="ir_taa_rate"/>
+      <xs:element name="todo"/>
     </xs:choice>
   </xs:group>
 
