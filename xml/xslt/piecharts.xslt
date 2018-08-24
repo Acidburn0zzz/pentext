@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format"
-    xmlns:svg="http://www.w3.org/2000/svg"
-    xmlns:math="http://www.w3.org/2005/xpath-functions/math"
-    xmlns:my="http://www.radical.sexy"
-    exclude-result-prefixes="xs math"
-    version="2.0">
-        <xsl:template match="generate_piechart">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    xmlns:svg="http://www.w3.org/2000/svg" xmlns:math="http://www.w3.org/2005/xpath-functions/math"
+    xmlns:my="http://www.radical.sexy" exclude-result-prefixes="xs math" version="2.0">
+    <xsl:template match="generate_piechart">
         <xsl:choose>
             <xsl:when test="//finding">
                 <!-- only generate pie chart if there are findings in the report - otherwise we get into trouble with empty percentages and divisions by zero -->
@@ -162,15 +158,16 @@
                                         <svg:svg>
                                             <!-- width and height of the viewport -->
                                             <xsl:attribute name="width">
-                                                <xsl:value-of select="$pieHeight"/>
+                                                <xsl:value-of select="$pieHeight + 15"/>
                                             </xsl:attribute>
                                             <xsl:attribute name="height">
-                                                <xsl:value-of select="$pieHeight"/>
+                                                <xsl:value-of select="$pieHeight + 15"/>
                                             </xsl:attribute>
                                             <!-- viewBox to scale -->
                                             <xsl:attribute name="viewBox">
+                                                <!-- start viewbox 15px to the left and make it 15px larger to catch svg's cutoff text -->
                                                 <xsl:value-of
-                                                  select="concat('0 0 ', $pieHeight, ' ', $pieHeight)"
+                                                  select="concat('-15 0 ', $pieHeight + 15 + 15, ' ', $pieHeight + 15)"
                                                 />
                                             </xsl:attribute>
                                             <!--call the template starting at the last slice-->
@@ -210,7 +207,8 @@
                                                   />
                                                 </xsl:variable>
                                                 <fo:table-row>
-                                                  <fo:table-cell xsl:use-attribute-sets="pieLegendTableCell">
+                                                  <fo:table-cell
+                                                  xsl:use-attribute-sets="pieLegendTableCell">
                                                   <fo:block>
                                                   <fo:instream-foreign-object>
                                                   <svg:svg height="13" width="13">
@@ -218,7 +216,8 @@
                                                   stroke-linejoin="round" height="11" width="11">
                                                   <xsl:attribute name="fill">
                                                   <xsl:call-template name="selectColor">
-                                                  <xsl:with-param name="position" select="position()"/>
+                                                  <xsl:with-param name="position"
+                                                  select="position()"/>
                                                   <xsl:with-param name="label"
                                                   select="pieEntryLabel"/>
                                                   </xsl:call-template>
@@ -228,7 +227,8 @@
                                                   </fo:instream-foreign-object>
                                                   </fo:block>
                                                   </fo:table-cell>
-                                                  <fo:table-cell xsl:use-attribute-sets="pieLegendTableCell">
+                                                  <fo:table-cell
+                                                  xsl:use-attribute-sets="pieLegendTableCell">
                                                   <fo:block>
                                                   <xsl:value-of select="$pieEntryLabel"/>
                                                   <xsl:text> (</xsl:text>
@@ -295,7 +295,7 @@
         <xsl:variable name="d"
             select="concat($middle, ' ', $first_line, ' ', 'a ', $radius, ',', $radius, ' ', $arc_move, ' ', $x, ',', $radius - $y, ' ', 'z')"/>
         <!--put it all together-->
-        <svg:path stroke="white" stroke-width="2" stroke-linejoin="round">
+        <svg:path stroke="white" stroke-width="1" stroke-linejoin="round">
             <xsl:attribute name="fill">
                 <xsl:call-template name="selectColor">
                     <xsl:with-param name="position" select="$position"/>
@@ -324,12 +324,61 @@
         <xsl:choose>
             <xsl:when test="$percentage >= 3.5">
                 <!--on the edge-->
-                <svg:text text-anchor="middle" xsl:use-attribute-sets="PieFont">
+                <svg:text xsl:use-attribute-sets="PieFont">
                     <xsl:attribute name="x">
-                        <xsl:value-of select="$middle_x + $text_line_x"/>
+                        <xsl:choose>
+                            <!-- try for some better placement of percentages than the standard -->
+                            <xsl:when test="$angle &lt;= 22.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 45 and $angle &gt; 22.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 67.5 and $angle &gt; 45"><xsl:value-of select="$middle_x + $text_line_x -5"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 90 and $angle &gt; 67.5"><xsl:value-of select="$middle_x + $text_line_x -5"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 112.5 and $angle &gt; 90"><xsl:value-of select="$middle_x + $text_line_x -5"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 135 and $angle &gt; 112.5"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 157.5 and $angle &gt; 135"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 180 and $angle &gt; 157.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 202.5 and $angle &gt; 180"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 225 and $angle &gt; 202.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 247.5 and $angle &gt; 225"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 270 and $angle &gt; 247.5"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 292.5 and $angle &gt; 270"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 315 and $angle &gt; 292.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 337.5 and $angle &gt; 315"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 360 and $angle &gt; 337.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:otherwise><xsl:value-of select="$middle_x + $text_line_x"/></xsl:otherwise>
+                        </xsl:choose>
                     </xsl:attribute>
                     <xsl:attribute name="y">
-                        <xsl:value-of select="$middle_y - $text_line_y"/>
+                        <xsl:choose>
+                            <!-- when in top right/bottom left quarters of circle, bring percentage text a bit closer to the circle -->
+                            <xsl:when test="$angle &lt;= 22.5"><xsl:value-of select="$middle_y - $text_line_y +5"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 45 and $angle &gt; 22.5"><xsl:value-of select="$middle_y - $text_line_y +4"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 67.5 and $angle &gt; 45"><xsl:value-of select="$middle_y - $text_line_y +3"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 90 and $angle &gt; 67.5"><xsl:value-of select="$middle_y - $text_line_y +2"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 112.5 and $angle &gt; 90"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 135 and $angle &gt; 112.5"><xsl:value-of select="$middle_y - $text_line_y -1"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 157.5 and $angle &gt; 135"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 180 and $angle &gt; 157.5"><xsl:value-of select="$middle_y - $text_line_y -0"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 202.5 and $angle &gt; 180"><xsl:value-of select="$middle_y - $text_line_y -0"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 225 and $angle &gt; 202.5"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 247.5 and $angle &gt; 225"><xsl:value-of select="$middle_y - $text_line_y -1"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 270 and $angle &gt; 247.5"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 292.5 and $angle &gt; 270"><xsl:value-of select="$middle_y - $text_line_y +2"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 315 and $angle &gt; 292.5"><xsl:value-of select="$middle_y - $text_line_y +3"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 337.5 and $angle &gt; 315"><xsl:value-of select="$middle_y - $text_line_y +4"/></xsl:when>
+                            <xsl:when test="$angle &lt;= 360 and $angle &gt; 337.5"><xsl:value-of select="$middle_y - $text_line_y +5"/></xsl:when>
+                            <xsl:otherwise><xsl:value-of select="$middle_y - $text_line_y"/></xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <xsl:attribute name="text-anchor">
+                        <xsl:choose>
+                            <!-- when in top/bottom quarters of circle, text is anchored in the middle, when left on end, when right on start -->
+                            <xsl:when
+                                test="($angle &gt;= 315 or $angle &lt;= 45) or ($angle &lt;= 225 and $angle &gt;= 135)"
+                                >middle</xsl:when>
+                            <xsl:when test="$angle &lt; 135 and $angle &gt; 45">start</xsl:when>
+                            <xsl:when test="$angle &lt; 315 and $angle &gt; 225">end</xsl:when>
+                            <xsl:otherwise>middle</xsl:otherwise>
+                        </xsl:choose>
                     </xsl:attribute>
                     <xsl:value-of select="format-number($percentage, '##,##0.0')"/>
                     <xsl:text>%</xsl:text>
@@ -399,43 +448,93 @@
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template name="selectColor">
         <xsl:param name="label"/>
         <xsl:param name="position"/>
         <xsl:choose>
             <!-- specific cases -->
             <!-- threat level -->
-            <xsl:when test="$label = 'Extreme'"><xsl:value-of select="$color_extreme"/></xsl:when>
-            <xsl:when test="$label = 'High'"><xsl:value-of select="$color_high"/></xsl:when>
-            <xsl:when test="$label = 'Elevated'"><xsl:value-of select="$color_elevated"/></xsl:when>
-            <xsl:when test="$label = 'Moderate'"><xsl:value-of select="$color_moderate"/></xsl:when>
-            <xsl:when test="$label = 'Low'"><xsl:value-of select="$color_low"/></xsl:when>
-            <xsl:when test="$label = 'N/A'"><xsl:value-of select="$color_na"/></xsl:when>
-            <xsl:when test="$label = 'Unknown'"><xsl:value-of select="$color_unknown"/></xsl:when>
+            <xsl:when test="$label = 'Extreme'">
+                <xsl:value-of select="$color_extreme"/>
+            </xsl:when>
+            <xsl:when test="$label = 'High'">
+                <xsl:value-of select="$color_high"/>
+            </xsl:when>
+            <xsl:when test="$label = 'Elevated'">
+                <xsl:value-of select="$color_elevated"/>
+            </xsl:when>
+            <xsl:when test="$label = 'Moderate'">
+                <xsl:value-of select="$color_moderate"/>
+            </xsl:when>
+            <xsl:when test="$label = 'Low'">
+                <xsl:value-of select="$color_low"/>
+            </xsl:when>
+            <xsl:when test="$label = 'N/A'">
+                <xsl:value-of select="$color_na"/>
+            </xsl:when>
+            <xsl:when test="$label = 'Unknown'">
+                <xsl:value-of select="$color_unknown"/>
+            </xsl:when>
             <!-- status -->
-            <xsl:when test="$label = 'new'"><xsl:value-of select="$color_new"/></xsl:when>
-            <xsl:when test="$label = 'unresolved'"><xsl:value-of select="$color_unresolved"/></xsl:when>
-            <xsl:when test="$label = 'not_retested'"><xsl:value-of select="$color_notretested"/></xsl:when>
-            <xsl:when test="$label = 'resolved'"><xsl:value-of select="$color_resolved"/></xsl:when>
+            <xsl:when test="$label = 'new'">
+                <xsl:value-of select="$color_new"/>
+            </xsl:when>
+            <xsl:when test="$label = 'unresolved'">
+                <xsl:value-of select="$color_unresolved"/>
+            </xsl:when>
+            <xsl:when test="$label = 'not_retested'">
+                <xsl:value-of select="$color_notretested"/>
+            </xsl:when>
+            <xsl:when test="$label = 'resolved'">
+                <xsl:value-of select="$color_resolved"/>
+            </xsl:when>
             <xsl:otherwise>
                 <!-- generic pie chart -->
                 <xsl:choose>
                     <!-- Going with shades of green and blue in all cases here so as not to imply severity levels -->
-                    <xsl:when test="$position = 1"><xsl:value-of select="$generic_piecolor_1"/></xsl:when>
-                    <xsl:when test="$position = 2"><xsl:value-of select="$generic_piecolor_2"/></xsl:when>
-                    <xsl:when test="$position = 3"><xsl:value-of select="$generic_piecolor_3"/></xsl:when>
-                    <xsl:when test="$position = 4"><xsl:value-of select="$generic_piecolor_4"/></xsl:when>
-                    <xsl:when test="$position = 5"><xsl:value-of select="$generic_piecolor_5"/></xsl:when>
-                    <xsl:when test="$position = 6"><xsl:value-of select="$generic_piecolor_6"/></xsl:when>
-                    <xsl:when test="$position = 7"><xsl:value-of select="$generic_piecolor_7"/></xsl:when>
-                    <xsl:when test="$position = 8"><xsl:value-of select="$generic_piecolor_8"/></xsl:when>
-                    <xsl:when test="$position = 9"><xsl:value-of select="$generic_piecolor_9"/></xsl:when>
-                    <xsl:when test="$position = 10"><xsl:value-of select="$generic_piecolor_10"/></xsl:when>
-                    <xsl:when test="$position = 11"><xsl:value-of select="$generic_piecolor_11"/></xsl:when>
-                    <xsl:when test="$position = 12"><xsl:value-of select="$generic_piecolor_12"/></xsl:when>
-                    <xsl:when test="$position = 13"><xsl:value-of select="$generic_piecolor_13"/></xsl:when>
-                    <xsl:otherwise><xsl:value-of select="$generic_piecolor_14"/></xsl:otherwise>
+                    <xsl:when test="$position = 1">
+                        <xsl:value-of select="$generic_piecolor_1"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 2">
+                        <xsl:value-of select="$generic_piecolor_2"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 3">
+                        <xsl:value-of select="$generic_piecolor_3"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 4">
+                        <xsl:value-of select="$generic_piecolor_4"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 5">
+                        <xsl:value-of select="$generic_piecolor_5"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 6">
+                        <xsl:value-of select="$generic_piecolor_6"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 7">
+                        <xsl:value-of select="$generic_piecolor_7"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 8">
+                        <xsl:value-of select="$generic_piecolor_8"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 9">
+                        <xsl:value-of select="$generic_piecolor_9"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 10">
+                        <xsl:value-of select="$generic_piecolor_10"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 11">
+                        <xsl:value-of select="$generic_piecolor_11"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 12">
+                        <xsl:value-of select="$generic_piecolor_12"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 13">
+                        <xsl:value-of select="$generic_piecolor_13"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$generic_piecolor_14"/>
+                    </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
