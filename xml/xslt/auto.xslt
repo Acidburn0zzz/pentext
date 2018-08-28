@@ -332,7 +332,7 @@
                 <fo:block>
                     <xsl:choose>
                         <xsl:when test="recommendation_summary">
-                            <xsl:value-of select="recommendation_summary"/>
+                            <xsl:apply-templates select="recommendation_summary" mode="summarytable"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:apply-templates select="recommendation" mode="summarytable"/>
