@@ -312,6 +312,8 @@
             select="(//pieEntry[position() = $position]/pieEntryCount div sum(//pieEntry/pieEntryCount)) * 100"/>
         <xsl:variable name="part_half" as="xs:double"
             select="(//pieEntry[position() = $position]/pieEntryCount div sum(//pieEntry/pieEntryCount)) div 2 * 360"/>
+        <xsl:variable name="text_angle" as="xs:double"
+            select="$angle - $part_half"/>
         <xsl:variable name="text_x"
             select="math:sin(3.1415292 * (($angle - $part_half) div 180.0)) * ($radius * 0.8)"/>
         <xsl:variable name="text_y"
@@ -328,44 +330,154 @@
                     <xsl:attribute name="x">
                         <xsl:choose>
                             <!-- try for some better placement of percentages than the standard -->
-                            <xsl:when test="$angle &lt;= 22.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 45 and $angle &gt; 22.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 67.5 and $angle &gt; 45"><xsl:value-of select="$middle_x + $text_line_x -5"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 90 and $angle &gt; 67.5"><xsl:value-of select="$middle_x + $text_line_x -5"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 112.5 and $angle &gt; 90"><xsl:value-of select="$middle_x + $text_line_x -5"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 135 and $angle &gt; 112.5"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 157.5 and $angle &gt; 135"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 180 and $angle &gt; 157.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 202.5 and $angle &gt; 180"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 225 and $angle &gt; 202.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 247.5 and $angle &gt; 225"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 270 and $angle &gt; 247.5"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 292.5 and $angle &gt; 270"><xsl:value-of select="$middle_x + $text_line_x +3"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 315 and $angle &gt; 292.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 337.5 and $angle &gt; 315"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 360 and $angle &gt; 337.5"><xsl:value-of select="$middle_x + $text_line_x"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 22.5"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 45 and $text_angle &gt; 22.5"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 67.5 and $text_angle &gt; 45"><xsl:value-of select="$middle_x + $text_line_x -8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 85 and $text_angle &gt; 67.5"><xsl:value-of select="$middle_x + $text_line_x -8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 95 and $text_angle &gt; 85"><xsl:value-of select="$middle_x + $text_line_x -8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 112.5 and $text_angle &gt; 95"><xsl:value-of select="$middle_x + $text_line_x -8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 135 and $text_angle &gt; 112.5"><xsl:value-of select="$middle_x + $text_line_x -8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 157.5 and $text_angle &gt; 135"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 180 and $text_angle &gt; 157.5"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 202.5 and $text_angle &gt; 180"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 225 and $text_angle &gt; 202.5"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 247.5 and $text_angle &gt; 225"><xsl:value-of select="$middle_x + $text_line_x +8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 265 and $text_angle &gt; 247.5"><xsl:value-of select="$middle_x + $text_line_x +8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 275 and $text_angle &gt; 265"><xsl:value-of select="$middle_x + $text_line_x +8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 292.5 and $text_angle &gt; 275"><xsl:value-of select="$middle_x + $text_line_x +8"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 315 and $text_angle &gt; 292.5"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 337.5 and $text_angle &gt; 315"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="$text_angle &lt;= 360 and $text_angle &gt; 337.5"><xsl:value-of select="$middle_x + $text_line_x"/>
+                                <xsl:call-template name="piechartdebug">
+                                    <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
+                                    <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
+                                    <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:when>
                             <xsl:otherwise><xsl:value-of select="$middle_x + $text_line_x"/></xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
                     <xsl:attribute name="y">
                         <xsl:choose>
                             <!-- when in top right/bottom left quarters of circle, bring percentage text a bit closer to the circle -->
-                            <xsl:when test="$angle &lt;= 22.5"><xsl:value-of select="$middle_y - $text_line_y +5"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 45 and $angle &gt; 22.5"><xsl:value-of select="$middle_y - $text_line_y +4"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 67.5 and $angle &gt; 45"><xsl:value-of select="$middle_y - $text_line_y +3"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 90 and $angle &gt; 67.5"><xsl:value-of select="$middle_y - $text_line_y +2"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 112.5 and $angle &gt; 90"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 135 and $angle &gt; 112.5"><xsl:value-of select="$middle_y - $text_line_y -1"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 157.5 and $angle &gt; 135"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 180 and $angle &gt; 157.5"><xsl:value-of select="$middle_y - $text_line_y -0"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 202.5 and $angle &gt; 180"><xsl:value-of select="$middle_y - $text_line_y -0"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 225 and $angle &gt; 202.5"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 247.5 and $angle &gt; 225"><xsl:value-of select="$middle_y - $text_line_y -1"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 270 and $angle &gt; 247.5"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 292.5 and $angle &gt; 270"><xsl:value-of select="$middle_y - $text_line_y +2"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 315 and $angle &gt; 292.5"><xsl:value-of select="$middle_y - $text_line_y +3"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 337.5 and $angle &gt; 315"><xsl:value-of select="$middle_y - $text_line_y +4"/></xsl:when>
-                            <xsl:when test="$angle &lt;= 360 and $angle &gt; 337.5"><xsl:value-of select="$middle_y - $text_line_y +5"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 22.5"><xsl:value-of select="$middle_y - $text_line_y +5"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 45 and $text_angle &gt; 22.5"><xsl:value-of select="$middle_y - $text_line_y +4"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 67.5 and $text_angle &gt; 45"><xsl:value-of select="$middle_y - $text_line_y +3"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 90 and $text_angle &gt; 67.5"><xsl:value-of select="$middle_y - $text_line_y +2"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 112.5 and $text_angle &gt; 90"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 135 and $text_angle &gt; 112.5"><xsl:value-of select="$middle_y - $text_line_y -1"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 157.5 and $text_angle &gt; 135"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 180 and $text_angle &gt; 157.5"><xsl:value-of select="$middle_y - $text_line_y -0"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 202.5 and $text_angle &gt; 180"><xsl:value-of select="$middle_y - $text_line_y -0"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 225 and $text_angle &gt; 202.5"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 247.5 and $text_angle &gt; 225"><xsl:value-of select="$middle_y - $text_line_y -1"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 270 and $text_angle &gt; 247.5"><xsl:value-of select="$middle_y - $text_line_y +1"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 292.5 and $text_angle &gt; 270"><xsl:value-of select="$middle_y - $text_line_y +2"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 315 and $text_angle &gt; 292.5"><xsl:value-of select="$middle_y - $text_line_y +3"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 337.5 and $text_angle &gt; 315"><xsl:value-of select="$middle_y - $text_line_y +4"/></xsl:when>
+                            <xsl:when test="$text_angle &lt;= 360 and $text_angle &gt; 337.5"><xsl:value-of select="$middle_y - $text_line_y +5"/></xsl:when>
                             <xsl:otherwise><xsl:value-of select="$middle_y - $text_line_y"/></xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
@@ -373,10 +485,10 @@
                         <xsl:choose>
                             <!-- when in top/bottom quarters of circle, text is anchored in the middle, when left on end, when right on start -->
                             <xsl:when
-                                test="($angle &gt;= 315 or $angle &lt;= 45) or ($angle &lt;= 225 and $angle &gt;= 135)"
+                                test="($text_angle &gt;= 315 or $text_angle &lt;= 45) or ($text_angle &lt;= 225 and $text_angle &gt;= 135)"
                                 >middle</xsl:when>
-                            <xsl:when test="$angle &lt; 135 and $angle &gt; 45">start</xsl:when>
-                            <xsl:when test="$angle &lt; 315 and $angle &gt; 225">end</xsl:when>
+                            <xsl:when test="$text_angle &lt; 135 and $text_angle &gt; 45">start</xsl:when>
+                            <xsl:when test="$text_angle &lt; 315 and $text_angle &gt; 225">end</xsl:when>
                             <xsl:otherwise>middle</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
@@ -447,6 +559,14 @@
                 <xsl:with-param name="radius" select="$radius"/>
             </xsl:call-template>
         </xsl:if>
+    </xsl:template>
+    
+    <xsl:template name="piechartdebug">
+        <xsl:param name="text_angle"/>
+        <xsl:param name="part_half"/>
+        <xsl:param name="percentage"/>
+        <!--<xsl:message>PERCENTAGE: <xsl:value-of select="$percentage"/></xsl:message>
+        <xsl:message>TEXT ANGLE: <xsl:value-of select="$text_angle"/></xsl:message>-->
     </xsl:template>
 
     <xsl:template name="selectColor">
