@@ -42,6 +42,7 @@
         <xsl:attribute name="border-bottom-width">1px</xsl:attribute>
         <xsl:attribute name="table-layout">fixed</xsl:attribute>
         <xsl:attribute name="width">100%</xsl:attribute>
+        <xsl:attribute name="keep-together.within-page">always</xsl:attribute>
     </xsl:attribute-set>
     
     <!-- Charts -->
