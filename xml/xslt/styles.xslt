@@ -248,6 +248,8 @@
         <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">4.6cm</xsl:attribute><!-- overlaps body since it's empty anyway and we need to push down the tab in region-end -->
     </xsl:attribute-set>
+    <xsl:attribute-set name="region-before-content-odd" use-attribute-sets="region-before-content"/>
+    <xsl:attribute-set name="region-before-content-even" use-attribute-sets="region-before-content"/>
     <xsl:attribute-set name="region-after-content">
         <xsl:attribute name="extent">2.1cm</xsl:attribute>
     </xsl:attribute-set>
@@ -266,6 +268,17 @@
         <xsl:attribute name="border-before-width">1px</xsl:attribute>
         <xsl:attribute name="border-before-style">solid</xsl:attribute>
         <xsl:attribute name="text-align-last">justify</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="header-odd">
+        <xsl:attribute name="color"><xsl:value-of select="$c_support_medium"/></xsl:attribute>
+        <xsl:attribute name="border-color"><xsl:value-of select="$c_support_dark"/></xsl:attribute>
+        <xsl:attribute name="padding-top">1cm</xsl:attribute>
+        <xsl:attribute name="border-before-width">1px</xsl:attribute>
+        <xsl:attribute name="border-before-style">solid</xsl:attribute>
+        <xsl:attribute name="text-align">right</xsl:attribute>
+        <!-- need to set margin-right to 0cm to force block to accept padding -->
+        <xsl:attribute name="margin-right">0cm</xsl:attribute>
+        <xsl:attribute name="padding-right">2cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="footer-odd" use-attribute-sets="footer">
         <!-- need to set margin-right to 0cm to force block to accept padding -->
@@ -399,6 +412,12 @@
         <xsl:attribute name="keep-together.within-page">always</xsl:attribute>
         <xsl:attribute name="margin-left" select="$very-large-space"/>
         <xsl:attribute name="line-height">18pt</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="coc">
+        <xsl:attribute name="font-size">9pt</xsl:attribute>
+        <xsl:attribute name="text-align">center</xsl:attribute>
+        <xsl:attribute name="margin-top">15px</xsl:attribute>
+        <xsl:attribute name="color"><xsl:value-of select="$c_support_medium"/></xsl:attribute>
     </xsl:attribute-set>
 
     <!-- Signature boxes -->

@@ -75,7 +75,7 @@
                                     select="$latestVersionDate"/>
                             </fo:block>
                             <fo:block>
-                                <xsl:value-of select="//meta/company/coc"/>
+                                <xsl:value-of select="//meta/classification"/>
                             </fo:block>
                         </fo:block>
                     </fo:table-cell>
@@ -332,7 +332,7 @@
             document and its contents please contact <xsl:value-of select="company/full_name"/>
             <xsl:if test="not(company/full_name[ends-with(., '.')])"
             ><xsl:text>.</xsl:text></xsl:if></fo:block>
-        <fo:block break-after="page">
+        <fo:block>
             <fo:table width="100%" table-layout="fixed" xsl:use-attribute-sets="borders">
                 <fo:table-column column-width="proportional-column-width(25)"/>
                 <fo:table-column column-width="proportional-column-width(75)"/>
@@ -386,6 +386,10 @@
                     </fo:table-row>
                 </fo:table-body>
             </fo:table>
+        </fo:block>
+        <fo:block xsl:use-attribute-sets="coc" break-after="page">
+            <xsl:value-of select="company/full_name"/> is registered at the trade register
+  of the Dutch chamber of commerce under number <xsl:value-of select="company/coc"/>.
         </fo:block>
     </xsl:template>
 

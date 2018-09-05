@@ -37,8 +37,8 @@
                 xsl:use-attribute-sets="PortraitPage">
                 <fo:region-body region-name="region-body"
                     xsl:use-attribute-sets="region-body-content-odd"/>
-                <fo:region-before region-name="region-before-content"
-                    xsl:use-attribute-sets="region-before-content"/>
+                <fo:region-before region-name="region-before-content-odd"
+                    xsl:use-attribute-sets="region-before-content-odd"/>
                 <fo:region-after region-name="region-after-content-odd"
                     xsl:use-attribute-sets="region-after-content"/>
                 <fo:region-start region-name="region-start-content-odd"
@@ -49,8 +49,8 @@
                 xsl:use-attribute-sets="PortraitPage">
                 <fo:region-body region-name="region-body"
                     xsl:use-attribute-sets="region-body-content-even"/>
-                <fo:region-before region-name="region-before-content"
-                    xsl:use-attribute-sets="region-before-content"/>
+                <fo:region-before region-name="region-before-content-even"
+                    xsl:use-attribute-sets="region-before-content-even"/>
                 <fo:region-after region-name="region-after-content-even"
                     xsl:use-attribute-sets="region-after-content"/>
                 <fo:region-end region-name="region-end-content-even"
@@ -106,9 +106,14 @@
     </xsl:template>
 
     <xsl:template name="page_header">
-        <fo:static-content flow-name="region-before-content" xsl:use-attribute-sets="HeaderFont">
-            <fo:block/>
-            <!-- empty, just needed for graphic -->
+        <fo:static-content flow-name="region-before-content-odd" xsl:use-attribute-sets="FooterFont">
+            <fo:block xsl:use-attribute-sets="header-odd"><xsl:value-of select="//meta/classification"/>
+            </fo:block>
+        </fo:static-content>
+        
+        <fo:static-content flow-name="region-before-content-even" xsl:use-attribute-sets="FooterFont">
+            <fo:block>
+            </fo:block>
         </fo:static-content>
     </xsl:template>
 
