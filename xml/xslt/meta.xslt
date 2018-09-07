@@ -56,14 +56,19 @@
                 </fo:table-row>
                 <fo:table-row>
                     <fo:table-cell xsl:use-attribute-sets="front-subtitlerow">
+                        <fo:block xsl:use-attribute-sets="title-client">
+                            <xsl:value-of select="//client/full_name"/>
+                        </fo:block>
+                        <xsl:if test="normalize-space(//meta/subtitle) or //meta/subtitle/*">
+                            <fo:block xsl:use-attribute-sets="title-sub">
+                                <xsl:apply-templates select="subtitle"/>
+                            </fo:block>
+                        </xsl:if>
                         <xsl:if test="$execsummary = true()">
                             <fo:block xsl:use-attribute-sets="title-sub">
                                 <xsl:text>Management Summary</xsl:text>
                             </fo:block>
                         </xsl:if>
-                        <fo:block xsl:use-attribute-sets="title-client">
-                            <xsl:value-of select="//client/full_name"/>
-                        </fo:block>
                     </fo:table-cell>
                 </fo:table-row>
                 <fo:table-row>
@@ -392,5 +397,11 @@
   of the Dutch chamber of commerce under number <xsl:value-of select="company/coc"/>.
         </fo:block>
     </xsl:template>
+    
+    <xsl:template match="subtitle">
+            <xsl:apply-templates/>
+    </xsl:template>
+    
+
 
 </xsl:stylesheet>

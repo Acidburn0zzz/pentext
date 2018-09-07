@@ -254,11 +254,9 @@
         <xsl:attribute name="extent">2.1cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-start-content-odd">
-        <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">2cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="region-end-content-even">
-        <xsl:attribute name="precedence">true</xsl:attribute>
         <xsl:attribute name="extent">2cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="footer">
