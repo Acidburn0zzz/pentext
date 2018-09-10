@@ -52,8 +52,16 @@
     <xsl:variable name="generic_piecolor_11">burlywood</xsl:variable>
     <xsl:variable name="generic_piecolor_12">cornflowerblue</xsl:variable>
     <!-- that's right people, cornflower blue -->
-    <xsl:variable name="generic_piecolor_13">cornsilk</xsl:variable>
-    <xsl:variable name="generic_piecolor_14">black</xsl:variable>
+    <xsl:variable name="generic_piecolor_13">darksalmon</xsl:variable>
+    <xsl:variable name="generic_piecolor_14">goldenrod</xsl:variable>
+    <xsl:variable name="generic_piecolor_15">lightslategray</xsl:variable>
+    <xsl:variable name="generic_piecolor_16">mediumpurple</xsl:variable>
+    <xsl:variable name="generic_piecolor_17">teal</xsl:variable>
+    <xsl:variable name="generic_piecolor_18">yellow</xsl:variable>
+    <xsl:variable name="generic_piecolor_19">sienna</xsl:variable>
+    <xsl:variable name="generic_piecolor_20">mediumturquoise</xsl:variable>
+    <xsl:variable name="generic_piecolor_21">navy</xsl:variable>
+    <xsl:variable name="generic_piecolor_other">black</xsl:variable>
 
     <!-- document version number (mostly for report) -->
     <xsl:variable name="latestVersionNumber">

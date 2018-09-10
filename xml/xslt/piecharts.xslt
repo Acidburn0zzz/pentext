@@ -652,8 +652,32 @@
                     <xsl:when test="$position = 13">
                         <xsl:value-of select="$generic_piecolor_13"/>
                     </xsl:when>
-                    <xsl:otherwise>
+                    <xsl:when test="$position = 14">
                         <xsl:value-of select="$generic_piecolor_14"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 15">
+                        <xsl:value-of select="$generic_piecolor_15"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 16">
+                        <xsl:value-of select="$generic_piecolor_16"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 17">
+                        <xsl:value-of select="$generic_piecolor_17"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 18">
+                        <xsl:value-of select="$generic_piecolor_18"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 19">
+                        <xsl:value-of select="$generic_piecolor_19"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 20">
+                        <xsl:value-of select="$generic_piecolor_20"/>
+                    </xsl:when>
+                    <xsl:when test="$position = 21">
+                        <xsl:value-of select="$generic_piecolor_21"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$generic_piecolor_other"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
