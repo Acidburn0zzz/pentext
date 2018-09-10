@@ -7,22 +7,16 @@
   <xs:import namespace="http://www.w3.org/2001/XInclude"
     schemaLocation="http://www.w3.org/2001/XInclude/XInclude.xsd"/>
 
-  <!-- company -->
-
-
-  <xs:simpleType name="emailAddress">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="[^@]+@[^\.]+\..+"/>
-    </xs:restriction>
-  </xs:simpleType>
   
-  <xs:complexType name="emailAddress" mixed="true">
+  <xs:complexType name="emailAddressType" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="1">
       <xs:element name="company_email"/>
-      <xs:any></xs:any>
+      <xs:element name="client_email"/>
+      <xs:element name="contractor_email"/>
     </xs:choice>
   </xs:complexType>
 
+  <xs:element name="email" type="emailAddressType"/>
 
   <xs:element name="company">
     <xs:complexType>
