@@ -612,7 +612,7 @@
             <xsl:otherwise>
                 <!-- generic pie chart -->
                 <xsl:choose>
-                    <!-- Going with shades of green and blue in all cases here so as not to imply severity levels -->
+                    <!-- Going with shades of green, yellow and blue/purple in all cases here so as not to imply severity levels -->
                     <xsl:when test="$position = 1">
                         <xsl:value-of select="$generic_piecolor_1"/>
                     </xsl:when>

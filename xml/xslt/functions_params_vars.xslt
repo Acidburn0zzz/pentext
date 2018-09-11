@@ -26,12 +26,12 @@
     <!-- finding colors (used in findings & pie charts) -->
     <!-- threatlevel -->
     <xsl:variable name="color_extreme">#000000</xsl:variable>
-    <xsl:variable name="color_high">#CC4900</xsl:variable>
-    <xsl:variable name="color_elevated">#FF5C00</xsl:variable>
-    <xsl:variable name="color_moderate">#FE9920</xsl:variable>
-    <xsl:variable name="color_low">#ffbf7f</xsl:variable>
-    <xsl:variable name="color_na">#CCCCCC</xsl:variable>
-    <xsl:variable name="color_unknown">#FFFFFF</xsl:variable>
+    <xsl:variable name="color_high">#922D00</xsl:variable>
+    <xsl:variable name="color_elevated">#E2632A</xsl:variable>
+    <xsl:variable name="color_moderate">#FFA67E</xsl:variable>
+    <xsl:variable name="color_low">#F7D4C4</xsl:variable>
+    <xsl:variable name="color_na">silver</xsl:variable>
+    <xsl:variable name="color_unknown">#EDD382</xsl:variable>
     <!-- status -->
     <xsl:variable name="color_new">#CC4900</xsl:variable>
     <xsl:variable name="color_unresolved">#FF5C00</xsl:variable>
