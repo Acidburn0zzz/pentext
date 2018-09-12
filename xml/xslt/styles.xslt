@@ -10,6 +10,9 @@
     <xsl:variable name="c_support_subtlydarkerlight">#e4e4e4</xsl:variable><!-- used for subtle light border around support_light background -->
     <xsl:variable name="c_support_medium">#999999</xsl:variable><!-- used for subtle light border around support_light background -->
     <xsl:variable name="c_support_dark">#444444</xsl:variable>
+    <xsl:variable name="c_main_contrast">white</xsl:variable>
+    
+    <xsl:variable name="border-color">#444444</xsl:variable>
     <!-- Note: pie chart colors can be customized in functions_params_vars.xslt -->
     
     <!-- variables -->
@@ -73,7 +76,7 @@
     </xsl:attribute-set>
     <xsl:attribute-set name="title-0" use-attribute-sets="title">
         <xsl:attribute name="font-size">16pt</xsl:attribute>
-        <xsl:attribute name="color">white</xsl:attribute>
+        <xsl:attribute name="color"><xsl:value-of select="$c_main_contrast"/></xsl:attribute>
         <xsl:attribute name="margin-top">0.4cm</xsl:attribute>
         <xsl:attribute name="margin-bottom">0.4cm</xsl:attribute>
     </xsl:attribute-set>
@@ -318,13 +321,13 @@
         <xsl:attribute name="text-align">center</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="front-subtitlerow" use-attribute-sets="frontrows">
-        <xsl:attribute name="background-color">white</xsl:attribute>
+        <xsl:attribute name="background-color"><xsl:value-of select="$c_main_contrast"/></xsl:attribute>
         <xsl:attribute name="padding-left">0.5cm</xsl:attribute>
         <xsl:attribute name="padding-top">0.7cm</xsl:attribute>
         <xsl:attribute name="padding-bottom">0.4cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="front-metarow" use-attribute-sets="frontrows">
-        <xsl:attribute name="background-color">white</xsl:attribute>
+        <xsl:attribute name="background-color"><xsl:value-of select="$c_main_contrast"/></xsl:attribute>
         <xsl:attribute name="padding-left">0.5cm</xsl:attribute>
         <xsl:attribute name="padding-top">0.5cm</xsl:attribute>
         <xsl:attribute name="padding-bottom">1.2cm</xsl:attribute>
@@ -339,7 +342,7 @@
     </xsl:attribute-set>
 
     <!-- tables -->
-    <xsl:attribute-set name="borders" use-attribute-sets="">
+    <xsl:attribute-set name="borders">
         <xsl:attribute name="border-color"><xsl:value-of select="$c_support_dark"/></xsl:attribute>
         <xsl:attribute name="border-width">
             <xsl:value-of select="$border-width"/>
@@ -350,7 +353,7 @@
     </xsl:attribute-set>
     <xsl:attribute-set name="th" use-attribute-sets="td  indent_reset">
         <xsl:attribute name="background-color"><xsl:value-of select="$c_main"/></xsl:attribute>
-        <xsl:attribute name="color">white</xsl:attribute>
+        <xsl:attribute name="color"><xsl:value-of select="$c_main_contrast"/></xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="td" use-attribute-sets="indent_reset">
         <xsl:attribute name="padding-left">4pt</xsl:attribute>
