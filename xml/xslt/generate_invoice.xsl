@@ -127,7 +127,7 @@
             </fo:table>
         </fo:block>
         <xsl:if
-            test="/*/meta//client/invoice_extra_field and normalize-space(/*/meta//client/invoice_extra_field) != ''">
+            test="/*/meta//client/client_reference and normalize-space(/*/meta//client/client_reference) != ''">
             <fo:block>
                 <fo:table width="100%" table-layout="fixed"
                     xsl:use-attribute-sets="big-space-below table-shading">
@@ -136,7 +136,7 @@
                         <fo:table-row>
                             <fo:table-cell xsl:use-attribute-sets="td">
                                 <fo:block xsl:use-attribute-sets="bold">
-                                    <xsl:value-of select="/*/meta//client/invoice_extra_field"/>
+                                    <xsl:value-of select="/*/meta//client/client_reference"/>
                                 </fo:block>
                             </fo:table-cell>
                         </fo:table-row>
@@ -249,7 +249,7 @@
             </fo:table>
         </fo:block>
         <xsl:if
-            test="/*/meta//client/invoice_extra_field and normalize-space(/*/meta//client/invoice_extra_field) != ''">
+            test="/*/meta//client/client_reference and normalize-space(/*/meta//client/client_reference) != ''">
             <fo:block>
                 <fo:table width="100%" table-layout="fixed"
                     xsl:use-attribute-sets="big-space-below table-shading">
@@ -258,7 +258,7 @@
                         <fo:table-row>
                             <fo:table-cell xsl:use-attribute-sets="td">
                                 <fo:block xsl:use-attribute-sets="bold">
-                                    <xsl:value-of select="/*/meta//client/invoice_extra_field"/>
+                                    <xsl:value-of select="/*/meta//client/client_reference"/>
                                 </fo:block>
                             </fo:table-cell>
                         </fo:table-row>
@@ -274,7 +274,7 @@
     <xsl:template name="invoiceStart">
         <xsl:param name="INVOICE_NO"/>
         <xsl:param name="DATE"/>
-        <fo:block xsl:use-attribute-sets="title-0">
+        <fo:block xsl:use-attribute-sets="title-1">
             <xsl:call-template name="getString">
                 <xsl:with-param name="stringID" select="'invoice_no'"/>
             </xsl:call-template>

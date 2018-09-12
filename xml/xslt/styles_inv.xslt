@@ -48,17 +48,11 @@
         <xsl:attribute name="content-height">scale-to-fit</xsl:attribute>
         <xsl:attribute name="scaling">uniform</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="title-0" use-attribute-sets="title bg-orange">
-        <xsl:attribute name="font-size">18pt</xsl:attribute>
-        <xsl:attribute name="margin-top">1cm</xsl:attribute>
-        <xsl:attribute name="margin-right">0cm</xsl:attribute>
-        <xsl:attribute name="padding-right">0.3cm</xsl:attribute>
-    </xsl:attribute-set>
-    <xsl:attribute-set name="title-2" use-attribute-sets="title">
-        <xsl:attribute name="font-style">normal</xsl:attribute>
-        <xsl:attribute name="font-size">18pt</xsl:attribute>
-        <xsl:attribute name="margin-left">0cm</xsl:attribute>
-        <xsl:attribute name="padding-left">0.3cm</xsl:attribute>
+    <xsl:attribute-set name="title-1" use-attribute-sets="title">
+        <xsl:attribute name="text-align">right</xsl:attribute>
+        <xsl:attribute name="color"><xsl:value-of select="$c_main"/></xsl:attribute>
+        <xsl:attribute name="padding-top">1cm</xsl:attribute>
+        <xsl:attribute name="padding-bottom">1cm</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="border-top">
         <xsl:attribute name="border-before-width">
@@ -68,8 +62,11 @@
             <xsl:value-of select="$border-style"/>
         </xsl:attribute>
         <xsl:attribute name="border-before-color">
-            <xsl:value-of select="$border-color"/>
+            <xsl:value-of select="$c_support_dark"/>
         </xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="main-color">
+        <xsl:attribute name="color"><xsl:value-of select="$c_main"/></xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="td">
         <xsl:attribute name="border-collapse">separate</xsl:attribute>
@@ -79,16 +76,29 @@
     <xsl:attribute-set name="padding-top">
         <xsl:attribute name="padding-top">5pt</xsl:attribute>
     </xsl:attribute-set>
-    <xsl:attribute-set name="table-shading" use-attribute-sets="findingTable">
-        <xsl:attribute name="border-left">1px solid #e4e4e4</xsl:attribute>
+    <xsl:attribute-set name="table-shading">
+        <xsl:attribute name="background-color"><xsl:value-of select="$c_support_light"/></xsl:attribute>
+        <xsl:attribute name="border-color"><xsl:value-of select="$c_support_subtlydarkerlight"/></xsl:attribute>
+        <xsl:attribute name="margin-bottom" select="$large-space"/>
+        <xsl:attribute name="padding-left">-8pt</xsl:attribute>
+        <xsl:attribute name="border-style">solid</xsl:attribute>
+        <xsl:attribute name="border-width">1px</xsl:attribute>
+        <xsl:attribute name="table-layout">fixed</xsl:attribute>
+        <xsl:attribute name="width">100%</xsl:attribute>
     </xsl:attribute-set>
     <xsl:attribute-set name="footer">
         <xsl:attribute name="text-align-last">center</xsl:attribute>
     </xsl:attribute-set>
-
-    <xsl:attribute-set name="sidetab"/>
-    <xsl:attribute-set name="sidetab-textblock"/>
-    <xsl:attribute-set name="for"/>
-    <xsl:attribute-set name="coverfooter"/>
-
+    <xsl:attribute-set name="header">
+        <xsl:attribute name="color"><xsl:value-of select="$c_support_medium"/></xsl:attribute>
+        <xsl:attribute name="border-color"><xsl:value-of select="$c_support_dark"/></xsl:attribute>
+        <xsl:attribute name="padding-top">1cm</xsl:attribute>
+        <xsl:attribute name="border-before-width">1px</xsl:attribute>
+        <xsl:attribute name="border-before-style">solid</xsl:attribute>
+        <xsl:attribute name="text-align">right</xsl:attribute>
+        <!-- need to set margin-right to 0cm to force block to accept padding -->
+        <xsl:attribute name="margin-right">0cm</xsl:attribute>
+        <xsl:attribute name="padding-right">2cm</xsl:attribute>
+    </xsl:attribute-set>
+    
 </xsl:stylesheet>

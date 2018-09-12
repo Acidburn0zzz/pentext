@@ -46,7 +46,7 @@
                             <fo:table-cell text-align="right" display-align="after"
                                 padding-bottom="5mm">
                                 <fo:block xsl:use-attribute-sets="TinyFont">
-                                    <fo:block xsl:use-attribute-sets="bold orange-text">
+                                    <fo:block xsl:use-attribute-sets="bold main-color">
                                         <xsl:value-of select="/*/meta/company/full_name"/>
                                     </fo:block>
                                     <fo:block>
@@ -67,7 +67,7 @@
                             </fo:table-cell>
                             <fo:table-cell display-align="after" padding-bottom="5mm">
                                 <fo:block xsl:use-attribute-sets="TinyFont">
-                                    <fo:block xsl:use-attribute-sets="bold orange-text">
+                                    <fo:block xsl:use-attribute-sets="bold main-color">
                                         <xsl:value-of select="/*/meta/company/website"/>
                                     </fo:block>
                                     <fo:block>
@@ -103,13 +103,13 @@
     <xsl:template name="page_footer">
         <fo:static-content flow-name="region-after-first" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer">
-                <fo:inline xsl:use-attribute-sets="TinyFont orange-text">
+                <fo:inline xsl:use-attribute-sets="TinyFont main-color">
                     <xsl:call-template name="getString">
                         <xsl:with-param name="stringID" select="'invoice_yaygreen'"/>
                     </xsl:call-template>
                 </fo:inline>
                 <fo:block/>
-                <fo:inline xsl:use-attribute-sets="TinyFont orange-text">
+                <fo:inline xsl:use-attribute-sets="TinyFont main-color">
                     <xsl:call-template name="getString">
                         <xsl:with-param name="stringID" select="'invoice_terms'"/>
                     </xsl:call-template>
@@ -118,13 +118,13 @@
         </fo:static-content>
         <fo:static-content flow-name="region-after-rest" xsl:use-attribute-sets="FooterFont">
             <fo:block xsl:use-attribute-sets="footer">
-                <fo:inline xsl:use-attribute-sets="TinyFont orange-text">
+                <fo:inline xsl:use-attribute-sets="TinyFont main-color">
                     <xsl:call-template name="getString">
                         <xsl:with-param name="stringID" select="'invoice_yaygreen'"/>
                     </xsl:call-template>
                 </fo:inline>
                 <fo:block/>
-                <fo:inline xsl:use-attribute-sets="TinyFont orange-text">
+                <fo:inline xsl:use-attribute-sets="TinyFont main-color">
                     <xsl:call-template name="getString">
                         <xsl:with-param name="stringID" select="'invoice_terms'"/>
                     </xsl:call-template>
