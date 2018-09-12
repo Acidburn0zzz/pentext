@@ -435,7 +435,7 @@
                                     <xsl:with-param name="part_half" select="$part_half"></xsl:with-param>
                                 </xsl:call-template>
                             </xsl:when>
-                            <xsl:when test="$text_angle &lt;= 315 and $text_angle &gt; 292.5"><xsl:value-of select="$middle_x + $text_line_x"/>
+                            <xsl:when test="$text_angle &lt;= 315 and $text_angle &gt; 292.5"><xsl:value-of select="$middle_x + $text_line_x +6"/>
                                 <xsl:call-template name="piechartdebug">
                                     <xsl:with-param name="text_angle" select="$text_angle"></xsl:with-param>
                                     <xsl:with-param name="percentage" select="$percentage"></xsl:with-param>
