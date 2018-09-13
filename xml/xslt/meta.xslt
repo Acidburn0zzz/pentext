@@ -59,6 +59,16 @@
                         <fo:block xsl:use-attribute-sets="title-client">
                             <xsl:value-of select="//client/full_name"/>
                         </fo:block>
+                        <xsl:if test="/offerte">
+                            <fo:block xsl:use-attribute-sets="title-sub">
+                                <xsl:sequence
+                                    select="
+                                        string-join(for $x in tokenize(normalize-space(//meta/offered_service_long), ' ')
+                                        return
+                                            my:titleCase($x), ' ')"
+                                />
+                            </fo:block>
+                        </xsl:if>
                         <xsl:if test="normalize-space(//meta/subtitle) or //meta/subtitle/*">
                             <fo:block xsl:use-attribute-sets="title-sub">
                                 <xsl:apply-templates select="subtitle"/>
@@ -393,15 +403,14 @@
             </fo:table>
         </fo:block>
         <fo:block xsl:use-attribute-sets="coc" break-after="page">
-            <xsl:value-of select="company/full_name"/> is registered at the trade register
-  of the Dutch chamber of commerce under number <xsl:value-of select="company/coc"/>.
-        </fo:block>
+            <xsl:value-of select="company/full_name"/> is registered at the trade register of the
+            Dutch chamber of commerce under number <xsl:value-of select="company/coc"/>. </fo:block>
     </xsl:template>
-    
+
     <xsl:template match="subtitle">
-            <xsl:apply-templates/>
+        <xsl:apply-templates/>
     </xsl:template>
-    
+
 
 
 </xsl:stylesheet>

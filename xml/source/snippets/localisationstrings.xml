@@ -8,8 +8,8 @@
   <!-- THIS you can change/expand! -->
   <!-- COVERPAGE AND HEADERS/FOOTERS -->
   <string id="coverpage_offer">
-    <translation xml:lang="nl">OFFERTE</translation>
-    <translation xml:lang="en">QUOTE</translation>
+    <translation xml:lang="nl">Offerte</translation>
+    <translation xml:lang="en">Quote</translation>
   </string>
   <string id="coverpage_service_pentest">
     <translation xml:lang="nl">penetratietestdiensten</translation>
